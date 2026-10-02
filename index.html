@@ -1042,15 +1042,45 @@
 
     // Form feedback
     function handleFormSubmit(e) {
-      e.preventDefault();
-      const feedback = document.getElementById('form-feedback');
-      const form = document.getElementById('contact-form');
-      if (feedback) feedback.classList.remove('hidden');
-      if (form) form.reset();
-      showToast('Message dispatched! Thank you.');
-      setTimeout(() => {
-        if (feedback) feedback.classList.add('hidden');
-      }, 5000);
+     async function handleFormSubmit(event) {
+  event.preventDefault();
+
+  const form = event.target;
+  const submitBtn = document.getElementById('submit-btn');
+  const originalText = submitBtn ? submitBtn.innerText : 'Dispatch Message';
+
+  if (submitBtn) {
+    submitBtn.disabled = true;
+    submitBtn.innerText = 'Transmitting Message...';
+  }
+
+  const formData = new FormData(form);
+  formData.append('_captcha', 'false'); // Disables captcha page redirect
+
+  try {
+    const response = await fetch('https://formsubmit.co/ajax/neloy111@proton.me', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json'
+      },
+      body: formData
+    });
+
+    if (response.ok) {
+      showToast('Message dispatched! Sent to Proton inbox.');
+      form.reset();
+    } else {
+      showToast('Transmission error. Please email directly.');
+    }
+  } catch (error) {
+    showToast('Network error. Check connection.');
+  } finally {
+    if (submitBtn) {
+      submitBtn.disabled = false;
+      submitBtn.innerText = originalText;
+    }
+  }
+}
     }
 
     // Scroll progress bar
