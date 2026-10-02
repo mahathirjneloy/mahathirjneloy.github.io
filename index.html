@@ -1021,7 +1021,7 @@
   event.preventDefault();
 
   const form = event.target;
-  const submitBtn = document.getElementById('submit-btn');
+  const submitBtn = form.querySelector('button[type="submit"]');
   const originalText = submitBtn ? submitBtn.innerText : 'Dispatch Message';
 
   if (submitBtn) {
@@ -1030,10 +1030,9 @@
   }
 
   const formData = new FormData(form);
-  formData.append('_captcha', 'false'); // Disables captcha page redirect
 
   try {
-    const response = await fetch('https://formsubmit.co/ajax/neloy111@proton.me', {
+    const response = await fetch('https://formspree.io/f/xaengzla', {
       method: 'POST',
       headers: {
         'Accept': 'application/json'
@@ -1045,7 +1044,7 @@
       showToast('Message dispatched! Sent to Proton inbox.');
       form.reset();
     } else {
-      showToast('Transmission error. Please email directly.');
+      showToast('Transmission error. Please try again.');
     }
   } catch (error) {
     showToast('Network error. Check connection.');
