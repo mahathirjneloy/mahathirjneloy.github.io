@@ -853,32 +853,7 @@
           <!-- Quick Dispatch Form -->
           <div class="lg:col-span-7">
             <div class="glass-card rounded-2xl p-7 border border-emerald-500/20">
-              <form id="contact-form" onsubmit="handleFormSubmit(event)" class="space-y-4">
-  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-    <div>
-      <label class="block text-xs font-mono text-slate-300 mb-2">YOUR NAME</label>
-      <input type="text" name="name" required placeholder="Dr. Alex Rivera" class="w-full px-4 py-3 rounded-xl bg-obsidian-950 border border-emerald-500/20 focus:border-emerald-400 focus:outline-none text-white text-sm">
-    </div>
-    <div>
-      <label class="block text-xs font-mono text-slate-300 mb-2">EMAIL ADDRESS</label>
-      <input type="email" name="email" required placeholder="alex@robotics-lab.org" class="w-full px-4 py-3 rounded-xl bg-obsidian-950 border border-emerald-500/20 focus:border-emerald-400 focus:outline-none text-white text-sm">
-    </div>
-  </div>
-
-  <div>
-    <label class="block text-xs font-mono text-slate-300 mb-2">SUBJECT / TOPIC</label>
-    <input type="text" name="subject" required placeholder="Robotics Internship / Hardware Collab" class="w-full px-4 py-3 rounded-xl bg-obsidian-950 border border-emerald-500/20 focus:border-emerald-400 focus:outline-none text-white text-sm">
-  </div>
-
-  <div>
-    <label class="block text-xs font-mono text-slate-300 mb-2">MESSAGE</label>
-    <textarea name="message" rows="4" required placeholder="Hi Mahathir, I reviewed your Raspberry Pi Pico dual-mode robot and would love to connect..." class="w-full px-4 py-3 rounded-xl bg-obsidian-950 border border-emerald-500/20 focus:border-emerald-400 focus:outline-none text-white text-sm resize-none"></textarea>
-  </div>
-
-  <button type="submit" id="submit-btn" class="w-full py-4 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-obsidian-950 font-bold text-sm tracking-wide transition-all shadow-emerald-glow btn-interactive">
-    Dispatch Message
-  </button>
-</form>
+              <form id="contact-form" action="https://formsubmit.co/neloy111@proton.me" method="POST" class="space-y-4">
 
               <div id="form-feedback" class="hidden mt-4 p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 text-xs font-mono text-center">
                 &gt; Message queued. Direct response will be routed via neloy111@proton.me.
