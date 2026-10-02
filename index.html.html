@@ -1,0 +1,1241 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mahathir Neloy | Robotics & Embedded Systems</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Google Fonts: Inter & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind Configuration for Emerald Obsidian Palette -->
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            obsidian: {
+              950: '#030705',
+              900: '#060f0a',
+              850: '#09150f',
+              800: '#0d1f16',
+              700: '#142e22',
+            },
+            emerald: {
+              300: '#6ee7b7',
+              400: '#34d399',
+              500: '#10b981',
+              600: '#059669',
+              bright: '#00ff87',
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          boxShadow: {
+            'emerald-glow': '0 0 35px -5px rgba(16, 185, 129, 0.25)',
+            'emerald-card': '0 4px 20px -2px rgba(0, 0, 0, 0.7), 0 0 15px -3px rgba(16, 185, 129, 0.15)',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #030705;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #0f2d1e;
+      border-radius: 4px;
+      border: 1px solid rgba(52, 211, 153, 0.2);
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #10b981;
+    }
+
+    /* Ambient Circuit Grid Pattern */
+    .circuit-bg {
+      background-image: 
+        radial-gradient(rgba(16, 185, 129, 0.08) 1px, transparent 1px),
+        linear-gradient(to right, rgba(16, 185, 129, 0.03) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(16, 185, 129, 0.03) 1px, transparent 1px);
+      background-size: 32px 32px, 64px 64px, 64px 64px;
+    }
+
+    /* Glassmorphism Card Style */
+    .glass-card {
+      background: rgba(9, 21, 15, 0.75);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(52, 211, 153, 0.15);
+    }
+
+    .glass-card:hover {
+      border-color: rgba(52, 211, 153, 0.4);
+    }
+
+    /* Interactive Spotlight Gradient */
+    .spotlight-card {
+      position: relative;
+      overflow: hidden;
+    }
+    .spotlight-card::before {
+      content: '';
+      position: absolute;
+      inset: -1px;
+      border-radius: inherit;
+      background: radial-gradient(400px circle at var(--mouse-x, -999px) var(--mouse-y, -999px), rgba(52, 211, 153, 0.22), transparent 70%);
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      z-index: 1;
+    }
+    .spotlight-card:hover::before {
+      opacity: 1;
+    }
+
+    /* 3D Tilt Card */
+    .tilt-card {
+      transform-style: preserve-3d;
+      transition: transform 0.18s ease-out, box-shadow 0.3s ease;
+      will-change: transform;
+    }
+
+    /* Scroll Reveal Animations */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+      will-change: opacity, transform;
+    }
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+
+    /* Button Ripple Animation */
+    .ripple-effect {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(52, 211, 153, 0.4);
+      transform: scale(0);
+      animation: ripple 0.6s linear;
+      pointer-events: none;
+    }
+    @keyframes ripple {
+      to {
+        transform: scale(4);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body class="bg-obsidian-950 text-slate-200 font-sans selection:bg-emerald-500 selection:text-obsidian-950 antialiased overflow-x-hidden min-h-screen circuit-bg">
+  <!-- Top Reading Progress Indicator -->
+  <div id="scroll-progress" class="fixed top-0 left-0 h-[2.5px] w-0 bg-gradient-to-r from-emerald-500 via-emerald-300 to-teal-300 z-50 transition-all duration-75 shadow-[0_0_12px_rgba(52,211,153,0.8)] pointer-events-none"></div>
+
+  <!-- Notification Toast -->
+  <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none">
+    <div class="px-5 py-3 rounded-xl bg-obsidian-900 border border-emerald-500/40 text-emerald-300 text-sm font-mono shadow-2xl flex items-center gap-3">
+      <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+      <span id="toast-message">Copied to clipboard!</span>
+    </div>
+  </div>
+
+  <!-- Fullscreen Lightbox Modal -->
+  <div id="image-lightbox" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-obsidian-950/90 backdrop-blur-md opacity-0 pointer-events-none transition-all duration-300">
+    <div class="relative max-w-4xl w-full bg-obsidian-900 border border-emerald-500/30 rounded-2xl overflow-hidden shadow-2xl p-4 sm:p-6" onclick="event.stopPropagation()">
+      <div class="flex items-center justify-between pb-3 mb-3 border-b border-emerald-500/20">
+        <h4 id="lightbox-title" class="font-bold text-white text-base sm:text-lg flex items-center gap-2"></h4>
+        <button onclick="closeLightbox()" aria-label="Close photo preview" class="text-slate-400 hover:text-white p-1 rounded-lg hover:bg-emerald-500/10 transition-colors">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+      <div class="relative flex items-center justify-center bg-obsidian-950/80 rounded-xl overflow-hidden min-h-[260px] max-h-[70vh]">
+        <img id="lightbox-img" src="" alt="Hardware preview" class="max-h-[68vh] w-auto object-contain mx-auto rounded-lg">
+      </div>
+      <p id="lightbox-caption" class="mt-4 text-xs sm:text-sm text-slate-300 font-mono leading-relaxed"></p>
+    </div>
+  </div>
+
+  <!-- Main Navigation Header -->
+  <header class="fixed top-0 inset-x-0 z-40 bg-obsidian-950/80 backdrop-blur-md border-b border-emerald-500/10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      <a href="#hero" class="flex items-center gap-3 group">
+        <div class="w-10 h-10 rounded-xl bg-obsidian-900 border border-emerald-500/30 group-hover:border-emerald-400 flex items-center justify-center text-emerald-400 font-mono font-bold text-base transition-colors shadow-emerald-glow">
+          MN
+        </div>
+        <div class="flex flex-col">
+          <span class="font-bold tracking-tight text-white group-hover:text-emerald-300 transition-colors">Mahathir Neloy</span>
+          <span class="text-[11px] font-mono text-emerald-400/80 uppercase tracking-wider">Robotics & Embedded</span>
+        </div>
+      </a>
+
+      <!-- Desktop Navigation Links -->
+      <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-300">
+        <a href="#about" class="hover:text-emerald-400 transition-colors">About</a>
+        <a href="#stack" class="hover:text-emerald-400 transition-colors">Technical Stack</a>
+        <a href="#projects" class="hover:text-emerald-400 transition-colors">Featured Project</a>
+        <a href="#experience" class="hover:text-emerald-400 transition-colors">IEEE Leadership</a>
+        <a href="#contact" class="px-4 py-2 rounded-lg bg-emerald-500/10 border border-emerald-500/30 hover:bg-emerald-500 hover:text-obsidian-950 text-emerald-300 font-mono text-xs transition-all duration-200">
+          Get in Touch
+        </a>
+      </nav>
+
+      <!-- Mobile Menu Toggle Button -->
+      <button id="mobile-menu-btn" aria-label="Toggle menu" class="md:hidden p-2 text-slate-400 hover:text-white rounded-lg hover:bg-obsidian-850">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Mobile Dropdown Menu -->
+    <div id="mobile-menu" class="hidden md:hidden bg-obsidian-900/95 border-b border-emerald-500/20 px-4 py-6 space-y-4 font-mono text-sm">
+      <a href="#about" class="block text-slate-300 hover:text-emerald-400 mobile-link">About</a>
+      <a href="#stack" class="block text-slate-300 hover:text-emerald-400 mobile-link">Technical Stack</a>
+      <a href="#projects" class="block text-slate-300 hover:text-emerald-400 mobile-link">Featured Project</a>
+      <a href="#experience" class="block text-slate-300 hover:text-emerald-400 mobile-link">IEEE Leadership</a>
+      <a href="#contact" class="block text-emerald-400 hover:underline mobile-link">Contact</a>
+    </div>
+  </header>
+  <!-- Main Content Layout -->
+  <main>
+    <section id="hero" class="relative pt-32 pb-24 md:pt-40 md:pb-36 overflow-hidden">
+      <!-- Glow ambient background -->
+      <div class="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[42rem] h-[26rem] bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+      <!-- Cybernetic Particle Nodes Canvas -->
+      <canvas id="circuit-canvas" class="absolute inset-0 w-full h-full pointer-events-auto opacity-45 z-0"></canvas>
+
+      <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="space-y-8">
+          
+          <!-- Availability Badge -->
+          <div class="relative inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-obsidian-850/90 border border-emerald-500/30 text-xs font-mono tracking-wide text-emerald-300 shadow-sm overflow-hidden group">
+            <span class="relative flex h-2 w-2">
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+              <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-400"></span>
+            </span>
+            <span class="relative">OPEN FOR ROBOTICS & EMBEDDED INTERNSHIPS</span>
+          </div>
+
+          <!-- Main Heading with Real-time Typewriter -->
+          <h1 class="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white leading-[1.1]">
+            Designing circuits, writing firmware & <span class="bg-gradient-to-r from-emerald-400 via-emerald-300 to-teal-200 bg-clip-text text-transparent"><span id="typewriter-text">building robots.</span><span id="typewriter-cursor" class="inline-block w-[3px] h-8 sm:h-12 bg-emerald-400 ml-1 translate-y-1 sm:translate-y-2 animate-pulse"></span></span>
+          </h1>
+
+          <!-- Subtitle / Bio -->
+          <p class="text-lg sm:text-xl text-slate-300 leading-relaxed max-w-3xl font-light">
+            Hi, I'm <strong class="text-white font-semibold">Mahathir Neloy</strong> &mdash; Electrical & Electronic Engineering student at <strong class="text-emerald-300 font-medium">North South University</strong>. I specialize in embedded microcontrollers (ESP32, STM32, Raspberry Pi Pico), circuit simulation, and autonomous robotics firmware.
+          </p>
+
+          <!-- Quick Action Buttons -->
+          <div class="flex flex-wrap items-center gap-4 pt-2">
+            <a href="#projects" class="relative overflow-hidden px-7 py-4 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-obsidian-950 font-bold text-sm tracking-wide shadow-emerald-glow transition-all duration-200 flex items-center gap-2 group btn-interactive">
+              <span>View Featured Robot</span>
+              <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+              </svg>
+            </a>
+
+            <button onclick="copyToClipboard('neloy111@proton.me', 'Email copied: neloy111@proton.me')" class="relative overflow-hidden px-6 py-4 rounded-xl bg-obsidian-850 border border-emerald-500/30 hover:border-emerald-400/80 text-slate-200 hover:text-white font-medium text-sm transition-all duration-200 flex items-center gap-2 btn-interactive">
+              <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2"/>
+              </svg>
+              <span>neloy111@proton.me</span>
+            </button>
+          </div>
+
+          <!-- Metadata Chips -->
+          <div class="flex flex-wrap items-center gap-6 pt-4 text-xs font-mono text-slate-400">
+            <span class="flex items-center gap-2">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+              North South University
+            </span>
+            <span class="flex items-center gap-2">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+              IEEE NSU Student Branch
+            </span>
+            <span class="flex items-center gap-2">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+              Dhaka, Bangladesh
+            </span>
+          </div>
+
+        </div>
+      </div>
+    </section>
+    <section id="about" class="py-20 border-t border-emerald-500/10 bg-obsidian-900/40 relative">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="max-w-3xl mb-12 reveal">
+          <p class="text-xs font-mono uppercase tracking-widest text-emerald-400 mb-2">// 01. Background & Vision</p>
+          <h2 class="text-3xl sm:text-4xl font-bold text-white tracking-tight">
+            Bridging hardware design, firmware, and team leadership.
+          </h2>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          
+          <!-- Card 1 -->
+          <div class="glass-card spotlight-card tilt-card rounded-2xl p-7 hover:shadow-emerald-glow transition-all reveal reveal-delay-1">
+            <div class="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 mb-6">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"/>
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold text-white mb-3">Robotics & Embedded</h3>
+            <p class="text-sm text-slate-300 leading-relaxed font-light">
+              Studying Electrical & Electronic Engineering at North South University. Focused on translating control theory and physics into autonomous rovers, sensor nodes, and real-time embedded architectures.
+            </p>
+          </div>
+
+          <!-- Card 2 -->
+          <div class="glass-card spotlight-card tilt-card rounded-2xl p-7 hover:shadow-emerald-glow transition-all reveal reveal-delay-2">
+            <div class="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 mb-6">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold text-white mb-3">Simulation & Firmware</h3>
+            <p class="text-sm text-slate-300 leading-relaxed font-light">
+              Proficient in circuit simulation with MATLAB, Multisim, and EasyEDA for schematic-to-PCB workflows. Programming microcontrollers using Python, MicroPython, and scripting for automation.
+            </p>
+          </div>
+
+          <!-- Card 3 -->
+          <div class="glass-card spotlight-card tilt-card rounded-2xl p-7 hover:shadow-emerald-glow transition-all reveal reveal-delay-3">
+            <div class="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 mb-6">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold text-white mb-3">IEEE Leadership</h3>
+            <p class="text-sm text-slate-300 leading-relaxed font-light">
+              Core volunteer across IEEE NSU SB chapters (IAS, WIE, PES). Driving logistics, event operations, PR, and membership development to foster thriving engineering communities.
+            </p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+    <section id="stack" class="py-20 relative">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4 reveal">
+          <div>
+            <p class="text-xs font-mono uppercase tracking-widest text-emerald-400 mb-2">// 02. Technical Arsenal</p>
+            <h2 class="text-3xl sm:text-4xl font-bold text-white tracking-tight">Microcontrollers, EDA & Toolchains</h2>
+          </div>
+          <span class="text-xs font-mono text-slate-400">HARDWARE-FIRST CAPABILITIES</span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          
+          <!-- Column 1: Microcontrollers & SBCs -->
+          <div class="glass-card spotlight-card tilt-card rounded-2xl p-6 space-y-4 reveal reveal-delay-1">
+            <div class="flex items-center gap-3">
+              <div class="p-2 rounded-lg bg-emerald-500/10 text-emerald-400">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"/></svg>
+              </div>
+              <h4 class="font-bold text-white">MCU & Compute</h4>
+            </div>
+            <ul class="space-y-2.5 text-sm text-slate-300 font-mono">
+              <li class="flex items-center justify-between p-2 rounded-lg bg-obsidian-950/40 border border-emerald-500/10">
+                <span>Raspberry Pi Pico</span>
+                <span class="text-xs text-emerald-400">RP2040</span>
+              </li>
+              <li class="flex items-center justify-between p-2 rounded-lg bg-obsidian-950/40 border border-emerald-500/10">
+                <span>ESP32</span>
+                <span class="text-xs text-emerald-400">Wi-Fi / BLE</span>
+              </li>
+              <li class="flex items-center justify-between p-2 rounded-lg bg-obsidian-950/40 border border-emerald-500/10">
+                <span>STM32</span>
+                <span class="text-xs text-emerald-400">ARM Cortex</span>
+              </li>
+              <li class="flex items-center justify-between p-2 rounded-lg bg-obsidian-950/40 border border-emerald-500/10">
+                <span>Raspberry Pi SBC</span>
+                <span class="text-xs text-emerald-400">Linux / ROS</span>
+              </li>
+              <li class="flex items-center justify-between p-2 rounded-lg bg-obsidian-950/40 border border-emerald-500/10">
+                <span>Arduino Ecosystem</span>
+                <span class="text-xs text-emerald-400">AVR Core</span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Column 2: EDA & Simulation -->
+          <div class="glass-card spotlight-card tilt-card rounded-2xl p-6 space-y-4 reveal reveal-delay-2">
+            <div class="flex items-center gap-3">
+              <div class="p-2 rounded-lg bg-emerald-500/10 text-emerald-400">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z"/></svg>
+              </div>
+              <h4 class="font-bold text-white">EDA & Simulation</h4>
+            </div>
+            <ul class="space-y-2.5 text-sm text-slate-300 font-mono">
+              <li class="flex items-center justify-between p-2 rounded-lg bg-obsidian-950/40 border border-emerald-500/10">
+                <span>MATLAB</span>
+                <span class="text-xs text-emerald-400">Signal & Data</span>
+              </li>
+              <li class="flex items-center justify-between p-2 rounded-lg bg-obsidian-950/40 border border-emerald-500/10">
+                <span>NI Multisim</span>
+                <span class="text-xs text-emerald-400">SPICE Sim</span>
+              </li>
+              <li class="flex items-center justify-between p-2 rounded-lg bg-obsidian-950/40 border border-emerald-500/10">
+                <span>EasyEDA</span>
+                <span class="text-xs text-emerald-400">PCB Layout</span>
+              </li>
+              <li class="flex items-center justify-between p-2 rounded-lg bg-obsidian-950/40 border border-emerald-500/10">
+                <span>Breadboard Wire</span>
+                <span class="text-xs text-emerald-400">Rapid Proto</span>
+              </li>
+              <li class="flex items-center justify-between p-2 rounded-lg bg-obsidian-950/40 border border-emerald-500/10">
+                <span>Lab Test Equipment</span>
+                <span class="text-xs text-emerald-400">DMM / Scope</span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Column 3: Languages & Automation -->
+          <div class="glass-card spotlight-card tilt-card rounded-2xl p-6 space-y-4 reveal reveal-delay-3">
+            <div class="flex items-center gap-3">
+              <div class="p-2 rounded-lg bg-emerald-500/10 text-emerald-400">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+              </div>
+              <h4 class="font-bold text-white">Languages & Code</h4>
+            </div>
+            <ul class="space-y-2.5 text-sm text-slate-300 font-mono">
+              <li class="flex items-center justify-between p-2 rounded-lg bg-obsidian-950/40 border border-emerald-500/10">
+                <span>Python</span>
+                <span class="text-xs text-emerald-400">Automation</span>
+              </li>
+              <li class="flex items-center justify-between p-2 rounded-lg bg-obsidian-950/40 border border-emerald-500/10">
+                <span>MicroPython</span>
+                <span class="text-xs text-emerald-400">Embedded</span>
+              </li>
+              <li class="flex items-center justify-between p-2 rounded-lg bg-obsidian-950/40 border border-emerald-500/10">
+                <span>C / C++ (Basics)</span>
+                <span class="text-xs text-emerald-400">Firmware</span>
+              </li>
+              <li class="flex items-center justify-between p-2 rounded-lg bg-obsidian-950/40 border border-emerald-500/10">
+                <span>UART / Bluetooth</span>
+                <span class="text-xs text-emerald-400">Serial Comm</span>
+              </li>
+              <li class="flex items-center justify-between p-2 rounded-lg bg-obsidian-950/40 border border-emerald-500/10">
+                <span>Git & GitHub</span>
+                <span class="text-xs text-emerald-400">Version Ctrl</span>
+              </li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+    </section>
+    <section id="projects" class="py-20 border-t border-emerald-500/10 bg-obsidian-900/30">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4 reveal">
+          <div>
+            <p class="text-xs font-mono uppercase tracking-widest text-emerald-400 mb-2">// 03. Engineering In Action</p>
+            <h2 class="text-3xl sm:text-4xl font-bold text-white tracking-tight">Featured Robotics Project</h2>
+          </div>
+          <span class="text-xs font-mono px-3 py-1 rounded bg-emerald-500/10 border border-emerald-500/30 text-emerald-300">
+            IEEE NSU RAS Workshop Showcase
+          </span>
+        </div>
+
+        <!-- Featured Project Master Card -->
+        <div class="glass-card spotlight-card rounded-3xl p-6 sm:p-10 border border-emerald-500/20 shadow-emerald-glow relative overflow-hidden reveal">
+          
+          <div class="space-y-6">
+            <div class="flex flex-wrap items-center justify-between gap-3 border-b border-emerald-500/10 pb-6">
+              <div>
+                <span class="text-xs font-mono text-emerald-400 uppercase tracking-wider block mb-1">Autonomous & RC Platform</span>
+                <h3 class="text-2xl sm:text-3xl font-extrabold text-white">
+                  Bluetooth RC Car with Autonomous Obstacle Avoidance
+                </h3>
+              </div>
+              <div class="flex flex-wrap gap-2 font-mono text-xs">
+                <span class="px-2.5 py-1 rounded-md bg-emerald-500/10 border border-emerald-500/20 text-emerald-300">Raspberry Pi Pico</span>
+                <span class="px-2.5 py-1 rounded-md bg-emerald-500/10 border border-emerald-500/20 text-emerald-300">MicroPython</span>
+                <span class="px-2.5 py-1 rounded-md bg-emerald-500/10 border border-emerald-500/20 text-emerald-300">L298N H-Bridge</span>
+                <span class="px-2.5 py-1 rounded-md bg-emerald-500/10 border border-emerald-500/20 text-emerald-300">HC-05 & HC-SR04</span>
+              </div>
+            </div>
+
+            <p class="text-slate-300 text-base leading-relaxed">
+              Built as part of a 3-member engineering team during the <strong class="text-emerald-300">IEEE NSU RAS "RC Car with Raspberry Pi Pico"</strong> workshop series. The project integrates dual DC gear-motor pairs, real-time wireless Bluetooth serial telemetry, and autonomous sonar-guided collision avoidance.
+            </p>
+
+            <!-- Technical Specifications Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm font-light text-slate-300">
+              <div class="flex items-start gap-3 p-3.5 rounded-xl bg-obsidian-950/60 border border-emerald-500/10">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 mt-2 shrink-0"></span>
+                <span><strong>4-Wheel Chassis Powertrain:</strong> Two DC gear-motor pairs driven through an L298N dual H-bridge module, controlled via RP2040 PWM logic running MicroPython.</span>
+              </div>
+              <div class="flex items-start gap-3 p-3.5 rounded-xl bg-obsidian-950/60 border border-emerald-500/10">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 mt-2 shrink-0"></span>
+                <span><strong>Wireless Telemetry:</strong> Implemented manual RC control over Bluetooth via HC-05 module receiving UART bytes (<code class="text-emerald-300">F/B/L/R/S</code>) from the Serial Bluetooth Terminal app.</span>
+              </div>
+              <div class="flex items-start gap-3 p-3.5 rounded-xl bg-obsidian-950/60 border border-emerald-500/10">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 mt-2 shrink-0"></span>
+                <span><strong>Dual-Mode State Machine:</strong> Extended firmware into a dual-mode system switchable on the fly over Bluetooth: RC mode for manual driving and Autonomous mode for collision avoidance.</span>
+              </div>
+              <div class="flex items-start gap-3 p-3.5 rounded-xl bg-obsidian-950/60 border border-emerald-500/10">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 mt-2 shrink-0"></span>
+                <span><strong>Sensor Fusion Avoidance:</strong> HC-SR04 ultrasonic echo timing with voltage-divided safe 3.3V logic plus side IR sensors &mdash; stops, maneuvers away, and resumes forward path safely.</span>
+              </div>
+            </div>
+
+            <!-- Interactive 3-Photo Showcase Cards -->
+            <div class="pt-6">
+              <div class="flex items-center justify-between mb-4">
+                <h4 class="text-xs font-mono uppercase tracking-widest text-emerald-400">// Visual Hardware Documentation</h4>
+                <span class="text-xs text-slate-400 font-mono">Click card or load photo</span>
+              </div>
+
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                
+                <!-- Card 1: 4WD Hardware Assembly -->
+                <div class="group relative rounded-2xl bg-obsidian-950/80 border border-emerald-500/20 hover:border-emerald-400/60 transition-all overflow-hidden flex flex-col cursor-pointer" onclick="handleCardClick('img-car', '4WD Robot Car Hardware Assembly', 'Top-down view of the assembled 4WD chassis featuring dual yellow gear motor pairs, breadboarded Raspberry Pi Pico, L298N H-Bridge driver, HC-05 Bluetooth module, and battery pack.')">
+                  <div class="relative w-full h-56 bg-obsidian-900/90 flex items-center justify-center overflow-hidden">
+                    <img id="img-car" src="image_301fca.png" alt="4WD Robot Hardware Assembly" onerror="handleImageError('img-car', 'fallback-svg-1')" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                    
+                    <!-- High-Fidelity SVG Fallback -->
+                    <div id="fallback-svg-1" class="hidden absolute inset-0 flex flex-col items-center justify-center p-6 text-center bg-obsidian-900/95">
+                      <svg class="w-16 h-16 text-emerald-400/60 mb-3" viewBox="0 0 100 100" fill="none" stroke="currentColor">
+                        <rect x="25" y="20" width="50" height="60" rx="6" stroke-width="2.5" fill="#06120b"/>
+                        <rect x="12" y="24" width="10" height="20" rx="3" stroke-width="2" fill="#eab308"/>
+                        <rect x="12" y="56" width="10" height="20" rx="3" stroke-width="2" fill="#eab308"/>
+                        <rect x="78" y="24" width="10" height="20" rx="3" stroke-width="2" fill="#eab308"/>
+                        <rect x="78" y="56" width="10" height="20" rx="3" stroke-width="2" fill="#eab308"/>
+                        <rect x="35" y="32" width="30" height="36" rx="2" stroke-width="1.5" stroke="#10b981" stroke-dasharray="2 2"/>
+                        <circle cx="50" cy="50" r="4" fill="#34d399"/>
+                      </svg>
+                      <span class="text-xs font-mono text-emerald-300 font-semibold">4WD Robot Hardware</span>
+                      <span class="text-[11px] text-slate-400 mt-1">Pico + L298N + Dual 18650</span>
+                    </div>
+
+                    <div class="absolute top-3 left-3 px-2 py-1 rounded bg-obsidian-950/80 border border-emerald-500/30 text-[10px] font-mono text-emerald-300">
+                      Hardware Assembly
+                    </div>
+                  </div>
+
+                  <div class="p-4 flex flex-col justify-between flex-grow border-t border-emerald-500/10">
+                    <div>
+                      <div class="flex items-center justify-between">
+                        <span class="font-bold text-white text-sm">4WD Pico Robot Chassis</span>
+                        <span class="text-xs font-mono text-emerald-400">RP2040 Build</span>
+                      </div>
+                      <p class="text-xs text-slate-400 mt-1 font-mono">Breadboarded motor driver, Bluetooth HC-05, ultrasonic sensor & power rail.</p>
+                    </div>
+
+                    <div class="mt-4 pt-3 border-t border-emerald-500/10 flex items-center justify-between gap-2" onclick="event.stopPropagation()">
+                      <label class="text-[11px] font-mono text-emerald-300 hover:text-emerald-200 cursor-pointer flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-emerald-500/10 border border-emerald-500/20 hover:bg-emerald-500/20 transition-colors">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>
+                        <span>Load Photo</span>
+                        <input id="input-car" type="file" accept="image/*" class="hidden" onchange="loadUserPhoto(event, 'img-car', '4WD Robot Car Hardware Assembly', 'fallback-svg-1')">
+                      </label>
+                      <button onclick="handleCardClick('img-car', '4WD Robot Car Hardware Assembly', 'Top-down view of the assembled 4WD chassis featuring dual yellow gear motor pairs, breadboarded Raspberry Pi Pico, L298N H-Bridge driver, HC-05 Bluetooth module, and battery pack.')" class="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-emerald-500/10">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"/></svg>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Card 2: Circuit Architecture Schematic -->
+                <div class="group relative rounded-2xl bg-obsidian-950/80 border border-emerald-500/20 hover:border-emerald-400/60 transition-all overflow-hidden flex flex-col cursor-pointer" onclick="handleCardClick('img-schematic', 'Fritzing Circuit Wiring Architecture', 'Complete wiring schematic illustrating Raspberry Pi Pico GPIO connections to L298N driver, HC-05 Bluetooth UART transceiver, HC-SR04 ultrasonic logic with resistor divider, and battery bus.')">
+                  <div class="relative w-full h-56 bg-obsidian-900/90 flex items-center justify-center overflow-hidden">
+                    <img id="img-schematic" src="image_301fcf.png" alt="Fritzing Circuit Wiring" onerror="handleImageError('img-schematic', 'fallback-svg-2')" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                    
+                    <!-- High-Fidelity SVG Fallback -->
+                    <div id="fallback-svg-2" class="hidden absolute inset-0 flex flex-col items-center justify-center p-6 text-center bg-obsidian-900/95">
+                      <svg class="w-16 h-16 text-emerald-400/60 mb-3" viewBox="0 0 100 100" fill="none" stroke="currentColor">
+                        <path d="M20 30 H80 V70 H20 Z" stroke-width="2" fill="#06120b"/>
+                        <path d="M25 40 H45 V60 H25 Z" stroke-width="1.5" stroke="#ef4444" fill="#180c0c"/>
+                        <path d="M55 40 H75 V60 H55 Z" stroke-width="1.5" stroke="#10b981" fill="#0c1810"/>
+                        <line x1="35" y1="30" x2="35" y2="15" stroke="#34d399" stroke-width="2"/>
+                        <line x1="65" y1="30" x2="65" y2="15" stroke="#34d399" stroke-width="2"/>
+                        <line x1="50" y1="70" x2="50" y2="85" stroke="#34d399" stroke-width="2"/>
+                      </svg>
+                      <span class="text-xs font-mono text-emerald-300 font-semibold">Circuit Schematic</span>
+                      <span class="text-[11px] text-slate-400 mt-1">Fritzing Bus Wiring</span>
+                    </div>
+
+                    <div class="absolute top-3 left-3 px-2 py-1 rounded bg-obsidian-950/80 border border-emerald-500/30 text-[10px] font-mono text-emerald-300">
+                      Circuit Schematic
+                    </div>
+                  </div>
+
+                  <div class="p-4 flex flex-col justify-between flex-grow border-t border-emerald-500/10">
+                    <div>
+                      <div class="flex items-center justify-between">
+                        <span class="font-bold text-white text-sm">Fritzing Architecture</span>
+                        <span class="text-xs font-mono text-emerald-400">Wiring Design</span>
+                      </div>
+                      <p class="text-xs text-slate-400 mt-1 font-mono">Detailed GPIO connections, voltage dividing for echo, and dual H-Bridge control.</p>
+                    </div>
+
+                    <div class="mt-4 pt-3 border-t border-emerald-500/10 flex items-center justify-between gap-2" onclick="event.stopPropagation()">
+                      <label class="text-[11px] font-mono text-emerald-300 hover:text-emerald-200 cursor-pointer flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-emerald-500/10 border border-emerald-500/20 hover:bg-emerald-500/20 transition-colors">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>
+                        <span>Load Photo</span>
+                        <input id="input-schematic" type="file" accept="image/*" class="hidden" onchange="loadUserPhoto(event, 'img-schematic', 'Fritzing Circuit Wiring Architecture', 'fallback-svg-2')">
+                      </label>
+                      <button onclick="handleCardClick('img-schematic', 'Fritzing Circuit Wiring Architecture', 'Complete wiring schematic illustrating Raspberry Pi Pico GPIO connections to L298N driver, HC-05 Bluetooth UART transceiver, HC-SR04 ultrasonic logic with resistor divider, and battery bus.')" class="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-emerald-500/10">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"/></svg>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Card 3: Team Workshop Prototyping -->
+                <div class="group relative rounded-2xl bg-obsidian-950/80 border border-emerald-500/20 hover:border-emerald-400/60 transition-all overflow-hidden flex flex-col cursor-pointer" onclick="handleCardClick('img-workshop', 'IEEE NSU RAS Workshop Prototyping', 'Mahathir Neloy and teammates during hands-on breadboard assembly, logic probing, and MicroPython firmware flashing at the IEEE NSU RAS workshop.')">
+                  <div class="relative w-full h-56 bg-obsidian-900/90 flex items-center justify-center overflow-hidden">
+                    <img id="img-workshop" src="image_301fe9.png" alt="IEEE NSU RAS Workshop Prototyping" onerror="handleImageError('img-workshop', 'fallback-svg-3')" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                    
+                    <!-- High-Fidelity SVG Fallback -->
+                    <div id="fallback-svg-3" class="hidden absolute inset-0 flex flex-col items-center justify-center p-6 text-center bg-obsidian-900/95">
+                      <svg class="w-16 h-16 text-emerald-400/60 mb-3" viewBox="0 0 100 100" fill="none" stroke="currentColor">
+                        <circle cx="35" cy="35" r="10" stroke-width="2" fill="#06120b"/>
+                        <circle cx="65" cy="35" r="10" stroke-width="2" fill="#06120b"/>
+                        <path d="M20 70 Q35 55 50 70" stroke-width="2"/>
+                        <path d="M50 70 Q65 55 80 70" stroke-width="2"/>
+                        <rect x="30" y="70" width="40" height="15" rx="3" stroke-width="1.5" stroke="#10b981" fill="#0d2417"/>
+                      </svg>
+                      <span class="text-xs font-mono text-emerald-300 font-semibold">Team Prototyping</span>
+                      <span class="text-[11px] text-slate-400 mt-1">IEEE NSU RAS Lab</span>
+                    </div>
+
+                    <div class="absolute top-3 left-3 px-2 py-1 rounded bg-obsidian-950/80 border border-emerald-500/30 text-[10px] font-mono text-emerald-300">
+                      Team Prototyping
+                    </div>
+                  </div>
+
+                  <div class="p-4 flex flex-col justify-between flex-grow border-t border-emerald-500/10">
+                    <div>
+                      <div class="flex items-center justify-between">
+                        <span class="font-bold text-white text-sm">IEEE NSU RAS Workshop</span>
+                        <span class="text-xs font-mono text-emerald-400">Team Lab Session</span>
+                      </div>
+                      <p class="text-xs text-slate-400 mt-1 font-mono">Hardware-in-the-loop troubleshooting, signal probing, and firmware deployment.</p>
+                    </div>
+
+                    <div class="mt-4 pt-3 border-t border-emerald-500/10 flex items-center justify-between gap-2" onclick="event.stopPropagation()">
+                      <label class="text-[11px] font-mono text-emerald-300 hover:text-emerald-200 cursor-pointer flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-emerald-500/10 border border-emerald-500/20 hover:bg-emerald-500/20 transition-colors">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>
+                        <span>Load Photo</span>
+                        <input id="input-workshop" type="file" accept="image/*" class="hidden" onchange="loadUserPhoto(event, 'img-workshop', 'IEEE NSU RAS Workshop Prototyping', 'fallback-svg-3')">
+                      </label>
+                      <button onclick="handleCardClick('img-workshop', 'IEEE NSU RAS Workshop Prototyping', 'Mahathir Neloy and teammates during hands-on breadboard assembly, logic probing, and MicroPython firmware flashing at the IEEE NSU RAS workshop.')" class="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-emerald-500/10">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"/></svg>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+    <section id="experience" class="py-20 border-t border-emerald-500/10 relative">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4 reveal">
+          <div>
+            <p class="text-xs font-mono uppercase tracking-widest text-emerald-400 mb-2">// 04. Organizational Leadership</p>
+            <h2 class="text-3xl sm:text-4xl font-bold text-white tracking-tight">IEEE NSU Student Branch</h2>
+          </div>
+          <span class="text-xs font-mono text-emerald-400">OCT 2025 &mdash; PRESENT</span>
+        </div>
+
+        <div class="space-y-6">
+          
+          <!-- Experience Card 1: IAS -->
+          <div class="glass-card spotlight-card rounded-2xl p-6 sm:p-7 hover:border-emerald-400/50 transition-all reveal reveal-delay-1">
+            <div class="flex flex-col md:flex-row md:items-start justify-between gap-4">
+              <div class="flex items-start gap-4">
+                <div class="w-12 h-12 rounded-xl bg-obsidian-950 border border-emerald-500/30 flex items-center justify-center shrink-0 text-emerald-400 font-mono font-bold text-xs">
+                  IAS
+                </div>
+                <div>
+                  <h3 class="text-lg font-bold text-white">Core Volunteer &mdash; PR and Membership Development Team</h3>
+                  <p class="text-sm font-medium text-emerald-400 mt-0.5">IEEE NSU Industry Applications Society Student Branch Chapter</p>
+                  <p class="text-xs font-mono text-slate-400 mt-1">Aug 2026 &mdash; Present &bull; 3 mos</p>
+                  <p class="text-sm text-slate-300 mt-3 max-w-3xl leading-relaxed">
+                    Spearheading chapter outreach, public relations, and membership drives. Managing attendee communications and coordinating cross-departmental operations to recruit and mentor budding electrical engineering students.
+                  </p>
+                </div>
+              </div>
+              <span class="self-start px-3 py-1 rounded text-xs font-mono bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">
+                Core Leadership
+              </span>
+            </div>
+          </div>
+
+          <!-- Experience Card 2: WIE Affinity Group -->
+          <div class="glass-card spotlight-card rounded-2xl p-6 sm:p-7 hover:border-emerald-400/50 transition-all reveal reveal-delay-2">
+            <div class="flex flex-col md:flex-row md:items-start justify-between gap-4">
+              <div class="flex items-start gap-4">
+                <div class="w-12 h-12 rounded-xl bg-obsidian-950 border border-emerald-500/30 flex items-center justify-center shrink-0 text-emerald-400 font-mono font-bold text-xs">
+                  WIE
+                </div>
+                <div>
+                  <h3 class="text-lg font-bold text-white">IEEE NSU Student Branch, WIE Affinity Group</h3>
+                  <p class="text-sm font-medium text-emerald-400 mt-0.5">Logistics and Operations Pathway &bull; 7 mos</p>
+                  
+                  <div class="mt-4 space-y-4 border-l-2 border-emerald-500/20 pl-4">
+                    <div>
+                      <div class="text-sm font-semibold text-white">Core Volunteer &mdash; Logistics and Operations</div>
+                      <div class="text-xs font-mono text-slate-400">Jul 2026 &mdash; Present &bull; 4 mos</div>
+                      <div class="text-xs text-slate-300 mt-1">Leading floor logistics, resource allocation, venue setup, and vendor coordination for major chapter events.</div>
+                    </div>
+                    <div>
+                      <div class="text-sm font-semibold text-slate-300">Team Volunteer &mdash; Logistics and Operations</div>
+                      <div class="text-xs font-mono text-slate-400">Apr 2026 &mdash; Jul 2026 &bull; 4 mos</div>
+                      <div class="text-xs text-slate-300 mt-1">Managed equipment, schedule adherence, and guest reception during chapter workshops.</div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+              <span class="self-start px-3 py-1 rounded text-xs font-mono bg-obsidian-850 text-slate-300 border border-emerald-500/20">
+                Logistics & Ops
+              </span>
+            </div>
+          </div>
+
+          <!-- Experience Card 3: PES Chapter -->
+          <div class="glass-card spotlight-card rounded-2xl p-6 sm:p-7 hover:border-emerald-400/50 transition-all reveal reveal-delay-2">
+            <div class="flex flex-col md:flex-row md:items-start justify-between gap-4">
+              <div class="flex items-start gap-4">
+                <div class="w-12 h-12 rounded-xl bg-obsidian-950 border border-emerald-500/30 flex items-center justify-center shrink-0 text-emerald-400 font-mono font-bold text-xs">
+                  PES
+                </div>
+                <div>
+                  <h3 class="text-lg font-bold text-white">Core Volunteer &mdash; Logistics and Operations</h3>
+                  <p class="text-sm font-medium text-emerald-400 mt-0.5">IEEE NSU PES Student Branch Chapter (Power & Energy Society)</p>
+                  <p class="text-xs font-mono text-slate-400 mt-1">Jul 2026 &mdash; Present &bull; 4 mos</p>
+                  <p class="text-sm text-slate-300 mt-3 max-w-3xl leading-relaxed">
+                    Executing operational management for power engineering technical symposiums, lab tours, and speaker sessions. Handling critical timeline tracking and audio/visual staging.
+                  </p>
+                </div>
+              </div>
+              <span class="self-start px-3 py-1 rounded text-xs font-mono bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">
+                Core Volunteer
+              </span>
+            </div>
+          </div>
+
+          <!-- Experience Card 4: Student Branch Main Body -->
+          <div class="glass-card spotlight-card rounded-2xl p-6 sm:p-7 hover:border-emerald-400/50 transition-all reveal reveal-delay-3">
+            <div class="flex flex-col md:flex-row md:items-start justify-between gap-4">
+              <div class="flex items-start gap-4">
+                <div class="w-12 h-12 rounded-xl bg-obsidian-950 border border-emerald-500/30 flex items-center justify-center shrink-0 text-emerald-400 font-mono font-bold text-xs">
+                  SB
+                </div>
+                <div>
+                  <h3 class="text-lg font-bold text-white">IEEE NSU Student Branch</h3>
+                  <p class="text-sm font-medium text-emerald-400 mt-0.5">Foundational Community Member & Volunteer &bull; 1 yr 1 mo</p>
+                  
+                  <div class="mt-4 space-y-4 border-l-2 border-emerald-500/20 pl-4">
+                    <div>
+                      <div class="text-sm font-semibold text-white">Team Volunteer &mdash; Logistics and Operations</div>
+                      <div class="text-xs font-mono text-slate-400">Jun 2026 &mdash; Present &bull; 5 mos</div>
+                      <div class="text-xs text-slate-300 mt-1">Active contributor in major flagship branch initiatives, hackathons, logistics management, and robotics exhibitions.</div>
+                    </div>
+                    <div>
+                      <div class="text-sm font-semibold text-slate-300">Member</div>
+                      <div class="text-xs font-mono text-slate-400">Oct 2025 &mdash; Jun 2026 &bull; 9 mos</div>
+                      <div class="text-xs text-slate-300 mt-1">Participated in technical workshops, industrial discussions, and hands-on skill-building bootcamps.</div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+              <span class="self-start px-3 py-1 rounded text-xs font-mono bg-obsidian-850 text-slate-300 border border-emerald-500/20">
+                1 yr 1 mo Tenure
+              </span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+    <section id="contact" class="py-24 border-t border-emerald-500/10 relative">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 reveal">
+          
+          <div class="lg:col-span-5 space-y-6">
+            <p class="text-xs font-mono uppercase tracking-widest text-emerald-400">// 05. Connectivity</p>
+            <h2 class="text-3xl sm:text-4xl font-bold text-white tracking-tight">Let's build something intelligent together.</h2>
+            <p class="text-slate-300 text-sm leading-relaxed font-light">
+              I am open to internship opportunities, research collaborations, and engineering discussions in robotics, microcontrollers, and circuit simulation.
+            </p>
+
+            <div class="space-y-4 pt-4">
+              <!-- Email Card -->
+              <div class="p-4 rounded-xl bg-obsidian-900 border border-emerald-500/20 flex items-center justify-between">
+                <div>
+                  <div class="text-xs font-mono text-slate-400">Direct Email</div>
+                  <div class="text-sm font-mono text-emerald-300 font-semibold mt-0.5">neloy111@proton.me</div>
+                </div>
+                <button onclick="copyToClipboard('neloy111@proton.me', 'Email copied!')" class="px-3 py-1.5 rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/30 text-emerald-300 text-xs font-mono transition-colors">
+                  Copy
+                </button>
+              </div>
+
+              <!-- Social Links -->
+              <div class="grid grid-cols-2 gap-4">
+                <a href="https://www.linkedin.com/in/mahathir-neloy" target="_blank" rel="noopener noreferrer" class="p-4 rounded-xl bg-obsidian-900 border border-emerald-500/20 hover:border-emerald-400/50 transition-all flex items-center justify-between group">
+                  <div>
+                    <div class="text-xs font-mono text-slate-400">Professional</div>
+                    <div class="text-sm font-semibold text-white group-hover:text-emerald-300 transition-colors">LinkedIn</div>
+                  </div>
+                  <svg class="w-4 h-4 text-emerald-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                </a>
+
+                <a href="https://www.facebook.com/mahathirjneloy" target="_blank" rel="noopener noreferrer" class="p-4 rounded-xl bg-obsidian-900 border border-emerald-500/20 hover:border-emerald-400/50 transition-all flex items-center justify-between group">
+                  <div>
+                    <div class="text-xs font-mono text-slate-400">Social</div>
+                    <div class="text-sm font-semibold text-white group-hover:text-emerald-300 transition-colors">Facebook</div>
+                  </div>
+                  <svg class="w-4 h-4 text-emerald-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick Dispatch Form -->
+          <div class="lg:col-span-7">
+            <div class="glass-card rounded-2xl p-7 border border-emerald-500/20">
+              <form id="contact-form" onsubmit="handleFormSubmit(event)" class="space-y-4">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label class="block text-xs font-mono text-slate-300 mb-2">YOUR NAME</label>
+                    <input type="text" required placeholder="Dr. Alex Rivera" class="w-full px-4 py-3 rounded-xl bg-obsidian-950 border border-emerald-500/20 focus:border-emerald-400 focus:outline-none text-white text-sm">
+                  </div>
+                  <div>
+                    <label class="block text-xs font-mono text-slate-300 mb-2">EMAIL ADDRESS</label>
+                    <input type="email" required placeholder="alex@robotics-lab.org" class="w-full px-4 py-3 rounded-xl bg-obsidian-950 border border-emerald-500/20 focus:border-emerald-400 focus:outline-none text-white text-sm">
+                  </div>
+                </div>
+
+                <div>
+                  <label class="block text-xs font-mono text-slate-300 mb-2">SUBJECT / TOPIC</label>
+                  <input type="text" required placeholder="Robotics Internship / Hardware Collab" class="w-full px-4 py-3 rounded-xl bg-obsidian-950 border border-emerald-500/20 focus:border-emerald-400 focus:outline-none text-white text-sm">
+                </div>
+
+                <div>
+                  <label class="block text-xs font-mono text-slate-300 mb-2">MESSAGE</label>
+                  <textarea rows="4" required placeholder="Hi Mahathir, I reviewed your Raspberry Pi Pico dual-mode robot and would love to connect..." class="w-full px-4 py-3 rounded-xl bg-obsidian-950 border border-emerald-500/20 focus:border-emerald-400 focus:outline-none text-white text-sm resize-none"></textarea>
+                </div>
+
+                <button type="submit" class="w-full py-4 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-obsidian-950 font-bold text-sm tracking-wide transition-all shadow-emerald-glow btn-interactive">
+                  Dispatch Message
+                </button>
+              </form>
+
+              <div id="form-feedback" class="hidden mt-4 p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 text-xs font-mono text-center">
+                &gt; Message queued. Direct response will be routed via neloy111@proton.me.
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="py-10 border-t border-emerald-500/10 bg-obsidian-950 text-center text-xs font-mono text-slate-400">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-2">
+      <p>&copy; 2026 Mahathir Neloy. Electrical & Electronic Engineering &bull; North South University.</p>
+      <p class="text-emerald-400/80">Built with micro-precision &bull; Deep Obsidian & Emerald Theme</p>
+    </div>
+  </footer>
+  <script>
+    // Handle image load error: reveal styled embedded vector graphic
+    function handleImageError(imgId, fallbackId) {
+      const img = document.getElementById(imgId);
+      const fallback = document.getElementById(fallbackId);
+      if (img) img.classList.add('hidden');
+      if (fallback) fallback.classList.remove('hidden');
+    }
+
+    // Load user selected file directly into preview
+    function loadUserPhoto(event, imgId, title, fallbackId) {
+      const file = event.target.files && event.target.files[0];
+      if (file) {
+        const objectUrl = URL.createObjectURL(file);
+        const img = document.getElementById(imgId);
+        const fallback = document.getElementById(fallbackId);
+        
+        if (img) {
+          img.src = objectUrl;
+          img.classList.remove('hidden');
+        }
+        if (fallback) {
+          fallback.classList.add('hidden');
+        }
+        showToast(`Loaded ${file.name}!`);
+      }
+    }
+
+    // Handle card click to open image or open file dialog
+    function handleCardClick(imgId, title, caption) {
+      const img = document.getElementById(imgId);
+      if (img && !img.classList.contains('hidden') && img.src && !img.src.endsWith('.html')) {
+        openLightbox(img.src, title, caption);
+      } else {
+        const inputId = imgId.replace('img-', 'input-');
+        const input = document.getElementById(inputId);
+        if (input) input.click();
+      }
+    }
+
+    // Copy text to clipboard
+    function copyToClipboard(text, msg) {
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text).then(() => {
+          showToast(msg);
+        }).catch(() => {
+          fallbackCopyText(text, msg);
+        });
+      } else {
+        fallbackCopyText(text, msg);
+      }
+    }
+
+    function fallbackCopyText(text, msg) {
+      const textArea = document.createElement("textarea");
+      textArea.value = text;
+      textArea.style.position = "fixed";
+      textArea.style.top = "0";
+      textArea.style.left = "0";
+      textArea.style.opacity = "0";
+      document.body.appendChild(textArea);
+      textArea.focus();
+      textArea.select();
+      try {
+        document.execCommand('copy');
+        showToast(msg);
+      } catch (err) {
+        showToast("Address: neloy111@proton.me");
+      }
+      document.body.removeChild(textArea);
+    }
+
+    // Toast notification
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      const toastMsg = document.getElementById('toast-message');
+      if (!toast || !toastMsg) return;
+      toastMsg.textContent = message;
+      toast.classList.remove('translate-y-20', 'opacity-0');
+      toast.classList.add('translate-y-0', 'opacity-100');
+      setTimeout(() => {
+        toast.classList.remove('translate-y-0', 'opacity-100');
+        toast.classList.add('translate-y-20', 'opacity-0');
+      }, 3000);
+    }
+
+    // Lightbox modal functions
+    function openLightbox(src, title, caption) {
+      const modal = document.getElementById('image-lightbox');
+      const img = document.getElementById('lightbox-img');
+      const titleEl = document.getElementById('lightbox-title');
+      const captionEl = document.getElementById('lightbox-caption');
+      
+      if (!modal) return;
+      if (img) {
+        img.src = src;
+        img.alt = title;
+      }
+      if (titleEl) {
+        titleEl.innerHTML = `<span class="w-2 h-2 rounded-full bg-emerald-400"></span><span>${title}</span>`;
+      }
+      if (captionEl) {
+        captionEl.textContent = caption;
+      }
+      modal.classList.remove('opacity-0', 'pointer-events-none');
+      document.body.classList.add('overflow-hidden');
+    }
+
+    function closeLightbox() {
+      const modal = document.getElementById('image-lightbox');
+      if (modal) {
+        modal.classList.add('opacity-0', 'pointer-events-none');
+      }
+      document.body.classList.remove('overflow-hidden');
+    }
+
+    // Keydown listener for modal
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeLightbox();
+    });
+
+    const lightboxModal = document.getElementById('image-lightbox');
+    if (lightboxModal) {
+      lightboxModal.addEventListener('click', (e) => {
+        if (e.target.id === 'image-lightbox') closeLightbox();
+      });
+    }
+
+    // Mobile menu toggle
+    const mobileBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    if (mobileBtn && mobileMenu) {
+      mobileBtn.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+      });
+    }
+    document.querySelectorAll('.mobile-link').forEach(link => {
+      link.addEventListener('click', () => {
+        if (mobileMenu) mobileMenu.classList.add('hidden');
+      });
+    });
+
+    // Form feedback
+    function handleFormSubmit(e) {
+      e.preventDefault();
+      const feedback = document.getElementById('form-feedback');
+      const form = document.getElementById('contact-form');
+      if (feedback) feedback.classList.remove('hidden');
+      if (form) form.reset();
+      showToast('Message dispatched! Thank you.');
+      setTimeout(() => {
+        if (feedback) feedback.classList.add('hidden');
+      }, 5000);
+    }
+
+    // Scroll progress bar
+    window.addEventListener('scroll', () => {
+      const winScroll = document.documentElement.scrollTop || document.body.scrollTop;
+      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrolled = height > 0 ? (winScroll / height) * 100 : 0;
+      const bar = document.getElementById('scroll-progress');
+      if (bar) bar.style.width = scrolled + '%';
+    }, { passive: true });
+
+    // Scroll reveal observer
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+    // Dynamic typewriter headline
+    const phrases = [
+      "building robots.",
+      "compiling MicroPython.",
+      "designing circuits.",
+      "tuning PID control.",
+      "building embedded nodes."
+    ];
+    let phraseIndex = 0;
+    let charIndex = phrases[0].length;
+    let isDeleting = false;
+
+    function tickTypewriter() {
+      const currentPhrase = phrases[phraseIndex];
+      const targetElement = document.getElementById('typewriter-text');
+      if (!targetElement) return;
+
+      if (isDeleting) {
+        targetElement.textContent = currentPhrase.substring(0, charIndex - 1);
+        charIndex--;
+      } else {
+        targetElement.textContent = currentPhrase.substring(0, charIndex + 1);
+        charIndex++;
+      }
+
+      let timeout = isDeleting ? 45 : 95;
+
+      if (!isDeleting && charIndex === currentPhrase.length) {
+        timeout = 2200;
+        isDeleting = true;
+      } else if (isDeleting && charIndex === 0) {
+        isDeleting = false;
+        phraseIndex = (phraseIndex + 1) % phrases.length;
+        timeout = 400;
+      }
+
+      setTimeout(tickTypewriter, timeout);
+    }
+    setTimeout(tickTypewriter, 1200);
+
+    // Mouse spotlight on cards
+    document.querySelectorAll('.spotlight-card').forEach(card => {
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        card.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`);
+        card.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
+      });
+    });
+
+    // 3D Tilt cards
+    document.querySelectorAll('.tilt-card').forEach(card => {
+      card.addEventListener('mousemove', (e) => {
+        if (window.innerWidth < 768) return;
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const rotateX = ((y - rect.height / 2) / (rect.height / 2)) * -5;
+        const rotateY = ((x - rect.width / 2) / (rect.width / 2)) * 5;
+        card.style.transform = `perspective(1000px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) translateZ(4px)`;
+      });
+
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0px)';
+      });
+    });
+
+    // Circuit particle canvas
+    (function initCircuitCanvas() {
+      const canvas = document.getElementById('circuit-canvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      let width, height;
+      let particles = [];
+      const particleCount = 40;
+      let mousePos = { x: -1000, y: -1000 };
+
+      function resize() {
+        const heroSection = document.getElementById('hero');
+        width = canvas.width = heroSection ? heroSection.clientWidth : window.innerWidth;
+        height = canvas.height = heroSection ? heroSection.clientHeight : window.innerHeight;
+      }
+      window.addEventListener('resize', resize, { passive: true });
+      resize();
+
+      class Particle {
+        constructor() {
+          this.x = Math.random() * width;
+          this.y = Math.random() * height;
+          this.vx = (Math.random() - 0.5) * 0.6;
+          this.vy = (Math.random() - 0.5) * 0.6;
+          this.radius = Math.random() * 2 + 1;
+          this.pulse = Math.random() * Math.PI;
+        }
+        update() {
+          this.x += this.vx;
+          this.y += this.vy;
+          this.pulse += 0.03;
+
+          if (this.x < 0) this.x = width;
+          if (this.x > width) this.x = 0;
+          if (this.y < 0) this.y = height;
+          if (this.y > height) this.y = 0;
+
+          const dx = this.x - mousePos.x;
+          const dy = this.y - mousePos.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < 120) {
+            const force = (120 - dist) / 120;
+            this.x += (dx / dist) * force * 1.5;
+            this.y += (dy / dist) * force * 1.5;
+          }
+        }
+        draw() {
+          const alpha = 0.3 + Math.sin(this.pulse) * 0.2;
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(52, 211, 153, ${alpha})`;
+          ctx.fill();
+        }
+      }
+
+      for (let i = 0; i < particleCount; i++) {
+        particles.push(new Particle());
+      }
+
+      canvas.addEventListener('mousemove', (e) => {
+        const rect = canvas.getBoundingClientRect();
+        mousePos.x = e.clientX - rect.left;
+        mousePos.y = e.clientY - rect.top;
+      });
+
+      canvas.addEventListener('mouseleave', () => {
+        mousePos.x = -1000;
+        mousePos.y = -1000;
+      });
+
+      function animate() {
+        ctx.clearRect(0, 0, width, height);
+
+        for (let i = 0; i < particles.length; i++) {
+          for (let j = i + 1; j < particles.length; j++) {
+            const dx = particles[i].x - particles[j].x;
+            const dy = particles[i].y - particles[j].y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist < 100) {
+              const alpha = (1 - dist / 100) * 0.2;
+              ctx.beginPath();
+              ctx.moveTo(particles[i].x, particles[i].y);
+              ctx.lineTo(particles[j].x, particles[j].y);
+              ctx.strokeStyle = `rgba(16, 185, 129, ${alpha})`;
+              ctx.lineWidth = 1;
+              ctx.stroke();
+            }
+          }
+        }
+
+        particles.forEach(p => {
+          p.update();
+          p.draw();
+        });
+
+        requestAnimationFrame(animate);
+      }
+      animate();
+    })();
+
+    // Button ripple animation
+    document.querySelectorAll('.btn-interactive').forEach(btn => {
+      btn.addEventListener('click', function (e) {
+        const rect = this.getBoundingClientRect();
+        const circle = document.createElement('span');
+        const diameter = Math.max(rect.width, rect.height);
+        const radius = diameter / 2;
+
+        circle.style.width = circle.style.height = `${diameter}px`;
+        circle.style.left = `${e.clientX - rect.left - radius}px`;
+        circle.style.top = `${e.clientY - rect.top - radius}px`;
+        circle.classList.add('ripple-effect');
+
+        const ripple = this.querySelector('.ripple-effect');
+        if (ripple) ripple.remove();
+
+        this.appendChild(circle);
+      });
+    });
+  </script>
+</body>
+</html>
