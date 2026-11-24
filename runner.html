@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="robots" content="noindex, nofollow">
+<title>MOJA - Spark Runner</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='9' fill='%23000'/><rect x='1' y='1' width='30' height='30' rx='8' fill='none' stroke='%2310b981' stroke-width='2'/><text x='16' y='21' font-family='system-ui,sans-serif' font-weight='700' font-size='12' fill='%23b7f5d6' text-anchor='middle'>MJ</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--b1:#b7f5d6;--b2:#6ee7b7;--b3:#34d399;--b4:#10b981;--line:rgba(255,255,255,.1);--mut:#8d95a8;--txt:#c5cad6;--mono:'JetBrains Mono',monospace}
+*{box-sizing:border-box;margin:0}
+body{background:#000;color:var(--txt);font-family:'Outfit',system-ui,sans-serif;min-height:100vh;line-height:1.5;display:flex;justify-content:center;padding:1.25rem;background-image:radial-gradient(60rem 30rem at 50% -8%,rgba(5,66,44,.4),transparent 70%),radial-gradient(34rem 34rem at 12% 90%,rgba(16,185,129,.14),transparent 65%)}
+.wrap{width:100%;max-width:38rem;padding-top:1.5rem}
+.back{display:inline-block;font:.78rem var(--mono);color:var(--b3);text-decoration:none;margin-bottom:1.25rem}.back:hover{color:var(--b1)}
+.card{padding:1.75rem;border-radius:1.75rem;background:linear-gradient(160deg,rgba(255,255,255,.055),rgba(255,255,255,.012));border:1px solid rgba(255,255,255,.1);box-shadow:inset 0 1px 0 rgba(255,255,255,.1),0 0 60px -30px rgba(52,211,153,.5)}
+.label{font:.72rem var(--mono);text-transform:uppercase;letter-spacing:.14em;color:var(--b3);margin-bottom:.6rem}
+h1{font-size:clamp(1.9rem,6vw,2.6rem);font-weight:500;color:#fff;letter-spacing:-.025em;line-height:1.15;margin-bottom:.75rem}
+p.s{font-weight:300;margin-bottom:1rem}
+.top{display:flex;justify-content:space-between;font:.75rem var(--mono);color:var(--mut)}.top b{color:var(--b2);font-weight:500}
+button{font:inherit;cursor:pointer}
+.go{display:inline-block;padding:.9rem 1.75rem;border-radius:999px;border:0;background:#fff;color:#111;font-weight:600;transition:.2s}.go:hover{background:var(--b1);box-shadow:0 0 34px -6px rgba(52,211,153,.6)}
+canvas{display:block;width:100%;height:auto;border-radius:1.1rem;border:1px solid var(--line);margin:.9rem 0;touch-action:none}
+.pad{display:grid;grid-template-columns:repeat(3,4rem);gap:.5rem;justify-content:center;margin-bottom:1rem}
+.pb{height:3rem;border-radius:1rem;background:rgba(255,255,255,.05);border:1px solid var(--line);color:#fff;font-size:1.1rem;touch-action:manipulation}.pb:active{background:rgba(52,211,153,.25)}
+.gc{display:block;text-decoration:none;padding:1.1rem 1.25rem;margin-bottom:.9rem;border-radius:1.25rem;background:rgba(255,255,255,.03);border:1px solid var(--line);transition:.2s}
+.gc:hover{border-color:rgba(52,211,153,.6);background:rgba(52,211,153,.07)}.gc b{display:block;color:#fff;font-weight:500;font-size:1.15rem}.gc span{font-size:.85rem;font-weight:300}.gc em{float:right;font:normal .72rem var(--mono);color:var(--b3)}
+</style></head><body>
+<div class="wrap"><a class="back" href="moja.html">&larr; All games</a>
+<div class="card"><p class="label">// MOJA</p><h1>Spark Runner</h1>
+<p class="s">Run along the PCB trace and jump over resistors, capacitors and inductors. Space / &uarr; / W or tap the screen to jump. It gets faster the longer you survive.</p>
+<div class="top"><span>Score <b id="sc">0</b></span><span>Best <b id="bs">0</b></span></div>
+<canvas id="c" width="600" height="200"></canvas>
+<button class="go" id="go" onclick="jump()">Start</button></div></div>
+<script>
+const $=s=>document.querySelector(s),R=a=>a[Math.random()*a.length|0];
+const cv=$('#c'),x=cv.getContext('2d'),W=600,G=160;
+let st='idle',p,ob,sp,dist,gap,last,endT=0,raf,shown=-1;
+const best=()=>{try{return+localStorage.getItem('moja-runner')||0}catch(e){return 0}};
+const save=v=>{try{localStorage.setItem('moja-runner',v)}catch(e){}};
+$('#bs').textContent=best();
+const TY=[{w:18,h:42},{w:26,h:36},{w:30,h:30}]; // resistor, capacitor, inductor
+function begin(){p={y:G,vy:0};ob=[];sp=5;dist=0;gap=200;st='run';last=performance.now();shown=-1;$('#go').textContent='Jump';cancelAnimationFrame(raf);raf=requestAnimationFrame(loop)}
+function jump(){
+  if(st!=='run'){if(st==='over'&&performance.now()-endT<500)return;begin();return}
+  if(p.y>=G)p.vy=-11.5;
+}
+function die(){
+  st='over';endT=performance.now();const s=dist/10|0;
+  if(s>best()){save(s);$('#bs').textContent=s}
+  $('#go').textContent='Restart';draw();
+}
+function loop(ts){
+  if(st!=='run')return;
+  const dt=Math.min((ts-last)/16.667,3);last=ts;
+  sp=Math.min(12,5+dist/2500);dist+=sp*dt;
+  p.vy+=.6*dt;p.y+=p.vy*dt;if(p.y>G){p.y=G;p.vy=0}
+  gap-=sp*dt;
+  if(gap<=0){const k=R([0,1,2]);ob.push({k,x:W+10,w:TY[k].w,h:TY[k].h});gap=sp*(45+Math.random()*30)}
+  for(const o of ob)o.x-=sp*dt;
+  ob=ob.filter(o=>o.x+o.w>0);
+  for(const o of ob)if(o.x<69&&o.x+o.w>51&&p.y>G-o.h+3)return die();
+  const s=dist/10|0;if(s!==shown){shown=s;$('#sc').textContent=s}
+  draw();raf=requestAnimationFrame(loop);
+}
+function obst(o){
+  const c=o.x+o.w/2,t=G-o.h;
+  x.lineWidth=2;x.strokeStyle='#bfc5cb';x.beginPath();x.moveTo(c,t);x.lineTo(c,G);x.stroke();
+  if(o.k===0){x.fillStyle='#d8b98a';x.fillRect(c-8,t+8,16,o.h-16);[['#6b3a1b',12],['#111',19],['#c4262b',26]].forEach(([f,y])=>{x.fillStyle=f;x.fillRect(c-8,t+y-4,16,3)})}
+  else if(o.k===1){x.fillStyle='#8fe3ff';x.fillRect(o.x,t+o.h/2-7,o.w,4);x.fillRect(o.x,t+o.h/2+3,o.w,4)}
+  else{x.strokeStyle='#d98a3a';x.lineWidth=3;for(let i=0;i<3;i++){x.beginPath();x.arc(c,G-6-i*9,8,0,6.2832);x.stroke()}}
+}
+function draw(){
+  x.fillStyle='#020504';x.fillRect(0,0,W,200);
+  x.lineWidth=2;x.strokeStyle='#10b981';x.beginPath();x.moveTo(0,G+1);x.lineTo(W,G+1);x.stroke();
+  x.save();x.setLineDash([10,16]);x.lineDashOffset=dist%26;x.strokeStyle='rgba(52,211,153,.35)';x.beginPath();x.moveTo(0,G+12);x.lineTo(W,G+12);x.stroke();x.restore();
+  if(ob)ob.forEach(obst);
+  if(p){x.shadowColor='#34d399';x.shadowBlur=16;x.fillStyle='#b7f5d6';x.beginPath();x.arc(60,p.y-12,10,0,6.2832);x.fill();x.shadowBlur=0}
+  x.textAlign='center';x.textBaseline='middle';
+  if(st!=='run'){x.fillStyle='rgba(0,0,0,.6)';x.fillRect(0,0,W,200);x.fillStyle='#b7f5d6';x.font='500 24px Outfit,sans-serif';
+    x.fillText(st==='over'?'Short circuit! Score: '+(dist/10|0):'Spark Runner',W/2,80);x.fillStyle='#8d95a8';x.font='14px monospace';x.fillText('Press Space or tap to '+(st==='over'?'retry':'start'),W/2,115)}
+}
+document.addEventListener('keydown',e=>{if(e.key===' '||e.key==='ArrowUp'||e.key==='w'){e.preventDefault();jump()}});
+cv.addEventListener('pointerdown',jump);
+draw();
+</script></body></html>
