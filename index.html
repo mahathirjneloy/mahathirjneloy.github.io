@@ -620,8 +620,48 @@ document.querySelectorAll('.btn').forEach(b => b.addEventListener('click', funct
     [10,10,x=>{ci(x,5,5,4.4,'#1f9f80','#8ff0cf');x.fillStyle='rgba(217,255,240,.9)';x.fillRect(1.4,2.4,2,5.2)}],
     [13,5,x=>{ln(x,[[0,2.5],[13,2.5]],'#cfd6d3');fr(x,3,.5,7,4,1.5,'#26332f','#6dffb8');x.fillStyle='#e6fff4';x.fillRect(8,.5,1.6,4)}],
     [8,5,x=>{fr(x,0,0,8,5,1,'#26332f','#9be8c4');x.fillStyle='#d0d0d0';x.fillRect(0,0,1.8,5);x.fillRect(6.2,0,1.8,5)}],
-    [9,9,x=>{x.fillStyle='#14231e';x.beginPath();x.arc(4.5,4.5,4,-1.57,1.57);x.lineTo(1.2,8.5);x.lineTo(1.2,.5);x.closePath();x.fill();x.strokeStyle='#6dffb8';x.lineWidth=.8;x.stroke()}]];
-  const WT=[0,0,0,1,1,1,2,2,3,4,5,5,5,5,6];
+    [9,9,x=>{x.fillStyle='#14231e';x.beginPath();x.arc(4.5,4.5,4,-1.57,1.57);x.lineTo(1.2,8.5);x.lineTo(1.2,.5);x.closePath();x.fill();x.strokeStyle='#6dffb8';x.lineWidth=.8;x.stroke()}],
+    // 7 inductor coil
+    [12,12,x=>{x.strokeStyle='#d98a3a';x.lineWidth=2.8;x.beginPath();x.arc(6,6,3.7,0,TAU);x.stroke();x.strokeStyle='#4a2a10';x.setLineDash([.7,1.5]);x.beginPath();x.arc(6,6,3.7,0,TAU);x.stroke();x.setLineDash([]);ci(x,6,6,1.4,'#14100c')}],
+    // 8 ceramic disc capacitor
+    [10,12,x=>{ln(x,[[3.4,7.5],[3.4,12]],'#cfd6d3',1.1);ln(x,[[6.6,7.5],[6.6,12]],'#cfd6d3',1.1);ci(x,5,4.6,4.4,'#e0a93b','#8a6a1f');ci(x,3.8,3.4,1.1,'rgba(255,255,255,.55)')}],
+    // 9 crystal oscillator
+    [14,6,x=>{ln(x,[[0,3],[14,3]],'#cfd6d3',1);fr(x,2,.4,10,5.2,2.6,'#cfd3d8','#7b8188');ln(x,[[4,2],[10,2]],'rgba(255,255,255,.8)',.9)}],
+    // 10 SOT-23 transistor
+    [10,10,x=>{x.fillStyle='#d9b44a';x.fillRect(0,2.2,2,1.4);x.fillRect(0,6.4,2,1.4);x.fillRect(8,4.3,2,1.4);fr(x,1.8,1.5,6.4,7,1,'#16181b','#6dffb8');ci(x,3.4,3,.7,'#6d737a')}],
+    // 11 trimmer potentiometer
+    [11,11,x=>{fr(x,0,0,11,11,1.8,'#1f5fbf','#8fb8ff');ci(x,5.5,5.5,3.4,'#d0d4d9','#777');ln(x,[[5.5,5.5],[8,3]],'#222',1.2)}],
+    // 12-15 LEDs (red, green, yellow, blue)
+    [10,10,x=>{ci(x,5,5,4.5,'#ff4d4d','rgba(255,255,255,.55)');ci(x,3.8,3.8,1.3,'rgba(255,255,255,.8)')}],
+    [10,10,x=>{ci(x,5,5,4.5,'#3dff8f','rgba(255,255,255,.55)');ci(x,3.8,3.8,1.3,'rgba(255,255,255,.8)')}],
+    [10,10,x=>{ci(x,5,5,4.5,'#ffd23d','rgba(255,255,255,.55)');ci(x,3.8,3.8,1.3,'rgba(255,255,255,.8)')}],
+    [10,10,x=>{ci(x,5,5,4.5,'#4da3ff','rgba(255,255,255,.55)');ci(x,3.8,3.8,1.3,'rgba(255,255,255,.8)')}],
+    // 16 electrolytic capacitor (top view)
+    [11,11,x=>{ci(x,5.5,5.5,5,'#1b2a73','#3f56c9');ci(x,5.5,5.5,2.4,'#2a3da0');fr(x,.8,2,2.2,7,1,'#d3dbff')}],
+    // 17 op-amp symbol
+    [12,12,x=>{x.strokeStyle='#6dffb8';x.lineWidth=1.8;x.lineJoin='round';x.beginPath();x.moveTo(2,1.5);x.lineTo(10.5,6);x.lineTo(2,10.5);x.closePath();x.stroke();ln(x,[[3.2,4.3],[5.2,4.3]],'#e6fff4',1);ln(x,[[3.2,7.7],[5.2,7.7]],'#e6fff4',1)}],
+    // 18 resistor zig-zag symbol
+    [13,7,x=>ln(x,[[0,3.5],[2,3.5],[3.2,1],[5.2,6],[7.2,1],[9.2,6],[10.4,3.5],[13,3.5]],'#ffd23d',1.5)],
+    // 19 capacitor symbol
+    [10,10,x=>{ln(x,[[0,5],[4,5]],'#cfd6d3',1.2);ln(x,[[6,5],[10,5]],'#cfd6d3',1.2);ln(x,[[4,1],[4,9]],'#8fe3ff',2);ln(x,[[6,1],[6,9]],'#8fe3ff',2)}],
+    // 20 ground symbol
+    [10,10,x=>{ln(x,[[5,0],[5,3.6]],'#9be8c4',1.3);ln(x,[[.8,4],[9.2,4]],'#9be8c4',1.5);ln(x,[[2.5,6.4],[7.5,6.4]],'#9be8c4',1.5);ln(x,[[4,8.8],[6,8.8]],'#9be8c4',1.5)}],
+    // 21 battery cell
+    [13,7,x=>{fr(x,0,.5,11,6,1.2,'#1c9c4e','#6dffb8');fr(x,11,2.5,2,2,.6,'#e6fff4');x.fillStyle='#0b5a2b';x.fillRect(2,.5,2.2,6)}],
+    // 22 tactile push button
+    [10,10,x=>{fr(x,0,0,10,10,1.5,'#2a2e33','#9aa3ab');ci(x,5,5,3,'#c9ced3','#555');[[1.8,1.8],[8.2,1.8],[1.8,8.2],[8.2,8.2]].forEach(([a,b])=>ci(x,a,b,.7,'#d9b44a'))}],
+    // 23 glass fuse
+    [14,5,x=>{fr(x,2,.4,10,4.2,1.8,'rgba(190,225,255,.35)','#9ab');ln(x,[[3,2.5],[11,2.5]],'#d0d0d0',.7);fr(x,0,.2,3,4.6,1,'#c9ced3');fr(x,11,.2,3,4.6,1,'#c9ced3')}],
+    // 24 QFP microchip
+    [12,12,x=>{x.fillStyle='#d9b44a';for(let i=0;i<4;i++){const o=2.6+i*2;x.fillRect(o,0,.9,2.2);x.fillRect(o,9.8,.9,2.2);x.fillRect(0,o,2.2,.9);x.fillRect(9.8,o,2.2,.9)}fr(x,2,2,8,8,1,'#16181b','#43484f');ci(x,3.6,3.6,.7,'#8b929a')}],
+    // 25 TO-220 power transistor
+    [10,12,x=>{fr(x,1,0,8,4.2,1,'#b9c0c6','#7b8188');ci(x,5,2,1,'#222');fr(x,1,4.2,8,5.2,.5,'#16181b','#444');x.fillStyle='#c9ced3';[2,4.5,7].forEach(a=>x.fillRect(a,9.4,1,2.6))}],
+    // 26 LDR photoresistor
+    [10,10,x=>{ci(x,5,5,4.5,'#d9a441','#8a6a1f');ln(x,[[2.2,2.8],[7.8,2.8],[2.2,5],[7.8,5],[2.2,7.2],[7.8,7.2]],'#5a3a10',.9)}],
+    // 27 piezo buzzer
+    [10,10,x=>{ci(x,5,5,4.7,'#111','#555');ci(x,5,5,3.2,null,'#2c2c2c');ci(x,5,5,1.4,'#3a3a3a')}]];
+  const WT=[0,0,0,1,1,2,2,3,4,5,5,6,7,7,8,8,9,10,10,11,12,13,14,15,16,17,17,18,18,19,19,20,20,21,22,23,24,24,25,26,27];
+  const AX=[0,4,5,9,18,21,23]; // axial parts: kept horizontal or vertical
   // ---------- shooting passives (head points +x) ----------
   const lead=x=>ln(x,[[0,6],[36,6]],'#bfc5cb',1.2);
   const led=c=>x=>{const g=x.createRadialGradient(24,6,1,24,6,14);g.addColorStop(0,c+'aa');g.addColorStop(1,c+'00');x.fillStyle=g;x.fillRect(-14,-14,64,40);ln(x,[[0,4],[14,4]],'#bfc5cb',1.2);ln(x,[[3,8],[14,8]],'#bfc5cb',1.2);fr(x,12,.5,17,11,5.5,c);fr(x,15,2,8,3,1.5,'rgba(255,255,255,.55)');x.fillStyle='rgba(255,255,255,.7)';x.fillRect(12,0,2,12)};
@@ -655,11 +695,11 @@ document.querySelectorAll('.btn').forEach(b => b.addEventListener('click', funct
     const hr=h1.getBoundingClientRect(),x0=Math.max(0,hr.left-ox-8),x1=Math.min(W,hr.right-ox+8),y0=Math.max(0,hr.top-oy-8),y1=Math.min(H,hr.bottom-oy+8);
     const d=m.getImageData(0,0,mc.width,mc.height).data;
     const pick=g=>{const a=[];for(let y=y0+g/2;y<y1;y+=g)for(let x=x0+g/2;x<x1;x+=g)if(d[((y|0)*mc.width+(x|0))*4+3]>140)a.push([x,y]);return a};
-    let g=Math.max(3,fs/17),pts=pick(g);while(pts.length>680){g+=.4;pts=pick(g)}
+    let g=Math.max(2.2,fs/30),pts=pick(g);while(pts.length>1700){g+=.3;pts=pick(g)}
     if(!pts.length)return;
-    const ps=g*1.9;PS=PT.map(q=>mk(q[0],q[1],q[2],1,ps/12));
+    const ps=g*1.8;PS=PT.map(q=>mk(q[0],q[1],q[2],1,ps/12));
     P=pts.map(([hx,hy])=>{
-      const type=WT[rnd()*WT.length|0],hrot=(type===0||type===4||type===5)?(rnd()<.5?0:1.5708):(rnd()*4|0)*1.5708;
+      const type=WT[rnd()*WT.length|0],hrot=AX.includes(type)?(rnd()<.5?0:1.5708):(rnd()*4|0)*1.5708;
       const p={hx,hy,x:hx,y:hy,vx:0,vy:0,mode:0,timer:0,rot:hrot,hrot,cr:Math.cos(hrot),sr:Math.sin(hrot),spin:0,type,ph:rnd()*TAU,a:0,sp:0,orx:0,ory:0};
       if(intro){const a=rnd()*TAU,r=rings[2].rx*(.7+rnd()*.4);p.x=cx+Math.cos(a)*r;p.y=cy+Math.sin(a)*r*.6;toOrbit(p,1.5+rnd()*5)}
       return p;
