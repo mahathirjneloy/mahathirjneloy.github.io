@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en" style="scroll-behavior:smooth">
 <head>
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='9' fill='%23000'/><rect x='1' y='1' width='30' height='30' rx='8' fill='none' stroke='%2310b981' stroke-width='2'/><circle cx='25' cy='7' r='2' fill='%2334d399'/><text x='15' y='21' font-family='system-ui,sans-serif' font-weight='700' font-size='13' fill='%23b7f5d6' text-anchor='middle'>MN</text></svg>">
 <meta charset="UTF-8">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='9' fill='%23000'/><rect x='1' y='1' width='30' height='30' rx='8' fill='none' stroke='%2310b981' stroke-width='2'/><circle cx='25' cy='7' r='2' fill='%2334d399'/><text x='15' y='21' font-family='system-ui,sans-serif' font-weight='700' font-size='13' fill='%23b7f5d6' text-anchor='middle'>MN</text></svg>">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Mahathir Neloy | Robotics & Embedded Systems</title>
 <meta name="title" content="Mahathir Neloy | Robotics & Embedded Systems">
@@ -46,9 +46,11 @@ h2{font-size:clamp(1.9rem,4vw,2.8rem);font-weight:500;color:#fff;letter-spacing:
 /* Cards */
 .card{position:relative;overflow:hidden;background:var(--card);border:1px solid var(--line);border-radius:1.75rem;transition:border-color .3s,box-shadow .3s}
 .card:hover{border-color:rgba(52,211,153,.45);box-shadow:0 0 50px -12px rgba(16,185,129,.45)}
-.card::before{content:'';position:absolute;inset:-1px;border-radius:inherit;pointer-events:none;opacity:0;transition:opacity .3s;z-index:0;background:radial-gradient(420px circle at var(--mx,-999px) var(--my,-999px),rgba(52,211,153,.16),transparent 70%)}
-.card:hover::before{opacity:1}
 .card>*{position:relative;z-index:1}
+/* Cursor spotlight: a real element moved by transform (compositor only, no repaint).
+   Radius 266px = 70% of the original 380px gradient radius. */
+.card>.spot{position:absolute;left:-1px;top:-1px;width:532px;height:532px;margin:0;z-index:0;pointer-events:none;opacity:0;transform:translate3d(-999px,-999px,0);background:radial-gradient(circle closest-side,rgba(52,211,153,.1),transparent);transition:opacity .3s}
+.card:hover>.spot{opacity:1;will-change:transform}
 .tilt{transform-style:preserve-3d;transition:transform .18s ease-out,border-color .3s,box-shadow .3s;will-change:transform}
 .ico{width:3rem;height:3rem;border-radius:1rem;background:rgba(52,211,153,.08);border:1px solid rgba(52,211,153,.25);display:flex;align-items:center;justify-content:center;color:var(--b3);flex-shrink:0;font:600 .75rem var(--mono)}
 .ico svg{width:1.5rem;height:1.5rem}
@@ -80,12 +82,13 @@ nav{display:none;align-items:center;gap:2rem;font-size:.9rem}nav a:not(.pill):ho
 h1{font-size:clamp(2.6rem,7vw,5.2rem);font-weight:500;letter-spacing:-.035em;line-height:1.12;color:#fff;text-shadow:0 0 40px rgba(52,211,153,.25)}
 h1 .g{background:linear-gradient(90deg,#fff,var(--b2) 55%,var(--b3));-webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:none}
 h1.pfx{text-shadow:none}h1.pfx .nw{color:transparent;-webkit-text-fill-color:transparent;background:none;text-shadow:none}
-.scope{display:inline-flex;vertical-align:middle;margin:0 .3rem;padding:.35rem .8rem;border-radius:999px;background:#000;border:1px solid rgba(52,211,153,.45);box-shadow:0 0 22px rgba(16,185,129,.3);transform:translateY(-.2rem);user-select:none}
+.scope{display:inline-flex;vertical-align:middle;margin:0 .3rem;padding:.35rem .8rem;border-radius:999px;background:#000;border:1px solid rgba(52,211,153,.45);box-shadow:0 0 22px rgba(16,185,129,.3);transform:translateY(-.2rem);user-select:none;will-change:transform}
 .scope svg{width:4.5rem;height:1.6rem}
 @media(min-width:640px){.scope svg{width:6rem;height:2.2rem}}
 .scope svg{overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 18%,#000 82%,transparent);mask-image:linear-gradient(90deg,transparent,#000 18%,#000 82%,transparent)}
 .amp{transform-origin:50px 16px;animation:amp 2.4s ease-in-out infinite}.roll{animation:roll 1.4s linear infinite}
 .scope:hover .roll{animation-duration:.6s}.scope:hover .amp{animation-duration:1.2s}
+#heropanel.off .amp,#heropanel.off .roll{animation-play-state:paused}
 @keyframes amp{0%,100%{transform:scaleY(.4)}50%{transform:scaleY(1)}}
 @keyframes roll{to{transform:translateX(-100px)}}
 .bio{font-size:1.2rem;font-weight:300;max-width:42rem;color:#cdd3e0}.bio strong{color:var(--b1);font-weight:500}
@@ -169,7 +172,6 @@ body::before{content:'';position:fixed;inset:0;z-index:-1;pointer-events:none;ba
 .panel{background:linear-gradient(155deg,rgba(255,255,255,.03),transparent 45%),#020504}
 .cpanel{background:radial-gradient(40rem 22rem at 0% 0%,rgba(16,185,129,.16),transparent 70%),#020504}
 .card:hover,.photo:hover{border-color:rgba(255,255,255,.18);box-shadow:var(--gs),0 0 44px -16px rgba(52,211,153,.4)}
-.card::before{z-index:0;background:radial-gradient(380px circle at var(--mx,-999px) var(--my,-999px),rgba(52,211,153,.1),transparent 70%)}
 .bar{background:rgba(6,10,8,.95)}
 .pill-w{background:#fff;box-shadow:0 8px 26px -10px rgba(0,0,0,.7)}.pill-w:hover{background:#b7f5d6;box-shadow:0 0 34px -6px rgba(52,211,153,.6)}
 .pill-d{background:rgba(255,255,255,.07)}.pill-d:hover{background:#fff;color:#000}
@@ -305,7 +307,7 @@ input:focus,textarea:focus{border-color:rgba(255,255,255,.35);box-shadow:0 0 0 3
           <!-- 1 -->
           <div class="photo" onclick="openLightbox('image_301fca.png','4WD Robot Car Hardware Assembly','Top-down view of the assembled 4WD chassis featuring dual yellow gear motor pairs, breadboarded Raspberry Pi Pico, L298N H-Bridge driver, HC-05 Bluetooth module, and battery pack.')">
             <div class="pimg">
-              <img id="img-car" src="image_301fca.png" alt="4WD Robot Hardware Assembly" onerror="imgErr('img-car','fb1')">
+              <img id="img-car" src="image_301fca.png" alt="4WD Robot Hardware Assembly" loading="lazy" decoding="async" onerror="imgErr('img-car','fb1')">
               <div id="fb1" class="fb hide"><svg viewBox="0 0 100 100" fill="none" stroke="currentColor"><rect x="25" y="20" width="50" height="60" rx="6" stroke-width="2.5" fill="#040806"/><rect x="12" y="24" width="10" height="20" rx="3" stroke-width="2" fill="#eab308"/><rect x="12" y="56" width="10" height="20" rx="3" stroke-width="2" fill="#eab308"/><rect x="78" y="24" width="10" height="20" rx="3" stroke-width="2" fill="#eab308"/><rect x="78" y="56" width="10" height="20" rx="3" stroke-width="2" fill="#eab308"/><rect x="35" y="32" width="30" height="36" rx="2" stroke-width="1.5" stroke="#10b981" stroke-dasharray="2 2"/><circle cx="50" cy="50" r="4" fill="#34d399"/></svg><span>4WD Robot Hardware</span><small>Pico + L298N + Dual 18650</small></div>
               <div class="badge">Hardware Assembly</div>
             </div>
@@ -317,7 +319,7 @@ input:focus,textarea:focus{border-color:rgba(255,255,255,.35);box-shadow:0 0 0 3
           <!-- 2 -->
           <div class="photo" onclick="openLightbox('image_301fcf.png','Fritzing Circuit Wiring Architecture','Complete wiring schematic illustrating Raspberry Pi Pico GPIO connections to L298N driver, HC-05 Bluetooth UART transceiver, HC-SR04 ultrasonic logic with resistor divider, and battery bus.')">
             <div class="pimg">
-              <img id="img-schematic" src="image_301fcf.png" alt="Fritzing Circuit Wiring" onerror="imgErr('img-schematic','fb2')">
+              <img id="img-schematic" src="image_301fcf.png" alt="Fritzing Circuit Wiring" loading="lazy" decoding="async" onerror="imgErr('img-schematic','fb2')">
               <div id="fb2" class="fb hide"><svg viewBox="0 0 100 100" fill="none" stroke="currentColor"><path d="M20 30H80V70H20Z" stroke-width="2" fill="#040806"/><path d="M25 40H45V60H25Z" stroke-width="1.5" stroke="#ef4444" fill="#180c0c"/><path d="M55 40H75V60H55Z" stroke-width="1.5" stroke="#10b981" fill="#07140e"/><line x1="35" y1="30" x2="35" y2="15" stroke="#34d399" stroke-width="2"/><line x1="65" y1="30" x2="65" y2="15" stroke="#34d399" stroke-width="2"/><line x1="50" y1="70" x2="50" y2="85" stroke="#34d399" stroke-width="2"/></svg><span>Circuit Schematic</span><small>Fritzing Bus Wiring</small></div>
               <div class="badge">Circuit Schematic</div>
             </div>
@@ -329,7 +331,7 @@ input:focus,textarea:focus{border-color:rgba(255,255,255,.35);box-shadow:0 0 0 3
           <!-- 3 -->
           <div class="photo" onclick="openLightbox('image_301fe9.png','IEEE NSU RAS Workshop Prototyping','Mahathir Neloy and teammates during hands-on breadboard assembly, logic probing, and MicroPython firmware flashing at the IEEE NSU RAS workshop.')">
             <div class="pimg">
-              <img id="img-workshop" src="image_301fe9.png" alt="IEEE NSU RAS Workshop Prototyping" onerror="imgErr('img-workshop','fb3')">
+              <img id="img-workshop" src="image_301fe9.png" alt="IEEE NSU RAS Workshop Prototyping" loading="lazy" decoding="async" onerror="imgErr('img-workshop','fb3')">
               <div id="fb3" class="fb hide"><svg viewBox="0 0 100 100" fill="none" stroke="currentColor"><circle cx="35" cy="35" r="10" stroke-width="2" fill="#040806"/><circle cx="65" cy="35" r="10" stroke-width="2" fill="#040806"/><path d="M20 70Q35 55 50 70" stroke-width="2"/><path d="M50 70Q65 55 80 70" stroke-width="2"/><rect x="30" y="70" width="40" height="15" rx="3" stroke-width="1.5" stroke="#10b981" fill="#07140e"/></svg><span>Team Prototyping</span><small>IEEE NSU RAS Lab</small></div>
               <div class="badge">Team Prototyping</div>
             </div>
@@ -360,8 +362,8 @@ input:focus,textarea:focus{border-color:rgba(255,255,255,.35);box-shadow:0 0 0 3
           <h3>IEEE NSU Student Branch</h3>
           <p class="org">Core Leadership Pathway &bull; 1 yr 2 mos</p>
           <div class="tl">
-            <div><b>Core Volunteer &mdash; Logistics and Operations <em>Promoted</em></b><p class="when blue">Oct 2026 &mdash; Present &bull; 2 mos</p><p class="skl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M6 3h12l4 6-10 12L2 9z"/><path d="M2 9h20M12 21 8 9l4-6 4 6z"/></div>
-            <div><b class="s">Team Volunteer &mdash; Logistics and Operations</b><p class="when">Jun 2026 &mdash; Oct 2026 &bull; 5 mos</p> <p class="skl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M6 3h12l4 6-10 12L2 9z"/><path d="M2 9h20M12 21 8 9l4-6 4 6z"/> </div>
+            <div><b>Core Volunteer &mdash; Logistics and Operations <em>Promoted</em></b><p class="when blue">Oct 2026 &mdash; Present &bull; 2 mos</p><p class="skl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M6 3h12l4 6-10 12L2 9z"/><path d="M2 9h20M12 21 8 9l4-6 4 6z"/></svg></p></div>
+            <div><b class="s">Team Volunteer &mdash; Logistics and Operations</b><p class="when">Jun 2026 &mdash; Oct 2026 &bull; 5 mos</p> <p class="skl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M6 3h12l4 6-10 12L2 9z"/><path d="M2 9h20M12 21 8 9l4-6 4 6z"/></svg></p></div>
             <div><b class="m">Member</b><p class="when">Oct 2025 &mdash; Jun 2026 &bull; 9 mos</p><p class="mut">Participated in technical workshops, industrial discussions, and hands-on skill bootcamps.</p></div>
           </div>
         </div></div>
@@ -510,28 +512,57 @@ async function handleFormSubmit(e){
   finally { b.disabled = false; b.innerText = old; }
 }
 
-// Scroll progress
-addEventListener('scroll', () => {
-  const h = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-  $('prog').style.width = (h > 0 ? scrollY / h * 100 : 0) + '%';
-}, { passive:true });
+// Scroll progress (one write per frame, not per scroll event)
+(function(){
+  const prog = $('prog'); let pend = false;
+  const upd = () => {
+    pend = false;
+    const h = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    prog.style.width = (h > 0 ? scrollY / h * 100 : 0) + '%';
+  };
+  addEventListener('scroll', () => { if (!pend) { pend = true; requestAnimationFrame(upd); } }, { passive:true });
+})();
 
-// Scroll reveal
-const io = new IntersectionObserver(es => es.forEach(x => x.isIntersecting && x.target.classList.add('active')), { threshold:.1, rootMargin:'0px 0px -40px 0px' });
+// Scroll reveal (stop observing once revealed)
+const io = new IntersectionObserver(es => es.forEach(x => { if (x.isIntersecting) { x.target.classList.add('active'); io.unobserve(x.target); } }), { threshold:.1, rootMargin:'0px 0px -40px 0px' });
 document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
+// Pause the NoobLab track animation while it is off-screen
+(function(){
+  const trk = document.querySelector('.track');
+  if (!trk || !trk.pauseAnimations) return;
+  new IntersectionObserver(e => e[0].isIntersecting ? trk.unpauseAnimations() : trk.pauseAnimations()).observe(trk);
+})();
+
 // Card spotlight + 3D tilt
-document.querySelectorAll('.card').forEach(c => c.addEventListener('mousemove', e => {
-  const r = c.getBoundingClientRect(); c.style.setProperty('--mx', (e.clientX - r.left) + 'px'); c.style.setProperty('--my', (e.clientY - r.top) + 'px');
-}));
-document.querySelectorAll('.tilt').forEach(c => {
-  c.addEventListener('mousemove', e => {
-    if (innerWidth < 768) return;
-    const r = c.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top;
-    c.style.transform = `perspective(1000px) rotateX(${((y - r.height/2) / (r.height/2) * -5).toFixed(2)}deg) rotateY(${((x - r.width/2) / (r.width/2) * 5).toFixed(2)}deg) translateZ(4px)`;
+// - rect is measured once per hover (and after a scroll), never on every event
+// - all writes are batched to one per animation frame
+// - spotlight is a real element moved via transform, so it never triggers a repaint
+(function(){
+  let st = 0;
+  addEventListener('scroll', () => { st++; }, { passive:true });
+  document.querySelectorAll('.card').forEach(c => {
+    const sp = document.createElement('i'); sp.className = 'spot'; c.insertBefore(sp, c.firstChild);
+    const tilt = c.classList.contains('tilt');
+    let rc = null, rt = -1, px = 0, py = 0, pend = false;
+    const apply = () => {
+      pend = false; if (!rc) return;
+      const x = px - rc.left, y = py - rc.top;
+      sp.style.transform = 'translate3d(' + (x - 266) + 'px,' + (y - 266) + 'px,0)';
+      if (tilt && innerWidth >= 768)
+        c.style.transform = `perspective(1000px) rotateX(${((y - rc.height/2) / (rc.height/2) * -5).toFixed(2)}deg) rotateY(${((x - rc.width/2) / (rc.width/2) * 5).toFixed(2)}deg) translateZ(4px)`;
+    };
+    c.addEventListener('mousemove', e => {
+      if (!rc || rt !== st) { rc = c.getBoundingClientRect(); rt = st; }
+      px = e.clientX; py = e.clientY;
+      if (!pend) { pend = true; requestAnimationFrame(apply); }
+    }, { passive:true });
+    c.addEventListener('mouseleave', () => {
+      rc = null;
+      if (tilt) c.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateZ(0)';
+    });
   });
-  c.addEventListener('mouseleave', () => c.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateZ(0)');
-});
+})();
 
 // Button ripple
 document.querySelectorAll('.btn').forEach(b => b.addEventListener('click', function(e){
@@ -599,7 +630,8 @@ document.querySelectorAll('.btn').forEach(b => b.addEventListener('click', funct
     x=>{[2.5,6,9.5].forEach(y=>ln(x,[[0,y],[18,y]],'#bfc5cb',1.1));x.fillStyle='#17181a';x.beginPath();x.arc(26,6,6.5,-1.57,1.57);x.lineTo(18,12.5);x.lineTo(18,-.5);x.closePath();x.fill();x.strokeStyle='#444';x.stroke()},
     led('#ff4d4d'),led('#3dff8f'),led('#ffd23d'),led('#4da3ff')];
   const TC=['#e0b982','#9ca3af','#34d399','#ff4d4d','#3dff8f','#ffd23d','#4da3ff'];
-  let W,H,cx,cy,sc,cd,Rc=40,RAD=80,rings=[],O=[],SH=[],S=[],M=[],P=[],PS=[],CG=null,BOLT=null,arcs=[],nextArc=0,nextStar=2,last=0,running=false,ready=false,mouse={x:-999,y:-999};
+  let W,H,cx,cy,sc,cd,CAP=1.5,Rc=40,RAD=80,rings=[],O=[],SH=[],S=[],M=[],P=[],PS=[],CG=null,BOLT=null,RC=null,rcx=0,rcy=0,rcw=0,rch=0,arcs=[],nextArc=0,nextStar=2,last=0,lastDraw=0,raf=0,fT=0,fN=0,running=false,ready=false,mouse={x:-999,y:-999};
+  const byK=(p,q)=>p.k-q.k;
   function init(){
     if(ready)return;ready=true;
     SH=SHD.map(f=>mk(36,12,f,14));
@@ -617,7 +649,7 @@ document.querySelectorAll('.btn').forEach(b => b.addEventListener('click', funct
   // sample the real heading's word positions -> targets for the component particles
   function layout(intro){
     const pr=panel.getBoundingClientRect(),ox=pr.left+panel.clientLeft,oy=pr.top+panel.clientTop,cs=getComputedStyle(h1),fs=parseFloat(cs.fontSize);
-    const mc=document.createElement('canvas');mc.width=Math.ceil(W);mc.height=Math.ceil(H);const m=mc.getContext('2d');
+    const mc=document.createElement('canvas');mc.width=Math.ceil(W);mc.height=Math.ceil(H);const m=mc.getContext('2d',{willReadFrequently:true});
     m.font='600 '+fs+'px '+FAM;m.fillStyle='#fff';m.textBaseline='middle';if('letterSpacing' in m)m.letterSpacing=cs.letterSpacing==='normal'?'0px':cs.letterSpacing;
     h1.querySelectorAll('.nw').forEach(el=>{const r=el.getBoundingClientRect();m.fillText(el.textContent,r.left-ox,r.top-oy+r.height/2+fs*.04)});
     const hr=h1.getBoundingClientRect(),x0=Math.max(0,hr.left-ox-8),x1=Math.min(W,hr.right-ox+8),y0=Math.max(0,hr.top-oy-8),y1=Math.min(H,hr.bottom-oy+8);
@@ -628,14 +660,14 @@ document.querySelectorAll('.btn').forEach(b => b.addEventListener('click', funct
     const ps=g*1.9;PS=PT.map(q=>mk(q[0],q[1],q[2],1,ps/12));
     P=pts.map(([hx,hy])=>{
       const type=WT[rnd()*WT.length|0],hrot=(type===0||type===4||type===5)?(rnd()<.5?0:1.5708):(rnd()*4|0)*1.5708;
-      const p={hx,hy,x:hx,y:hy,vx:0,vy:0,mode:0,timer:0,rot:hrot,hrot,spin:0,type,ph:rnd()*TAU,a:0,sp:0,orx:0,ory:0};
+      const p={hx,hy,x:hx,y:hy,vx:0,vy:0,mode:0,timer:0,rot:hrot,hrot,cr:Math.cos(hrot),sr:Math.sin(hrot),spin:0,type,ph:rnd()*TAU,a:0,sp:0,orx:0,ory:0};
       if(intro){const a=rnd()*TAU,r=rings[2].rx*(.7+rnd()*.4);p.x=cx+Math.cos(a)*r;p.y=cy+Math.sin(a)*r*.6;toOrbit(p,1.5+rnd()*5)}
       return p;
     });
     h1.classList.add('pfx');
   }
   function build(){
-    cd=Math.min(devicePixelRatio||1,1.5);W=panel.clientWidth;H=panel.clientHeight;
+    cd=Math.min(devicePixelRatio||1,CAP);W=panel.clientWidth;H=panel.clientHeight;
     cv.width=W*cd;cv.height=H*cd;ctx.setTransform(cd,0,0,cd,0,0);
     const wide=W>=768;cx=W*(wide?.74:.5);cy=H*(wide?.5:.84);sc=wide?.78:.56;RAD=wide?80:55;
     const rxO=wide?Math.min(W*.2,260):W*.44,ryO=rxO*.6;
@@ -645,6 +677,12 @@ document.querySelectorAll('.btn').forEach(b => b.addEventListener('click', funct
     const gs=Math.ceil(Rc*7);CG=document.createElement('canvas');CG.width=CG.height=gs;const g=CG.getContext('2d'),gr=g.createRadialGradient(gs/2,gs/2,0,gs/2,gs/2,gs/2);
     gr.addColorStop(0,'rgba(190,255,225,.85)');gr.addColorStop(.12,'rgba(110,231,183,.5)');gr.addColorStop(.35,'rgba(16,185,129,.2)');gr.addColorStop(1,'rgba(16,185,129,0)');g.fillStyle=gr;g.fillRect(0,0,gs,gs);
     BOLT=mk(80,100,x=>{const gg=x.createLinearGradient(0,0,0,100);gg.addColorStop(0,'#fff');gg.addColorStop(1,'#6dffb8');x.shadowColor='#34d399';x.shadowBlur=14;x.fillStyle=gg;x.beginPath();[[48,0],[12,54],[36,54],[28,100],[70,40],[46,40]].forEach((q,i)=>i?x.lineTo(q[0],q[1]):x.moveTo(q[0],q[1]));x.closePath();x.fill();x.fill()},14,Rc*1.55/100);
+    // static dashed orbit rails: rendered once, blitted every frame (they never change)
+    const R2=rings[2],hw=Math.ceil(Math.hypot(R2.rx*CT,R2.ry*ST))+4,hh=Math.ceil(Math.hypot(R2.rx*ST,R2.ry*CT))+4;
+    rcx=Math.floor(cx);rcy=Math.floor(cy);rcw=hw;rch=hh;
+    RC=document.createElement('canvas');RC.width=Math.ceil(hw*2*cd);RC.height=Math.ceil(hh*2*cd);
+    const g2=RC.getContext('2d');g2.scale(cd,cd);g2.translate(hw+cx-rcx,hh+cy-rcy);g2.setLineDash([3,7]);g2.strokeStyle='rgba(52,211,153,.2)';g2.lineWidth=1;
+    rings.forEach(r=>{g2.beginPath();g2.ellipse(0,0,r.rx,r.ry,TILT,0,TAU);g2.stroke()});
     S=[];for(let i=0;i<50;i++)S.push({x:rnd()*W,y:rnd()*H,ph:rnd()*TAU});
   }
   function newArc(){
@@ -657,22 +695,29 @@ document.querySelectorAll('.btn').forEach(b => b.addEventListener('click', funct
     M.push({x:top?W*(.3+rnd()*.9):W+30,y:top?-30:rnd()*H*.6,vx:-Math.cos(ang)*v,vy:Math.sin(ang)*v,life:0,max:1.1+rnd()*.9,len:90+rnd()*70,t:f<3?f:3+(rnd()*4|0)});
   }
   function push(o,x,y){if(mouse.x<-900&&!o.ox&&!o.oy)return;const dx=x-mouse.x,dy=y-mouse.y,d=Math.hypot(dx,dy),f=d<110?(110-d)/110:0;o.ox+=((d?dx/d:0)*f*28-o.ox)*.1;o.oy+=((d?dy/d:0)*f*28-o.oy)*.1}
-  const drawItem=(o,t)=>{ctx.globalAlpha=.45+.55*o.k;ctx.save();ctx.translate(o.sx,o.sy);ctx.rotate(Math.sin(t*.5+o.ph)*.25);ctx.scale(o.ss,o.ss);ctx.drawImage(o.s.c,-o.s.w/2,-o.s.h/2,o.s.w,o.s.h);ctx.restore()};
+  // orbiting component: single setTransform instead of save/translate/rotate/scale/restore
+  const drawItem=(o,t)=>{const r=Math.sin(t*.5+o.ph)*.25,k=o.ss*cd,c=Math.cos(r)*k,s=Math.sin(r)*k;ctx.globalAlpha=.45+.55*o.k;ctx.setTransform(c,s,-s,c,o.sx*cd,o.sy*cd);ctx.drawImage(o.s.c,-o.s.w/2,-o.s.h/2,o.s.w,o.s.h)};
   function frame(ms){
-    const t=ms/1000,dt=Math.min(t-last,.05);last=t;ctx.clearRect(0,0,W,H);
-    S.forEach(s=>{ctx.globalAlpha=.1+Math.sin(t+s.ph)*.07;ctx.fillStyle='#8be8c0';ctx.fillRect(s.x,s.y,1.2,1.2)});
+    if(!running)return;
+    // cap at ~60-100fps: high-refresh displays no longer double/triple the canvas workload
+    if(ms-lastDraw<10){raf=requestAnimationFrame(frame);return}
+    const el=ms-lastDraw;lastDraw=ms;
+    const t=ms/1000,dt=Math.max(0,Math.min(t-last,.05));last=t;ctx.clearRect(0,0,W,H);
+    ctx.fillStyle='#8be8c0';
+    for(let i=0;i<S.length;i++){const s=S[i];ctx.globalAlpha=.1+Math.sin(t+s.ph)*.07;ctx.fillRect(s.x,s.y,1.2,1.2)}
     // core glow, energy ripples, orbit rails with moving "electrons"
     ctx.globalAlpha=.8+.2*Math.sin(t*2.4);ctx.drawImage(CG,cx-CG.width/2,cy-CG.height/2);
     ctx.lineWidth=1.4;ctx.strokeStyle='#6ee7b7';
     for(let i=0;i<3;i++){const ph=(t*.3+i/3)%1,r=Rc*.9+ph*(rings[1].rx-Rc*.9);ctx.globalAlpha=Math.pow(1-ph,1.6)*.3;ctx.beginPath();ctx.ellipse(cx,cy,r,r*.6,TILT,0,TAU);ctx.stroke()}
-    ctx.save();ctx.setLineDash([3,7]);ctx.strokeStyle='rgba(52,211,153,.2)';ctx.lineWidth=1;ctx.globalAlpha=1;
-    rings.forEach(r=>{ctx.beginPath();ctx.ellipse(cx,cy,r.rx,r.ry,TILT,0,TAU);ctx.stroke()});ctx.restore();
+    ctx.globalAlpha=1;ctx.drawImage(RC,rcx-rcw,rcy-rch,rcw*2,rch*2);
     ctx.fillStyle='#d6fff0';
-    rings.forEach(r=>{for(let j=0;j<3;j++){const a=t*r.sp*2.2+j*TAU/3,ex=Math.cos(a)*r.rx,ey=Math.sin(a)*r.ry;ctx.globalAlpha=.85;ctx.beginPath();ctx.arc(cx+ex*CT-ey*ST,cy+ex*ST+ey*CT,1.7,0,TAU);ctx.fill();ctx.globalAlpha=.18;ctx.beginPath();ctx.arc(cx+ex*CT-ey*ST,cy+ex*ST+ey*CT,4.5,0,TAU);ctx.fill()}});
+    for(let q=0;q<3;q++){const r=rings[q];for(let j=0;j<3;j++){const a=t*r.sp*2.2+j*TAU/3,ex=Math.cos(a)*r.rx,ey=Math.sin(a)*r.ry,px=cx+ex*CT-ey*ST,py=cy+ex*ST+ey*CT;ctx.globalAlpha=.85;ctx.beginPath();ctx.arc(px,py,1.7,0,TAU);ctx.fill();ctx.globalAlpha=.18;ctx.beginPath();ctx.arc(px,py,4.5,0,TAU);ctx.fill()}}
     if(ready){
       // components: back half, then the core, then front half (planets pass in front of the core)
-      const L=O.map(o=>{const r=rings[o.ring],a=o.a0+t*r.sp,ex=Math.cos(a)*r.rx,ey=Math.sin(a)*r.ry;o.x=cx+ex*CT-ey*ST;o.y=cy+ex*ST+ey*CT;o.k=(Math.sin(a)+1)/2;push(o,o.x,o.y);o.sx=o.x+o.ox;o.sy=o.y+o.oy;o.ss=sc*(.74+.36*o.k);return o}).sort((p,q)=>p.k-q.k);
-      let i=0;for(;i<L.length&&L[i].k<.5;i++)drawItem(L[i],t);
+      for(let n=0;n<O.length;n++){const o=O[n],r=rings[o.ring],a=o.a0+t*r.sp,ex=Math.cos(a)*r.rx,ey=Math.sin(a)*r.ry;o.x=cx+ex*CT-ey*ST;o.y=cy+ex*ST+ey*CT;o.k=(Math.sin(a)+1)/2;push(o,o.x,o.y);o.sx=o.x+o.ox;o.sy=o.y+o.oy;o.ss=sc*(.74+.36*o.k)}
+      O.sort(byK);
+      let i=0;for(;i<O.length&&O[i].k<.5;i++)drawItem(O[i],t);
+      ctx.setTransform(cd,0,0,cd,0,0);
       // core: arcs, energy shell, bolt
       if(t>nextArc&&arcs.length<7){newArc();nextArc=t+.05+rnd()*.12}
       ctx.lineJoin='round';
@@ -681,18 +726,20 @@ document.querySelectorAll('.btn').forEach(b => b.addEventListener('click', funct
         ctx.strokeStyle='rgba(52,211,153,'+(.25*f)+')';ctx.lineWidth=3.4;ctx.globalAlpha=1;ctx.stroke();ctx.strokeStyle='rgba(225,255,242,'+(.95*f)+')';ctx.lineWidth=1.1;ctx.stroke()}
       ctx.save();ctx.setLineDash([5,7]);ctx.lineDashOffset=-t*22;ctx.strokeStyle='rgba(110,231,183,.55)';ctx.lineWidth=1.2;ctx.globalAlpha=1;ctx.beginPath();ctx.arc(cx,cy,Rc*.88,0,TAU);ctx.stroke();ctx.restore();
       const bp=1+.05*Math.sin(t*3.2);ctx.globalAlpha=1;ctx.drawImage(BOLT.c,cx-BOLT.w*bp/2,cy-BOLT.h*bp/2,BOLT.w*bp,BOLT.h*bp);
-      for(;i<L.length;i++)drawItem(L[i],t);
+      for(;i<O.length;i++)drawItem(O[i],t);
+      ctx.setTransform(cd,0,0,cd,0,0);
       // hover label
-      if(mouse.x>-900){let b=null,bd=1e9;for(const o of L){const d=Math.hypot(o.sx-mouse.x,o.sy-mouse.y);if(d<bd){bd=d;b=o}}
+      if(mouse.x>-900){let b=null,bd=1e9;for(let n=0;n<O.length;n++){const o=O[n],d=Math.hypot(o.sx-mouse.x,o.sy-mouse.y);if(d<bd){bd=d;b=o}}
         if(b&&bd<42*b.ss+12){ctx.globalAlpha=1;ctx.drawImage(b.l.c,b.sx-b.l.w/2,b.sy-b.s.h*b.ss/2-b.l.h-4,b.l.w,b.l.h)}}
       // name particles: home -> scattered into the orbit -> glide back
       const act=mouse.x>-900,R2=RAD*RAD;
-      for(const p of P){
-        let x,y;
+      for(let n=0;n<P.length;n++){
+        const p=P[n];let x,y,cr,sr;
         if(p.mode===0){
           if(act){const dx=p.x-mouse.x,dy=p.y-mouse.y;if(dx*dx+dy*dy<R2)hit(p)}
           x=p.hx+Math.sin(t*1.3+p.ph)*.4;y=p.hy+Math.cos(t*1.1+p.ph)*.4;p.x=p.hx;p.y=p.hy;
-        }else{
+        }
+        if(p.mode!==0){
           let tx,ty,k,c;
           if(p.mode===1){p.a+=p.sp*dt;const ex=Math.cos(p.a)*p.orx,ey=Math.sin(p.a)*p.ory;tx=cx+ex*CT-ey*ST;ty=cy+ex*ST+ey*CT;k=7;c=4.5;p.rot+=p.spin*dt;p.timer-=dt;if(p.timer<=0)p.mode=2}
           else{tx=p.hx;ty=p.hy;k=1.5;c=2.5;p.rot+=Math.atan2(Math.sin(p.hrot-p.rot),Math.cos(p.hrot-p.rot))*Math.min(1,3*dt)}
@@ -700,7 +747,8 @@ document.querySelectorAll('.btn').forEach(b => b.addEventListener('click', funct
           if(p.mode===2&&Math.abs(p.hx-p.x)+Math.abs(p.hy-p.y)<1.2&&Math.abs(p.vx)+Math.abs(p.vy)<14){p.mode=0;p.x=p.hx;p.y=p.hy;p.vx=p.vy=0;p.rot=p.hrot}
           x=p.x;y=p.y;
         }
-        const sp=PS[p.type],cr=Math.cos(p.rot),sr=Math.sin(p.rot);
+        if(p.mode===0){cr=p.cr;sr=p.sr}else{cr=Math.cos(p.rot);sr=Math.sin(p.rot)}
+        const sp=PS[p.type];
         ctx.globalAlpha=p.mode?.95:.85+.15*Math.sin(t*1.7+p.hx*.03);
         ctx.setTransform(cr*cd,sr*cd,-sr*cd,cr*cd,x*cd,y*cd);ctx.drawImage(sp.c,-sp.w/2,-sp.h/2,sp.w,sp.h);
       }
@@ -716,36 +764,48 @@ document.querySelectorAll('.btn').forEach(b => b.addEventListener('click', funct
       }
     }
     ctx.globalAlpha=1;
-    if(running)requestAnimationFrame(frame);
+    // safety net: if a weak device averages <~38fps for ~90 frames, drop canvas DPR cap to 1 (once)
+    if(ready&&CAP>1){fT+=Math.min(el,50);if(++fN>=90){const slow=fT/fN>26;fT=fN=0;if(slow){CAP=1;build()}}}
+    raf=requestAnimationFrame(frame);
   }
-  const setM=e=>{const r=cv.getBoundingClientRect();mouse.x=e.clientX-r.left;mouse.y=e.clientY-r.top};
-  panel.addEventListener('pointermove',setM);
-  panel.addEventListener('pointerdown',e=>{setM(e);P.forEach(p=>{if(p.mode===0&&Math.hypot(p.x-mouse.x,p.y-mouse.y)<RAD*2.4)hit(p)})});
+  // cached canvas rect: re-measured only after scroll / resize / pointer enter, not on every move
+  let cr0=null;const inv=()=>{cr0=null};
+  const setM=e=>{if(!cr0)cr0=cv.getBoundingClientRect();mouse.x=e.clientX-cr0.left;mouse.y=e.clientY-cr0.top};
+  panel.addEventListener('pointerenter',inv);
+  addEventListener('scroll',inv,{passive:true});addEventListener('resize',inv,{passive:true});
+  panel.addEventListener('pointermove',setM,{passive:true});
+  panel.addEventListener('pointerdown',e=>{inv();setM(e);P.forEach(p=>{if(p.mode===0&&Math.hypot(p.x-mouse.x,p.y-mouse.y)<RAD*2.4)hit(p)})});
   panel.addEventListener('pointerleave',()=>mouse.x=mouse.y=-999);
   let rz;addEventListener('resize',()=>{clearTimeout(rz);rz=setTimeout(()=>{build();if(ready)layout(false)},150)},{passive:true});
-  function go(){if(!running&&!document.hidden){running=true;last=performance.now()/1000;requestAnimationFrame(frame)}}
-  function stop(){running=false}
-  new IntersectionObserver(e=>e[0].isIntersecting?go():stop(),{threshold:0}).observe(panel);
+  function go(){if(!running&&!document.hidden){running=true;last=performance.now()/1000;lastDraw=performance.now();raf=requestAnimationFrame(frame)}}
+  function stop(){running=false;cancelAnimationFrame(raf)}
+  new IntersectionObserver(e=>{const v=e[0].isIntersecting;panel.classList.toggle('off',!v);v?go():stop()},{threshold:0}).observe(panel);
   document.addEventListener('visibilitychange',()=>document.hidden?stop():go());
   build();go();
   const fl=document.fonts&&document.fonts.load?Promise.race([document.fonts.load('600 80px Outfit'),new Promise(r=>setTimeout(r,2500))]):Promise.resolve();
   fl.then(()=>{if(ready)return;build();init()});setTimeout(()=>{if(!ready){build();init()}},3000);
 })();
 
-// Microcontroller cursor
+// Microcontroller cursor (runs its loop only while it is still catching up to the pointer)
 (function(){
   if(!matchMedia('(hover:hover) and (pointer:fine)').matches)return;
-  const c=$('cur');let x=-100,y=-100,tx=-100,ty=-100,on=false;
+  const c=$('cur');let x=-100,y=-100,tx=-100,ty=-100,on=false,run=false,lt=null;
   document.documentElement.classList.add('nocur');
+  const loop=()=>{
+    x+=(tx-x)*.35;y+=(ty-y)*.35;
+    if(Math.abs(tx-x)<.05&&Math.abs(ty-y)<.05){x=tx;y=ty;run=false}
+    c.style.transform='translate3d('+x+'px,'+y+'px,0)';
+    if(run)requestAnimationFrame(loop);
+  };
   document.addEventListener('mousemove',e=>{
     tx=e.clientX;ty=e.clientY;if(!on){x=tx;y=ty;on=true;c.classList.add('on')}
-    c.classList.toggle('hot',!!e.target.closest('a,button,.photo,.pill'));
-    c.classList.toggle('txt',!!e.target.closest('input,textarea'));
+    const t=e.target;
+    if(t!==lt){lt=t;c.classList.toggle('hot',!!t.closest('a,button,.photo,.pill'));c.classList.toggle('txt',!!t.closest('input,textarea'))}
+    if(!run){run=true;requestAnimationFrame(loop)}
   },{passive:true});
   document.documentElement.addEventListener('mouseleave',()=>{on=false;c.classList.remove('on')});
   document.addEventListener('mousedown',()=>c.classList.add('down'));
   document.addEventListener('mouseup',()=>c.classList.remove('down'));
-  (function loop(){x+=(tx-x)*.35;y+=(ty-y)*.35;c.style.transform=`translate(${x}px,${y}px)`;requestAnimationFrame(loop)})();
 })();
 </script>
 </body>
