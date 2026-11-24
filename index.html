@@ -25,7 +25,7 @@
         extend: {
           colors: {
             obsidian: {
-              950: '#000000', /* Pure Black for maximum contrast */
+              950: '#000000',
               900: '#050505',
               850: '#0a0a0a',
             },
@@ -53,10 +53,10 @@
     ::-webkit-scrollbar-thumb:hover { background: #10b981; }
 
     body {
-      background-color: #000000; /* Pure black background */
+      background-color: #000000;
     }
 
-    /* Minimalist Glow Eclipse Animation (The Reference Style) */
+    /* Minimalist Glow Eclipse Animation */
     @keyframes slowPulse {
       0%, 100% { opacity: 0.6; transform: scale(1) translate(-50%, -50%); }
       50% { opacity: 0.85; transform: scale(1.05) translate(-48%, -48%); }
@@ -184,6 +184,8 @@
 
       <!-- Desktop Navigation -->
       <nav class="hidden md:flex items-center gap-8 text-sm text-slate-400">
+        <a href="#about" class="hover:text-white transition-colors">About</a>
+        <a href="#stack" class="hover:text-white transition-colors">Arsenal</a>
         <a href="#projects" class="hover:text-white transition-colors">Projects</a>
         <a href="#experience" class="hover:text-white transition-colors">Leadership</a>
         <a href="#contact" class="hover:text-emerald-400 transition-colors">Contact</a>
@@ -208,7 +210,7 @@
             <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
             <span class="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-400"></span>
           </span>
-          Available for Embedded Internships
+          Welcome in, don’t mind the wires
         </div>
 
         <!-- The Glowing Headline -->
@@ -228,25 +230,112 @@
 
         <!-- Ultra-Clean Bio -->
         <p class="mt-8 text-lg sm:text-xl text-slate-400 leading-relaxed max-w-2xl font-light">
-          An Electrical & Electronic Engineering student at <span class="text-slate-200 font-medium">North South University</span>. I build robotics and embedded systems, focusing on hardware layout, sensor fusion, and bare-metal control.
+          Electrical & Electronic Engineering student at <span class="text-slate-200 font-medium">North South University</span>.
         </p>
 
         <!-- Minimal Action Button -->
         <div class="mt-10">
           <a href="#projects" class="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-white text-black font-semibold text-sm hover:bg-emerald-400 hover:scale-105 transition-all duration-300 shadow-[0_0_30px_rgba(255,255,255,0.15)]">
-            View Featured Work
+            Check The Builds
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
           </a>
+        </div>
+
+        <div class="mt-8 flex flex-wrap justify-center gap-6 text-xs font-mono text-slate-500">
+          <span class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500/50"></span>NSU</span>
+          <span class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500/50"></span>IEEE NSU SB</span>
+          <span class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500/50"></span>Dhaka</span>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ABOUT ME SECTION -->
+    <section id="about" class="py-32 relative z-20 bg-[#050505] border-t border-white/5">
+      <div class="max-w-6xl mx-auto px-6">
+        
+        <div class="mb-16 reveal text-center">
+          <h2 class="text-3xl sm:text-4xl font-bold text-white tracking-tight">Hardware, Code, and People</h2>
+          <p class="mt-4 text-slate-400 font-light">Background & Vision</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="minimal-card p-8 reveal reveal-delay-1">
+            <h3 class="text-xl font-bold text-white mb-4">Robotics & Embedded</h3>
+            <p class="text-sm text-slate-400 leading-relaxed font-light">
+              I’m an EEE student at North South University. I like building things that move, and so far that’s meant robots on the Raspberry Pi Pico, Esp328266, with motors, sensors, and a lot of debugging.
+            </p>
+          </div>
+          <div class="minimal-card p-8 reveal reveal-delay-2">
+            <h3 class="text-xl font-bold text-white mb-4">Simulation & Firmware</h3>
+            <p class="text-sm text-slate-400 leading-relaxed font-light">
+              I simulate circuits in MATLAB and Multisim and draw schematics in EasyEDA. For firmware, I write MicroPython in Thonny for the Raspberry Pi Pico and use the Arduino IDE to program the ESP8266.
+            </p>
+          </div>
+          <div class="minimal-card p-8 reveal reveal-delay-3">
+            <h3 class="text-xl font-bold text-white mb-4">IEEE Leadership</h3>
+            <p class="text-sm text-slate-400 leading-relaxed font-light">
+              I joined IEEE NSU Student Branch as a member in October 2025 and I’m now a core volunteer in logistics and operations. I do the same role in WIE and PES, and I’m on the PR and membership development team for IAS.
+            </p>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- FEATURED PROJECTS SECTION (CLEAN DARK MODE) -->
-    <section id="projects" class="py-32 relative z-20 bg-black">
+    <!-- TECHNICAL ARSENAL SECTION -->
+    <section id="stack" class="py-32 relative z-20 bg-black border-t border-white/5">
       <div class="max-w-6xl mx-auto px-6">
         
         <div class="mb-16 reveal text-center">
-          <h2 class="text-3xl sm:text-4xl font-bold text-white tracking-tight">Engineering in Action</h2>
+          <h2 class="text-3xl sm:text-4xl font-bold text-white tracking-tight">Microcontrollers, EDA & Toolchains</h2>
+          <p class="mt-4 text-slate-400 font-light">Hardware-First Capabilities</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          
+          <div class="minimal-card p-8 reveal reveal-delay-1">
+            <h4 class="font-bold text-white mb-6">MCU & Compute</h4>
+            <ul class="space-y-3 text-sm text-slate-400 font-mono font-light">
+              <li class="flex justify-between border-b border-white/5 pb-2"><span>Raspberry Pi Pico</span><span class="text-emerald-500">RP2040</span></li>
+              <li class="flex justify-between border-b border-white/5 pb-2"><span>ESP32</span><span class="text-emerald-500">Wi-Fi / BLE</span></li>
+              <li class="flex justify-between border-b border-white/5 pb-2"><span>STM32</span><span class="text-emerald-500">ARM Cortex</span></li>
+              <li class="flex justify-between border-b border-white/5 pb-2"><span>Raspberry Pi SBC</span><span class="text-emerald-500">Linux</span></li>
+              <li class="flex justify-between"><span>Arduino Ecosystem</span><span class="text-emerald-500">AVR</span></li>
+            </ul>
+          </div>
+
+          <div class="minimal-card p-8 reveal reveal-delay-2">
+            <h4 class="font-bold text-white mb-6">EDA & Simulation</h4>
+            <ul class="space-y-3 text-sm text-slate-400 font-mono font-light">
+              <li class="flex justify-between border-b border-white/5 pb-2"><span>MATLAB</span><span class="text-emerald-500">Signal/Data</span></li>
+              <li class="flex justify-between border-b border-white/5 pb-2"><span>NI Multisim</span><span class="text-emerald-500">SPICE</span></li>
+              <li class="flex justify-between border-b border-white/5 pb-2"><span>EasyEDA</span><span class="text-emerald-500">PCB</span></li>
+              <li class="flex justify-between border-b border-white/5 pb-2"><span>Breadboard Wire</span><span class="text-emerald-500">Proto</span></li>
+              <li class="flex justify-between"><span>Lab Equipment</span><span class="text-emerald-500">Scope</span></li>
+            </ul>
+          </div>
+
+          <div class="minimal-card p-8 reveal reveal-delay-3">
+            <h4 class="font-bold text-white mb-6">Languages & Code</h4>
+            <ul class="space-y-3 text-sm text-slate-400 font-mono font-light">
+              <li class="flex justify-between border-b border-white/5 pb-2"><span>Python</span><span class="text-emerald-500">Automation</span></li>
+              <li class="flex justify-between border-b border-white/5 pb-2"><span>MicroPython</span><span class="text-emerald-500">Embedded</span></li>
+              <li class="flex justify-between border-b border-white/5 pb-2"><span>C / C++</span><span class="text-emerald-500">Firmware</span></li>
+              <li class="flex justify-between border-b border-white/5 pb-2"><span>UART / BT</span><span class="text-emerald-500">Serial</span></li>
+              <li class="flex justify-between"><span>Git & GitHub</span><span class="text-emerald-500">VCS</span></li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- FEATURED PROJECTS SECTION -->
+    <section id="projects" class="py-32 relative z-20 bg-[#050505] border-t border-white/5">
+      <div class="max-w-6xl mx-auto px-6">
+        
+        <div class="mb-16 reveal text-center">
+          <h2 class="text-3xl sm:text-4xl font-bold text-white tracking-tight">Featured Robotics Project</h2>
           <p class="mt-4 text-slate-400 font-light">IEEE NSU RAS Workshop Showcase</p>
         </div>
 
@@ -257,9 +346,10 @@
               <span class="px-3 py-1 rounded-full bg-emerald-500/10">RP2040</span>
               <span class="px-3 py-1 rounded-full bg-emerald-500/10">MicroPython</span>
               <span class="px-3 py-1 rounded-full bg-emerald-500/10">L298N</span>
+              <span class="px-3 py-1 rounded-full bg-emerald-500/10">HC-05 & HC-SR04</span>
             </div>
             <p class="text-slate-400 leading-relaxed font-light text-sm sm:text-base">
-              Engineered as part of a 3-member team. The project integrates dual DC gear-motor pairs, real-time wireless Bluetooth UART telemetry, and autonomous sonar-guided collision avoidance utilizing non-blocking state loops.
+              Built as part of a 3-member engineering team during the IEEE NSU RAS "RC Car with Raspberry Pi Pico" workshop series. The project integrates dual DC gear-motor pairs, real-time wireless Bluetooth serial telemetry, and autonomous sonar-guided collision avoidance.
             </p>
           </div>
 
@@ -308,7 +398,7 @@
     </section>
 
     <!-- IEEE LEADERSHIP SECTION -->
-    <section id="experience" class="py-32 relative z-20 bg-[#050505] border-t border-white/5">
+    <section id="experience" class="py-32 relative z-20 bg-black border-t border-white/5">
       <div class="max-w-4xl mx-auto px-6">
         
         <div class="mb-16 reveal text-center">
@@ -354,12 +444,34 @@
             </div>
           </div>
 
+          <!-- WIE Card -->
+          <div class="minimal-card p-6 sm:p-8 reveal reveal-delay-2">
+            <div class="flex items-start justify-between">
+              <div>
+                <h3 class="text-lg font-bold text-white">WIE Affinity Group</h3>
+                <p class="text-sm text-emerald-400 mt-1">Core Volunteer, Logistics & Ops</p>
+                <div class="text-sm text-slate-400 mt-4 font-light max-w-2xl">Leading floor logistics, resource allocation, venue setup, and vendor coordination for major chapter events.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- PES Card -->
+          <div class="minimal-card p-6 sm:p-8 reveal reveal-delay-3">
+            <div class="flex items-start justify-between">
+              <div>
+                <h3 class="text-lg font-bold text-white">PES Chapter</h3>
+                <p class="text-sm text-emerald-400 mt-1">Core Volunteer, Logistics & Ops</p>
+                <div class="text-sm text-slate-400 mt-4 font-light max-w-2xl">Executing operational management for power engineering technical symposiums, lab tours, and speaker sessions.</div>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
     </section>
 
     <!-- CONTACT SECTION -->
-    <section id="contact" class="py-32 relative z-20 bg-black border-t border-white/5">
+    <section id="contact" class="py-32 relative z-20 bg-[#050505] border-t border-white/5">
       <div class="max-w-3xl mx-auto px-6 text-center reveal">
         <h2 class="text-3xl sm:text-4xl font-bold text-white tracking-tight mb-6">Let's build something.</h2>
         <p class="text-slate-400 font-light mb-12">Open for internship opportunities and hardware collaborations.</p>
@@ -369,6 +481,7 @@
             <input type="text" name="name" required placeholder="Name" class="w-full px-5 py-4 rounded-2xl bg-white/5 border border-white/10 focus:border-emerald-500/50 focus:bg-white/10 outline-none text-white text-sm transition-all">
             <input type="email" name="email" required placeholder="Email" class="w-full px-5 py-4 rounded-2xl bg-white/5 border border-white/10 focus:border-emerald-500/50 focus:bg-white/10 outline-none text-white text-sm transition-all">
           </div>
+          <input type="text" name="subject" required placeholder="Subject / Topic" class="w-full px-5 py-4 rounded-2xl bg-white/5 border border-white/10 focus:border-emerald-500/50 focus:bg-white/10 outline-none text-white text-sm transition-all">
           <textarea name="message" rows="4" required placeholder="Message..." class="w-full px-5 py-4 rounded-2xl bg-white/5 border border-white/10 focus:border-emerald-500/50 focus:bg-white/10 outline-none text-white text-sm resize-none transition-all"></textarea>
           <button type="submit" class="w-full py-4 rounded-2xl bg-white hover:bg-emerald-400 text-black font-semibold text-sm transition-colors">
             Send Message
@@ -386,6 +499,7 @@
 
   <footer class="py-8 bg-black text-center text-xs text-slate-600 font-light">
     <p>&copy; 2026 Mahathir Neloy. North South University.</p>
+    <p class="mt-2 text-slate-700">Tui Same HSC batch hoile &bull; tore bhai dakbo kun logic e?</p>
   </footer>
 
   <script>
