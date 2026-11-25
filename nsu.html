@@ -18,7 +18,7 @@ header p:last-child{font-weight:300}
 .col{display:grid;gap:1.25rem}
 .card{padding:1.25rem 1.35rem 1.35rem;border-radius:1.75rem;border:1px solid var(--line);background:linear-gradient(160deg,rgba(255,255,255,.06),rgba(255,255,255,.012)),#030806;box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 0 60px -34px rgba(52,211,153,.5)}
 h2{font-size:1.1rem;font-weight:500;color:#fff;margin-bottom:.9rem}
-.f4{display:grid;gap:.75rem;grid-template-columns:repeat(4,1fr)}
+.f4{display:grid;gap:.75rem;grid-template-columns:repeat(auto-fit,minmax(8.5rem,1fr))}
 .f{display:flex;flex-direction:column;gap:.25rem;min-width:0}
 .f small{font:.6rem var(--mono);text-transform:uppercase;letter-spacing:.1em;color:var(--mut)}
 input,select{width:100%;padding:.65rem .8rem;border-radius:.9rem;border:1px solid var(--line);background:rgba(255,255,255,.05);color:#fff;font:500 .95rem var(--mono);outline:0;color-scheme:dark;min-width:0}
@@ -50,6 +50,7 @@ input::placeholder{color:#5d6579}
 <section class="card"><h2>Your record</h2><div class="f4">
 <label class="f"><small>Total credit</small><input id="tot" type="number" inputmode="decimal" min="0" step="any" placeholder="130"></label>
 <label class="f"><small>Credits passed</small><input id="pass" type="number" inputmode="decimal" min="0" step="any" placeholder="0"></label>
+<label class="f"><small>Failed credits (F)</small><input id="fl" type="number" inputmode="decimal" min="0" step="any" placeholder="0"></label>
 <label class="f"><small>Current CGPA</small><input id="cg" type="number" inputmode="decimal" min="0" max="4" step="any" placeholder="0.00"></label>
 <label class="f"><small>Target CGPA</small><input id="tg" type="number" inputmode="decimal" min="0" max="4" step="any" placeholder="optional"></label>
 </div></section>
@@ -65,7 +66,7 @@ input::placeholder{color:#5d6579}
 <button class="reset" id="rs" type="button">Reset</button>
 </aside>
 </div>
-<p class="note">Retakes count the better grade. W / I courses are not counted.</p>
+<p class="note">An F counts as 0.0 in your CGPA until you retake it. A retake replaces the old grade. W / I courses are not counted.</p>
 </div>
 <script>
 const G=['A','A-','B+','B','B-','C+','C','C-','D+','D','F'],GP=[4,3.7,3.3,3,2.7,2.3,2,1.7,1.3,1,0],CR=[1,1.5,2,3,4],K='nsu-cgpa';
@@ -74,30 +75,32 @@ const num=v=>{v=parseFloat(v);return isFinite(v)&&v>0?v:0},f2=v=>(isFinite(v)?v:
 const sel=(c,l,o)=>`<label class="f"><small>${l}</small><select class="${c}">${o}</select></label>`;
 const gO=(v,x)=>G.map((g,i)=>`<option value="${i}"${v==i?' selected':''}>${g}</option>`).join('')+(x?`<option value="x"${v==='x'?' selected':''}>W / I</option>`:'');
 const cO=v=>CR.map(c=>`<option${v==c?' selected':''}>${c}</option>`).join('');
-const def=()=>({tot:130,pass:'',cg:'',tg:'',c:[0,1,2].map(()=>({n:'',c:3,g:'0'})),r:[]});
+const def=()=>({tot:130,pass:'',fl:'',cg:'',tg:'',c:[0,1,2].map(()=>({n:'',c:3,g:'0'})),r:[]});
 let S;try{S=JSON.parse(localStorage.getItem(K))}catch(e){}
 if(!S||!Array.isArray(S.c)||!Array.isArray(S.r))S=def();
 const save=()=>{try{localStorage.setItem(K,JSON.stringify(S))}catch(e){}};
 function draw(){
-  for(const k of ['tot','pass','cg','tg'])$('#'+k).value=S[k];
+  for(const k of ['tot','pass','fl','cg','tg'])$('#'+k).value=S[k]??'';
   $('#cl').innerHTML=S.c.map(r=>`<div class="row"><button class="x" type="button" data-d="c" aria-label="Remove course">&times;</button><input class="n" maxlength="24" placeholder="Course (optional)">${sel('cr','Credit',cO(r.c))}${sel('gr','Grade',gO(r.g,1))}</div>`).join('');
   $('#rl').innerHTML=S.r.map(r=>`<div class="row"><button class="x" type="button" data-d="r" aria-label="Remove retake">&times;</button><input class="n" maxlength="24" placeholder="Course (optional)">${sel('cr','Credit',cO(r.c))}${sel('go','Old',gO(r.o))}${sel('gw','New',gO(r.w))}</div>`).join('');
   $$('#cl .n').forEach((e,i)=>e.value=S.c[i].n);$$('#rl .n').forEach((e,i)=>e.value=S.r[i].n);
 }
 function read(){
-  for(const k of ['tot','pass','cg','tg'])S[k]=$('#'+k).value;
+  for(const k of ['tot','pass','fl','cg','tg'])S[k]=$('#'+k).value;
   S.c=$$('#cl .row').map(r=>({n:r.querySelector('.n').value,c:+r.querySelector('.cr').value,g:r.querySelector('.gr').value}));
   S.r=$$('#rl .row').map(r=>({n:r.querySelector('.n').value,c:+r.querySelector('.cr').value,o:r.querySelector('.go').value,w:r.querySelector('.gw').value}));
 }
 function calc(){
-  const tot=num(S.tot),pass=num(S.pass),cg=Math.min(4,num(S.cg)),tg=num(S.tg);
-  let sp=0,sc=0,np=0,nc=0,rd=0;
-  for(const r of S.c){if(r.g==='x'||!r.c)continue;const p=GP[r.g]*r.c;sp+=p;sc+=r.c;np+=p;nc+=r.c}
-  for(const r of S.r){if(!r.c)continue;sp+=GP[r.w]*r.c;sc+=r.c;rd+=Math.max(0,GP[r.w]-GP[r.o])*r.c}
-  const cr=pass+nc,pts=cg*pass+np+rd,den=Math.max(tot,cr),left=den-cr,cgpa=cr?pts/cr:0;
+  const tot=num(S.tot),pass=num(S.pass),fl=num(S.fl),cg=Math.min(4,num(S.cg)),tg=num(S.tg);
+  let sp=0,sc=0,np=0,nc=0,ncp=0,rd=0,rf=0,rfp=0;
+  for(const r of S.c){if(r.g==='x'||!r.c)continue;const p=GP[r.g]*r.c;sp+=p;sc+=r.c;np+=p;nc+=r.c;if(r.g!=='10')ncp+=r.c}
+  for(const r of S.r){if(!r.c)continue;sp+=GP[r.w]*r.c;sc+=r.c;rd+=Math.max(0,GP[r.w]-GP[r.o])*r.c;if(r.o==='10'){rf+=r.c;if(r.w!=='10')rfp+=r.c}}
+  // F credits already count in your CGPA (as 0.0) until the course is retaken and the new grade replaces it
+  const failed=Math.max(fl,rf),att=pass+failed+nc,pts=cg*(pass+failed)+np+rd,cgpa=att?pts/att:0;
+  const earned=pass+ncp+rfp,unF=failed-rfp+(nc-ncp),newR=Math.max(0,tot-earned-unF),den=att+newR,left=unF+newR;
   $('#osg').textContent=f2(sc?sp/sc:0);$('#osc').textContent=sc+' credits';
-  $('#ocg').textContent=f2(cgpa);$('#otc').textContent=cr+' credits';
-  $('#ocl').textContent=cr?(cgpa>=3?'First class':cgpa>=2.5?'Second class':cgpa>=2?'Third class':'Below 2.00'):'';
+  $('#ocg').textContent=f2(cgpa);$('#otc').textContent=att+' credits counted';
+  $('#ocl').textContent=att?(cgpa>=3?'First class':cgpa>=2.5?'Second class':cgpa>=2?'Third class':'Below 2.00'):'';
   $('#omx').textContent=f2(den?(pts+4*left)/den:0);
   $('#ond').hidden=!tg;
   if(tg){

@@ -74,7 +74,7 @@ nav{display:none;align-items:center;gap:2rem;font-size:.9rem}nav a:not(.pill):ho
 #hero{padding:7rem 0 2rem}
 .panel{position:relative;overflow:hidden;border-radius:2rem;background:#000;border:1px solid rgba(255,255,255,.07)}
 .hero-in{position:relative;z-index:2;display:flex;flex-direction:column;gap:2rem;padding:3.5rem 1.5rem 20rem}
-@media(min-width:768px){.hero-in{padding:6rem 4rem;max-width:62%;min-height:44rem;justify-content:center}}
+@media(min-width:768px){.hero-in{padding:5rem 4rem;max-width:62%;min-height:34rem;justify-content:center}}
 #dust{position:absolute;inset:0;width:100%;height:100%;z-index:1}
 .status{align-self:flex-start;display:inline-flex;align-items:center;gap:.6rem;padding:.5rem 1rem;border-radius:999px;background:rgba(6,16,11,.9);border:1px solid rgba(52,211,153,.3);font:.75rem var(--mono);color:var(--b2)}
 .dot{position:relative;width:.5rem;height:.5rem;border-radius:50%;background:var(--b3);flex-shrink:0}
@@ -209,6 +209,9 @@ nav a:not(.pill)::after{content:'';position:absolute;left:0;right:0;bottom:-7px;
 nav a:not(.pill):hover::after{transform:scaleX(1)}
 nav .pill-d[href="moja.html"]{border-color:rgba(52,211,153,.5);color:var(--b1)}
 nav .pill-d[href="moja.html"]:hover{color:#000}
+nav .pill-d[href="nsu.html"]{border-color:rgba(52,211,153,.5);color:var(--b1)}
+nav .pill-d[href="nsu.html"]:hover{color:#000}
+@media(min-width:768px) and (max-width:1100px){nav{gap:1.1rem}}
 /* ===== Mobile visibility fixes ===== */
 /* menu was see-through (glass style overrode its background) -> solid panel */
 #mmenu{background:#050a07;box-shadow:0 18px 40px -8px rgba(0,0,0,.95),inset 0 1px 0 rgba(255,255,255,.1)}
@@ -287,6 +290,13 @@ footer::before{content:'';position:absolute;inset:0;z-index:0;pointer-events:non
 .lfr-ir{display:flex;gap:3px}.lfr-ir i{width:.8rem;height:.8rem;border-radius:3px;background:#34d399;opacity:.12}
 .lfr-m{white-space:nowrap;display:grid;grid-template-columns:auto 3.5rem;gap:.15rem .4rem;align-items:center}
 .lfr-m u{display:block;height:4px;border-radius:4px;background:rgba(255,255,255,.1);text-decoration:none;overflow:hidden}.lfr-m u i{display:block;height:100%;width:0;background:var(--b3)}
+
+/* ===== Hero: bold + glow ===== */
+h1{font-size:clamp(2.6rem,7.6vw,6rem)}
+@media(min-width:768px){.scope svg{width:6.8rem;height:2.5rem}.hero-in{gap:1.6rem}}
+#heropanel{border-color:rgba(52,211,153,.24);box-shadow:inset 0 1px 0 rgba(183,245,214,.12),0 0 0 1px rgba(16,185,129,.06),0 0 70px -24px rgba(16,185,129,.6),0 40px 90px -50px rgba(16,185,129,.4)}
+#heropanel::after{content:'';position:absolute;inset:0;z-index:0;pointer-events:none;background:radial-gradient(ellipse 34% 52% at 75% 50%,rgba(16,185,129,.24),rgba(16,185,129,.08) 48%,transparent 74%)}
+@media(max-width:767px){#heropanel::after{background:radial-gradient(ellipse 70% 30% at 50% 84%,rgba(16,185,129,.24),rgba(16,185,129,.08) 48%,transparent 74%)}}
 </style>
 </head>
 <body>
@@ -312,13 +322,14 @@ footer::before{content:'';position:absolute;inset:0;z-index:0;pointer-events:non
     <nav>
       <a href="#about">About</a><a href="#projects">Featured Project</a><a href="#experience">Leadership</a>
       <a href="moja.html" class="pill pill-d">MOJA</a>
+      <a href="nsu.html" class="pill pill-d">NSU STUFF</a>
       <a href="#contact" class="pill pill-d">Get in Touch</a>
     </nav>
     <button id="mbtn" aria-label="Toggle menu"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"/></svg></button>
   </div>
   <div id="mmenu" class="hide">
     <a href="#about" class="mlink">About</a><a href="#projects" class="mlink">Featured Project</a>
-    <a href="#experience" class="mlink">Leadership</a><a href="moja.html" class="mlink">MOJA</a><a href="#contact" class="mlink blue">Contact</a>
+    <a href="#experience" class="mlink">Leadership</a><a href="moja.html" class="mlink">MOJA</a><a href="nsu.html" class="mlink">NSU STUFF</a><a href="#contact" class="mlink blue">Contact</a>
   </div>
 </header>
 
@@ -343,13 +354,6 @@ footer::before{content:'';position:absolute;inset:0;z-index:0;pointer-events:non
           <span class="g nw">Neloy</span>
         </h1>
         <p class="bio">Electrical & Electronic Engineering student at <strong>North South University</strong>.</p>
-        <div><a href="#projects" class="pill pill-w btn">
-          <span>Check The Builds</span>
-          <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
-        </a></div>
-        <div class="chips">
-          <span><i></i>North South University</span><span><i></i>IEEE NSU Student Branch</span><span><i></i>Dhaka, Bangladesh</span>
-        </div>
       </div>
     </div>
   </div>
@@ -843,8 +847,8 @@ document.querySelectorAll('.btn').forEach(b => b.addEventListener('click', funct
   function build(){
     cd=Math.min(devicePixelRatio||1,CAP);W=panel.clientWidth;H=panel.clientHeight;
     cv.width=W*cd;cv.height=H*cd;ctx.setTransform(cd,0,0,cd,0,0);if(!NC){NC=document.createElement('canvas');nctx=NC.getContext('2d')}NC.width=cv.width;NC.height=cv.height;
-    const wide=W>=768;cx=W*(wide?.74:.5);cy=H*(wide?.5:.84);sc=wide?.78:.56;RAD=wide?80:55;
-    const rxO=wide?Math.min(W*.2,260):W*.44,ryO=rxO*.6;
+    const wide=W>=768;cx=W*(wide?.75:.5);cy=H*(wide?.5:.84);sc=wide?.95:.56;RAD=wide?88:55;
+    const rxO=wide?Math.min(W*.22,300):W*.44,ryO=rxO*.6;
     rings=[[.5,.26],[.75,.16],[1,.1]].map(([f,sp])=>({rx:rxO*f,ry:ryO*f,sp}));
     Rc=rxO*.2;
     // core glow + lightning bolt (cached)
