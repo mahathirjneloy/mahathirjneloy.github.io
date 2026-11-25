@@ -204,7 +204,7 @@ input:focus,textarea:focus{border-color:rgba(255,255,255,.35);box-shadow:0 0 0 3
 /* Nav links: numbered like the section labels (01, 02, 03) + trace underline on hover */
 nav{counter-reset:n}
 nav a:not(.pill){position:relative;counter-increment:n;font:500 .74rem var(--mono);text-transform:uppercase;letter-spacing:.08em}
-nav a:not(.pill)::before{content:'0' counter(n);color:var(--b3);margin-right:.45rem}
+
 nav a:not(.pill)::after{content:'';position:absolute;left:0;right:0;bottom:-7px;height:1px;background:var(--b3);box-shadow:0 0 8px var(--b3);transform:scaleX(0);transform-origin:left;transition:transform .25s}
 nav a:not(.pill):hover::after{transform:scaleX(1)}
 nav .pill-d[href="moja.html"]{border-color:rgba(52,211,153,.5);color:var(--b1)}
@@ -230,7 +230,7 @@ nav .pill-d[href="moja.html"]:hover{color:#000}
 <!-- Header -->
 <header>
   <div class="bar">
-    <a href="#hero" class="logo"><div class="mn">MN</div><div><b>Mahathir Neloy</b><small>Robotics & Embedded</small></div></a>
+    <a href="#hero" class="logo"><div class="mn">MN</div><div><b>Mahathir Neloy</b></div></a>
     <nav>
       <a href="#about">About</a><a href="#projects">Featured Project</a><a href="#experience">Leadership</a>
       <a href="moja.html" class="pill pill-d">MOJA</a>
