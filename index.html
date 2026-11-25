@@ -713,7 +713,7 @@ document.querySelectorAll('.btn').forEach(b => b.addEventListener('click', funct
   }
   function hit(p){mark(p);
     const dx=p.x-mouse.x,dy=p.y-mouse.y,d=Math.hypot(dx,dy)||1;
-    p.vx=dx/d*(180+rnd()*260)+(rnd()-.5)*120;p.vy=dy/d*(180+rnd()*260)+(rnd()-.5)*120;toOrbit(p,2+rnd()*3.5);
+    p.vx=dx/d*(180+rnd()*260)+(rnd()-.5)*120;p.vy=dy/d*(180+rnd()*260)+(rnd()-.5)*120;toOrbit(p,1+rnd()*1.5);
   }
   // sample the real heading's word positions -> targets for the component particles
   function layout(intro){
@@ -730,7 +730,7 @@ document.querySelectorAll('.btn').forEach(b => b.addEventListener('click', funct
     P=pts.map(([hx,hy])=>{
       const type=WT[rnd()*WT.length|0],hrot=AX.includes(type)?(rnd()<.5?0:1.5708):(rnd()*4|0)*1.5708;
       const p={hx,hy,x:hx,y:hy,vx:0,vy:0,mode:0,timer:0,rot:hrot,hrot,cr:Math.cos(hrot),sr:Math.sin(hrot),spin:0,type,ph:rnd()*TAU,a:0,sp:0,orx:0,ory:0};
-      if(intro){const a=rnd()*TAU,r=rings[2].rx*(.7+rnd()*.4);p.x=cx+Math.cos(a)*r;p.y=cy+Math.sin(a)*r*.6;toOrbit(p,.8+rnd()*2.4)}
+      if(intro){const a=rnd()*TAU,r=rings[2].rx*(.7+rnd()*.4);p.x=cx+Math.cos(a)*r;p.y=cy+Math.sin(a)*r*.6;toOrbit(p,.3+rnd()*.9)}
       return p;
     });
     setupCache();h1.classList.add('pfx');
@@ -811,7 +811,7 @@ document.querySelectorAll('.btn').forEach(b => b.addEventListener('click', funct
         if(p.mode!==0){
           let tx,ty,k,c;
           if(p.mode===1){p.a+=p.sp*dt;const ex=Math.cos(p.a)*p.orx,ey=Math.sin(p.a)*p.ory;tx=cx+ex*CT-ey*ST;ty=cy+ex*ST+ey*CT;k=7;c=4.5;p.rot+=p.spin*dt;p.timer-=dt;if(p.timer<=0)p.mode=2}
-          else{tx=p.hx;ty=p.hy;k=4.5;c=4.2;p.rot+=Math.atan2(Math.sin(p.hrot-p.rot),Math.cos(p.hrot-p.rot))*Math.min(1,6*dt)}
+          else{tx=p.hx;ty=p.hy;k=40;c=12.6;p.rot+=Math.atan2(Math.sin(p.hrot-p.rot),Math.cos(p.hrot-p.rot))*Math.min(1,12*dt)}
           p.vx+=((tx-p.x)*k-p.vx*c)*dt;p.vy+=((ty-p.y)*k-p.vy*c)*dt;p.x+=p.vx*dt;p.y+=p.vy*dt;
           if(p.mode===2&&Math.abs(p.hx-p.x)+Math.abs(p.hy-p.y)<1.2&&Math.abs(p.vx)+Math.abs(p.vy)<14){p.mode=0;p.x=p.hx;p.y=p.hy;p.vx=p.vy=0;p.rot=p.hrot;mark(p)}
           x=p.x;y=p.y;
