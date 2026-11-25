@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" style="scroll-behavior:smooth">
-<head>
+<head><!-- speed-patched -->
 <meta charset="UTF-8">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='9' fill='%23000'/><rect x='1' y='1' width='30' height='30' rx='8' fill='none' stroke='%2310b981' stroke-width='2'/><circle cx='25' cy='7' r='2' fill='%2334d399'/><text x='15' y='21' font-family='system-ui,sans-serif' font-weight='700' font-size='13' fill='%23b7f5d6' text-anchor='middle'>MN</text></svg>">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,7 +19,7 @@
 <meta name="twitter:image" content="https://mahathirjneloy.github.io/image_301fca.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"></noscript>
 <script>function imgErr(i,f){const h=()=>{const a=document.getElementById(i),b=document.getElementById(f);a&&a.classList.add("hide");b&&b.classList.remove("hide")};document.readyState==="loading"?document.addEventListener("DOMContentLoaded",h):h()}</script>
 <style>
 :root{--b1:#b7f5d6;--b2:#6ee7b7;--b3:#34d399;--b4:#10b981;--ring:#10b981;--line:rgba(255,255,255,.1);--card:rgba(4,10,7,.72);--mut:#8d95a8;--txt:#c5cad6;--sans:'Google Sans','Outfit',system-ui,sans-serif;--mono:'JetBrains Mono',monospace}
@@ -874,8 +874,8 @@ document.querySelectorAll('.btn').forEach(b => b.addEventListener('click', funct
   function frame(ms){
     if(!running)return;
     // cap at ~60-100fps: high-refresh displays no longer double/triple the canvas workload
-    if(ms-lastDraw<14.2){raf=requestAnimationFrame(frame);return}
-    const el=ms-lastDraw;lastDraw=ms-(el%16.667);
+    
+    const el=ms-lastDraw;lastDraw=ms;
     const t=ms/1000,dt=Math.max(0,Math.min(t-last,.05));last=t;ctx.clearRect(0,0,W,H);
     ctx.fillStyle='#8be8c0';
     for(let i=0;i<S.length;i++){const s=S[i];ctx.globalAlpha=.1+Math.sin(t+s.ph)*.07;ctx.fillRect(s.x,s.y,1.2,1.2)}
