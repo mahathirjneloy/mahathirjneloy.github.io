@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"><meta name="robots" content="noindex, nofollow">
+<title>NSU Stuff | CGPA Calculator</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='9' fill='%23000'/><rect x='1' y='1' width='30' height='30' rx='8' fill='none' stroke='%2310b981' stroke-width='2'/><text x='16' y='21' font-family='system-ui,sans-serif' font-weight='700' font-size='12' fill='%23b7f5d6' text-anchor='middle'>MJ</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"></noscript>
+<style>
+:root{--b1:#b7f5d6;--b2:#6ee7b7;--b3:#34d399;--line:rgba(255,255,255,.1);--mut:#8d95a8;--txt:#c5cad6;--mono:'JetBrains Mono',monospace}
+*{box-sizing:border-box;margin:0}
+body{background:#000;color:var(--txt);font-family:'Outfit',system-ui,sans-serif;min-height:100vh;line-height:1.5;padding:1.25rem max(1.25rem,env(safe-area-inset-right)) max(1.25rem,env(safe-area-inset-bottom)) max(1.25rem,env(safe-area-inset-left));background-image:radial-gradient(60rem 30rem at 50% -8%,rgba(5,66,44,.5),transparent 70%),radial-gradient(34rem 34rem at 8% 95%,rgba(16,185,129,.14),transparent 65%),radial-gradient(30rem 30rem at 95% 75%,rgba(13,148,136,.12),transparent 65%)}
+.wrap{width:100%;max-width:64rem;margin:0 auto;padding:1rem 0}
+.back{display:inline-block;font:.78rem var(--mono);color:var(--b3);text-decoration:none}.back:hover{color:var(--b1)}
+header{text-align:center;margin:1.25rem 0 2rem}
+.label{font:.72rem var(--mono);text-transform:uppercase;letter-spacing:.14em;color:var(--b3)}
+h1{font-size:clamp(2rem,6vw,3.2rem);font-weight:500;color:#fff;letter-spacing:-.03em;line-height:1.15;margin:.4rem 0}
+header p:last-child{font-weight:300}
+.grid{display:grid;gap:1.25rem;grid-template-columns:minmax(0,1fr) 21rem;align-items:start}
+.col{display:grid;gap:1.25rem}
+.card{padding:1.25rem 1.35rem 1.35rem;border-radius:1.75rem;border:1px solid var(--line);background:linear-gradient(160deg,rgba(255,255,255,.06),rgba(255,255,255,.012)),#030806;box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 0 60px -34px rgba(52,211,153,.5)}
+h2{font-size:1.1rem;font-weight:500;color:#fff;margin-bottom:.9rem}
+.f4{display:grid;gap:.75rem;grid-template-columns:repeat(4,1fr)}
+.f{display:flex;flex-direction:column;gap:.25rem;min-width:0}
+.f small{font:.6rem var(--mono);text-transform:uppercase;letter-spacing:.1em;color:var(--mut)}
+input,select{width:100%;padding:.65rem .8rem;border-radius:.9rem;border:1px solid var(--line);background:rgba(255,255,255,.05);color:#fff;font:500 .95rem var(--mono);outline:0;color-scheme:dark;min-width:0}
+input:focus,select:focus{border-color:var(--b3);background:rgba(52,211,153,.07)}
+input::placeholder{color:#5d6579}
+.row{display:flex;flex-wrap:wrap;gap:.5rem;align-items:flex-end;padding:.7rem 0;border-top:1px solid var(--line)}
+.row:first-child{border-top:0;padding-top:0}
+.row .n{flex:1 1 9rem;align-self:flex-end}
+.row .f{flex:0 0 5.2rem}
+.x{flex:0 0 2rem;height:2.4rem;border-radius:.7rem;border:0;background:none;color:#f87171;font-size:1.4rem;line-height:1;cursor:pointer}.x:hover{background:rgba(248,113,113,.12)}
+.add{width:100%;margin-top:.5rem;padding:.7rem;border-radius:.9rem;border:1px dashed rgba(52,211,153,.4);background:transparent;color:var(--b3);font:500 .85rem var(--mono);cursor:pointer;transition:.2s}.add:hover{background:rgba(52,211,153,.08);border-color:var(--b3)}
+.res{position:sticky;top:1rem}
+.r{display:flex;flex-direction:column;padding:.9rem 0;border-bottom:1px solid var(--line)}.r:first-of-type{padding-top:0}
+.k{font:.62rem var(--mono);text-transform:uppercase;letter-spacing:.12em;color:var(--mut)}
+.r b{font:500 2.2rem/1.2 var(--mono);color:#fff}.r.big b{font-size:3.2rem;color:var(--b1);text-shadow:0 0 30px rgba(52,211,153,.4)}
+.r small{font:.75rem var(--mono);color:var(--mut)}
+.chip{display:inline-block;margin:.9rem 0 .2rem;padding:.3rem .8rem;border-radius:999px;border:1px solid rgba(52,211,153,.4);background:rgba(52,211,153,.1);color:var(--b2);font:.72rem var(--mono)}.chip:empty{display:none}
+.line{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;padding:.7rem 0;font-size:.9rem}.line b{font:500 1rem var(--mono);color:var(--b1);text-align:right}
+.reset{width:100%;margin-top:.6rem;padding:.7rem;border-radius:999px;border:0;background:#fff;color:#111;font:600 .9rem 'Outfit',sans-serif;cursor:pointer;transition:.2s}.reset:hover{background:var(--b3)}
+.note{margin-top:1.25rem;text-align:center;font:.7rem var(--mono);color:var(--mut)}
+@media(max-width:860px){.grid{grid-template-columns:1fr}.res{position:static;order:-1}}
+@media(max-width:600px){.f4{grid-template-columns:1fr 1fr}input,select{font-size:16px}.card{padding:1.1rem}}
+</style></head><body>
+<div class="wrap">
+<a class="back" href="index.html">&larr; Back to portfolio</a>
+<header><p class="label">// NSU STUFF</p><h1>CGPA Calculator</h1><p>North South University grading scale.</p></header>
+<div class="grid">
+<div class="col">
+<section class="card"><h2>Your record</h2><div class="f4">
+<label class="f"><small>Total credit</small><input id="tot" type="number" inputmode="decimal" min="0" step="any" placeholder="130"></label>
+<label class="f"><small>Credits passed</small><input id="pass" type="number" inputmode="decimal" min="0" step="any" placeholder="0"></label>
+<label class="f"><small>Current CGPA</small><input id="cg" type="number" inputmode="decimal" min="0" max="4" step="any" placeholder="0.00"></label>
+<label class="f"><small>Target CGPA</small><input id="tg" type="number" inputmode="decimal" min="0" max="4" step="any" placeholder="optional"></label>
+</div></section>
+<section class="card"><h2>This semester</h2><div id="cl"></div><button class="add" id="ac" type="button">+ Add course</button></section>
+<section class="card"><h2>Retakes</h2><div id="rl"></div><button class="add" id="ar" type="button">+ Add retake</button></section>
+</div>
+<aside class="card res">
+<div class="r"><span class="k">Semester GPA</span><b id="osg">0.00</b><small id="osc">0 credits</small></div>
+<div class="r big"><span class="k">Overall CGPA</span><b id="ocg">0.00</b><small id="otc">0 credits</small></div>
+<span class="chip" id="ocl"></span>
+<div class="line"><span>Best possible CGPA</span><b id="omx">0.00</b></div>
+<div class="line" id="ond" hidden><span id="onl">Needed average GPA</span><b id="onv"></b></div>
+<button class="reset" id="rs" type="button">Reset</button>
+</aside>
+</div>
+<p class="note">Retakes count the better grade. W / I courses are not counted.</p>
+</div>
+<script>
+const G=['A','A-','B+','B','B-','C+','C','C-','D+','D','F'],GP=[4,3.7,3.3,3,2.7,2.3,2,1.7,1.3,1,0],CR=[1,1.5,2,3,4],K='nsu-cgpa';
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const num=v=>{v=parseFloat(v);return isFinite(v)&&v>0?v:0},f2=v=>(isFinite(v)?v:0).toFixed(2);
+const sel=(c,l,o)=>`<label class="f"><small>${l}</small><select class="${c}">${o}</select></label>`;
+const gO=(v,x)=>G.map((g,i)=>`<option value="${i}"${v==i?' selected':''}>${g}</option>`).join('')+(x?`<option value="x"${v==='x'?' selected':''}>W / I</option>`:'');
+const cO=v=>CR.map(c=>`<option${v==c?' selected':''}>${c}</option>`).join('');
+const def=()=>({tot:130,pass:'',cg:'',tg:'',c:[0,1,2].map(()=>({n:'',c:3,g:'0'})),r:[]});
+let S;try{S=JSON.parse(localStorage.getItem(K))}catch(e){}
+if(!S||!Array.isArray(S.c)||!Array.isArray(S.r))S=def();
+const save=()=>{try{localStorage.setItem(K,JSON.stringify(S))}catch(e){}};
+function draw(){
+  for(const k of ['tot','pass','cg','tg'])$('#'+k).value=S[k];
+  $('#cl').innerHTML=S.c.map(r=>`<div class="row"><button class="x" type="button" data-d="c" aria-label="Remove course">&times;</button><input class="n" maxlength="24" placeholder="Course (optional)">${sel('cr','Credit',cO(r.c))}${sel('gr','Grade',gO(r.g,1))}</div>`).join('');
+  $('#rl').innerHTML=S.r.map(r=>`<div class="row"><button class="x" type="button" data-d="r" aria-label="Remove retake">&times;</button><input class="n" maxlength="24" placeholder="Course (optional)">${sel('cr','Credit',cO(r.c))}${sel('go','Old',gO(r.o))}${sel('gw','New',gO(r.w))}</div>`).join('');
+  $$('#cl .n').forEach((e,i)=>e.value=S.c[i].n);$$('#rl .n').forEach((e,i)=>e.value=S.r[i].n);
+}
+function read(){
+  for(const k of ['tot','pass','cg','tg'])S[k]=$('#'+k).value;
+  S.c=$$('#cl .row').map(r=>({n:r.querySelector('.n').value,c:+r.querySelector('.cr').value,g:r.querySelector('.gr').value}));
+  S.r=$$('#rl .row').map(r=>({n:r.querySelector('.n').value,c:+r.querySelector('.cr').value,o:r.querySelector('.go').value,w:r.querySelector('.gw').value}));
+}
+function calc(){
+  const tot=num(S.tot),pass=num(S.pass),cg=Math.min(4,num(S.cg)),tg=num(S.tg);
+  let sp=0,sc=0,np=0,nc=0,rd=0;
+  for(const r of S.c){if(r.g==='x'||!r.c)continue;const p=GP[r.g]*r.c;sp+=p;sc+=r.c;np+=p;nc+=r.c}
+  for(const r of S.r){if(!r.c)continue;sp+=GP[r.w]*r.c;sc+=r.c;rd+=Math.max(0,GP[r.w]-GP[r.o])*r.c}
+  const cr=pass+nc,pts=cg*pass+np+rd,den=Math.max(tot,cr),left=den-cr,cgpa=cr?pts/cr:0;
+  $('#osg').textContent=f2(sc?sp/sc:0);$('#osc').textContent=sc+' credits';
+  $('#ocg').textContent=f2(cgpa);$('#otc').textContent=cr+' credits';
+  $('#ocl').textContent=cr?(cgpa>=3?'First class':cgpa>=2.5?'Second class':cgpa>=2?'Third class':'Below 2.00'):'';
+  $('#omx').textContent=f2(den?(pts+4*left)/den:0);
+  $('#ond').hidden=!tg;
+  if(tg){
+    const need=left>0?(tg*den-pts)/left:null;
+    $('#onl').textContent='Needed avg GPA ('+left+' credits left)';
+    $('#onv').textContent=need===null?'No credits left':need<=0?'Already reached':need>4?'Not reachable':f2(need);
+  }
+}
+const upd=()=>{read();calc();save()};
+document.addEventListener('input',upd);document.addEventListener('change',upd);
+$('#ac').onclick=()=>{read();S.c.push({n:'',c:3,g:'0'});draw();calc();save()};
+$('#ar').onclick=()=>{read();S.r.push({n:'',c:3,o:'3',w:'0'});draw();calc();save()};
+document.addEventListener('click',e=>{
+  const b=e.target.closest('.x');if(!b)return;
+  read();const row=b.parentElement,i=[...row.parentElement.children].indexOf(row);
+  (b.dataset.d==='c'?S.c:S.r).splice(i,1);draw();calc();save();
+});
+$('#rs').onclick=()=>{S=def();draw();calc();save()};
+draw();calc();
+</script></body></html>
