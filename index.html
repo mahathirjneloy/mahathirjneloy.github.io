@@ -209,6 +209,18 @@ nav a:not(.pill)::after{content:'';position:absolute;left:0;right:0;bottom:-7px;
 nav a:not(.pill):hover::after{transform:scaleX(1)}
 nav .pill-d[href="moja.html"]{border-color:rgba(52,211,153,.5);color:var(--b1)}
 nav .pill-d[href="moja.html"]:hover{color:#000}
+/* ===== Mobile visibility fixes ===== */
+/* menu was see-through (glass style overrode its background) -> solid panel */
+#mmenu{background:#050a07;box-shadow:0 18px 40px -8px rgba(0,0,0,.95),inset 0 1px 0 rgba(255,255,255,.1)}
+#mmenu a{display:block;padding:.35rem 0;color:#e6ecf5}
+#mmenu a.blue{color:var(--b3)}
+/* top bar: no page text showing through */
+.bar{background-color:#050a07}
+/* About / Leadership cards: darker base + brighter text on phones */
+@media(max-width:767px){
+ .about.card{background:linear-gradient(160deg,rgba(255,255,255,.07),rgba(255,255,255,.02)),#050a07}
+ .about p{color:#e1e6f0;font-weight:400}
+}
 </style>
 </head>
 <body>
@@ -907,6 +919,13 @@ document.querySelectorAll('[data-from]').forEach(el=>{
   const y=Math.floor(m/12),r=m%12,mo=r+(r===1?' mo':' mos');
   el.textContent=y?y+(y>1?' yrs':' yr')+(r?' '+mo:''):mo;
 });})();
+</script>
+<script>
+// Mobile menu: close on scroll or when tapping outside it
+(function(){const m=document.getElementById('mmenu');if(!m)return;
+const close=()=>m.classList.add('hide');
+addEventListener('scroll',close,{passive:true});
+document.addEventListener('click',e=>{if(!e.target.closest('#mmenu,#mbtn'))close()});})();
 </script>
 </body>
 </html>
