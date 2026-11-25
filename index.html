@@ -241,6 +241,52 @@ header.nav-hide .bar::before{animation-play-state:paused}
 .cpanel::before{content:'';position:absolute;inset:0;z-index:0;pointer-events:none;background:var(--pcb) 0 0/220px 220px;opacity:.13;-webkit-mask-image:linear-gradient(115deg,#000 0%,rgba(0,0,0,.5) 35%,transparent 70%);mask-image:linear-gradient(115deg,#000 0%,rgba(0,0,0,.5) 35%,transparent 70%)}
 .fcard{background-image:radial-gradient(circle,rgba(52,211,153,.45) 0 1.8px,transparent 2.4px),radial-gradient(circle,rgba(52,211,153,.45) 0 1.8px,transparent 2.4px),radial-gradient(circle,rgba(52,211,153,.45) 0 1.8px,transparent 2.4px),radial-gradient(circle,rgba(52,211,153,.45) 0 1.8px,transparent 2.4px);background-repeat:no-repeat;background-size:8px 8px;background-position:10px 10px,right 10px top 10px,10px bottom 10px,right 10px bottom 10px}
 .fcard::before{content:'J1';position:absolute;right:1.6rem;top:.8rem;pointer-events:none;font:600 .62rem var(--mono);letter-spacing:.16em;color:rgba(52,211,153,.32)}
+/* ===== Subtle EEE vibe: Projects + Leadership ===== */
+#projects,#experience{position:relative;overflow:hidden}
+#projects .wrap,#experience .wrap{position:relative;z-index:1}
+#projects::before,#experience::before{content:'';position:absolute;inset:0;z-index:0;pointer-events:none;background:var(--pcb) 0 0/220px 220px;opacity:.1;-webkit-mask-image:radial-gradient(ellipse 80% 62% at 50% 50%,#000 28%,transparent 100%);mask-image:radial-gradient(ellipse 80% 62% at 50% 50%,#000 28%,transparent 100%)}
+#experience::before{background-position:110px 60px}
+/* corner via-dots on the project card and the leadership cards */
+.proj.card,.xc.card{background-image:radial-gradient(circle,rgba(52,211,153,.45) 0 1.8px,transparent 2.4px),radial-gradient(circle,rgba(52,211,153,.45) 0 1.8px,transparent 2.4px),radial-gradient(circle,rgba(52,211,153,.45) 0 1.8px,transparent 2.4px),radial-gradient(circle,rgba(52,211,153,.45) 0 1.8px,transparent 2.4px),var(--gl);background-repeat:no-repeat;background-size:8px 8px,8px 8px,8px 8px,8px 8px,auto;background-position:12px 12px,right 12px top 12px,12px bottom 12px,right 12px bottom 12px,0 0}
+/* silkscreen labels */
+#experience .wrap{counter-reset:x}
+.xc{counter-increment:x}
+.xc::before{content:'R' counter(x);right:1.4rem;bottom:.75rem;position:absolute;z-index:0;pointer-events:none;font:600 .62rem var(--mono);letter-spacing:.16em;color:rgba(52,211,153,.32)}
+.proj::before{content:'PRJ1 · RP2040';right:1.4rem;bottom:.75rem;position:absolute;z-index:0;pointer-events:none;font:600 .62rem var(--mono);letter-spacing:.16em;color:rgba(52,211,153,.32)}
+.photos{counter-reset:p}
+.photo{counter-increment:p}
+.photo::before{content:'FIG ' counter(p);top:.8rem;right:.85rem;z-index:2;position:absolute;pointer-events:none;font:600 .6rem var(--mono);letter-spacing:.14em;color:rgba(183,245,214,.75);text-shadow:0 0 6px #000}
+/* timeline nodes look like solder pads on the vertical trace */
+.tl>div{position:relative}
+.tl>div::before{content:'';position:absolute;left:calc(-1rem - 5px);top:.4rem;width:8px;height:8px;border-radius:50%;background:#020504;border:1.5px solid var(--b3);box-shadow:0 0 6px rgba(52,211,153,.5)}
+/* ===== Remove silkscreen labels (U1-U3, J1, R1-R5, PRJ1, FIG 1-3) ===== */
+.about::before,.fcard::before,.xc::before,.proj::before,.photo::before{content:none!important;display:none!important}
+/* ===== Live stats (footer) ===== */
+.stats{display:flex;flex-wrap:wrap;justify-content:center;gap:.75rem;margin-bottom:1.75rem}
+.stat{min-width:13rem;padding:.8rem 1.25rem;border-radius:1.25rem;background:rgba(255,255,255,.03);border:1px solid var(--line)}
+.stat span{display:block;font-size:.65rem;text-transform:uppercase;letter-spacing:.12em}
+.stat b{display:block;margin-top:.25rem;font-size:1.15rem;font-weight:500;color:var(--b1);font-variant-numeric:tabular-nums}
+/* ===== Subtle EEE vibe: Hero + Top bar + Footer ===== */
+/* Hero: traces fading in from two corners + corner via-dots */
+#heropanel::before{content:'';position:absolute;inset:0;z-index:0;pointer-events:none;background:var(--pcb) 0 0/220px 220px;opacity:.14;-webkit-mask-image:radial-gradient(ellipse 80% 90% at 0% 100%,#000 20%,transparent 75%),radial-gradient(ellipse 45% 55% at 100% 0%,#000 10%,transparent 100%);mask-image:radial-gradient(ellipse 80% 90% at 0% 100%,#000 20%,transparent 75%),radial-gradient(ellipse 45% 55% at 100% 0%,#000 10%,transparent 100%)}
+#heropanel{background-image:radial-gradient(circle,rgba(52,211,153,.45) 0 1.8px,transparent 2.4px),radial-gradient(circle,rgba(52,211,153,.45) 0 1.8px,transparent 2.4px),radial-gradient(circle,rgba(52,211,153,.45) 0 1.8px,transparent 2.4px),radial-gradient(circle,rgba(52,211,153,.45) 0 1.8px,transparent 2.4px),linear-gradient(155deg,rgba(255,255,255,.03),transparent 45%);background-repeat:no-repeat;background-size:8px 8px,8px 8px,8px 8px,8px 8px,auto;background-position:18px 18px,right 18px top 18px,left 18px bottom 18px,right 18px bottom 18px,0 0}
+/* Top bar: a trace stub between the name and the links (wide screens only) */
+@media(min-width:1100px){.bar{background-image:var(--stub),radial-gradient(rgba(52,211,153,.13) 1px,transparent 1.2px);background-repeat:no-repeat,repeat;background-size:80px 28px,14px 14px;background-position:17rem center,0 0}}
+/* Footer: traces behind the counters + via-dots on each counter box */
+footer{position:relative;overflow:hidden}
+footer .wrap{position:relative;z-index:1}
+footer::before{content:'';position:absolute;inset:0;z-index:0;pointer-events:none;background:var(--pcb) 0 0/220px 220px;opacity:.11;-webkit-mask-image:radial-gradient(ellipse 60% 85% at 50% 40%,#000 25%,transparent 100%);mask-image:radial-gradient(ellipse 60% 85% at 50% 40%,#000 25%,transparent 100%)}
+.stat{background-image:radial-gradient(circle,rgba(52,211,153,.45) 0 1.8px,transparent 2.4px),radial-gradient(circle,rgba(52,211,153,.45) 0 1.8px,transparent 2.4px),radial-gradient(circle,rgba(52,211,153,.45) 0 1.8px,transparent 2.4px),radial-gradient(circle,rgba(52,211,153,.45) 0 1.8px,transparent 2.4px);background-repeat:no-repeat;background-size:7px 7px;background-position:8px 8px,right 8px top 8px,left 8px bottom 8px,right 8px bottom 8px}
+/* ===== NoobLab: live line-follower simulation ===== */
+.lfr{flex:0 1 27rem;min-width:min(100%,18rem);align-self:center;margin:0 auto;border-radius:1.25rem;overflow:hidden;background:#020605;border:1px solid rgba(52,211,153,.28);box-shadow:0 0 34px -14px rgba(52,211,153,.55);font:.65rem var(--mono);color:var(--mut)}
+@media(max-width:899px){.lfr{flex:1 1 100%}}
+.lfr-top,.lfr-bot{display:flex;align-items:center;justify-content:space-between;gap:.75rem;padding:.55rem .85rem}
+.lfr-top{border-bottom:1px solid var(--line);text-transform:uppercase;letter-spacing:.08em}.lfr b{font-weight:600;color:var(--b1);font-variant-numeric:tabular-nums}
+.lfr canvas{display:block;width:100%;height:auto;aspect-ratio:420/260}
+.lfr-bot{border-top:1px solid var(--line)}
+.lfr-ir{display:flex;gap:3px}.lfr-ir i{width:.8rem;height:.8rem;border-radius:3px;background:#34d399;opacity:.12}
+.lfr-m{white-space:nowrap;display:grid;grid-template-columns:auto 3.5rem;gap:.15rem .4rem;align-items:center}
+.lfr-m u{display:block;height:4px;border-radius:4px;background:rgba(255,255,255,.1);text-decoration:none;overflow:hidden}.lfr-m u i{display:block;height:100%;width:0;background:var(--b3)}
 </style>
 </head>
 <body>
@@ -467,11 +513,14 @@ header.nav-hide .bar::before{animation-play-state:paused}
           <p class="desc">NoobLab is a robotics competition team I started with my 2 friends. We take part in various university-level competitions, and right now we compete in one segment: LFR (Line Following Robot). Our aim is to become the top LFR team in Bangladesh.</p>
           <div class="tags"><span class="tag">Team Leader</span><span class="tag">Founding Member</span><span class="tag">LFR &mdash; Line Following Robot</span><span class="tag">Goal: Top LFR Team in Bangladesh</span></div>
         </div></div>
-        <svg class="track" viewBox="0 0 240 100" fill="none" aria-hidden="true">
-          <path id="trk" d="M4 70 C40 70 44 24 90 24 S140 78 180 66 S224 30 238 34" stroke="rgba(255,255,255,.14)" stroke-width="9" stroke-linecap="round"/>
-          <path d="M4 70 C40 70 44 24 90 24 S140 78 180 66 S224 30 238 34" stroke="#34d399" stroke-opacity=".5" stroke-width="1.4" stroke-dasharray="3 5"/>
-          <g><rect x="-8" y="-6" width="16" height="12" rx="3" fill="#040806" stroke="#6ee7b7" stroke-width="1.3"/><rect x="5" y="-4" width="3.5" height="8" rx="1" fill="#6ee7b7"/><animateMotion dur="6s" repeatCount="indefinite" rotate="auto"><mpath href="#trk"/></animateMotion></g>
-        </svg>
+        <div class="lfr" id="lfr">
+          <div class="lfr-top"><span>Lap <b data-k="lap">1</b></span><span>Time <b data-k="time">0.0s</b></span><span>Best <b data-k="best">&mdash;</b></span></div>
+          <canvas role="img" aria-label="Simulation of a line following robot driving around a track"></canvas>
+          <div class="lfr-bot">
+            <div><div class="lfr-ir"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div style="margin-top:.3rem">IR sensor array</div></div>
+            <div class="lfr-m"><span>Left motor</span><u><i data-k="ml"></i></u><span>Right motor</span><u><i data-k="mr"></i></u></div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -517,6 +566,10 @@ header.nav-hide .bar::before{animation-play-state:paused}
 
 <footer>
   <div class="wrap">
+    <div class="stats">
+      <div class="stat"><span>Visitors today</span><b id="st-visitors">&mdash;</b></div>
+      <div class="stat"><span>Site online for</span><b id="st-uptime">&mdash;</b></div>
+    </div>
     <p>&copy; 2026 Mahathir Neloy. Electrical & Electronic Engineering &bull; North South University.</p>
     <p> Nesha Nari Taash &bull; Tile Tile Shorbonash  </p>
   </div>
@@ -965,6 +1018,155 @@ document.addEventListener('click',e=>{if(!e.target.closest('#mmenu,#mbtn'))close
     if(e.clientY<80){if(h.classList.contains('nav-hide')){show();byMouse=true}}
     else if(byMouse&&e.clientY>170&&scrollY>=80){byMouse=false;hide()}
   },{passive:true});
+})();
+</script>
+<script id="live-stats">
+// Daily visitors (Abacus counting API) and time since the site's GitHub repo was created
+(function(){
+  const HOST='mahathirjneloy.github.io';
+  const LAUNCH=''; // optional: set your own launch date, e.g. '2026-01-15'
+  const read=k=>{try{return localStorage.getItem(k)}catch(e){return null}};
+  const write=(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}};
+
+  // Visitors: each browser is counted once per day (Dhaka time), only on the live site
+  const vis=document.getElementById('st-visitors');
+  const day=new Date(Date.now()+6*3600e3).toISOString().slice(0,10);
+  const count=location.hostname===HOST&&read('mn-visit')!==day;
+  fetch('https://abacus.jasoncameron.dev/'+(count?'hit':'get')+'/'+HOST+'/day-'+day,{cache:'no-store'})
+    .then(r=>{
+      if(r.status===404)return{value:0};
+      if(!r.ok)throw 0;
+      return r.json();
+    })
+    .then(d=>{if(count)write('mn-visit',day);vis.textContent=Number(d.value).toLocaleString('en-US')})
+    .catch(()=>{vis.textContent='unavailable'});
+
+  // Uptime: live timer counting from the launch date
+  const up=document.getElementById('st-uptime');
+  const start=iso=>{
+    const t0=Date.parse(iso);if(isNaN(t0)){up.textContent='unavailable';return}
+    const two=n=>String(n).padStart(2,'0');
+    const tick=()=>{
+      const s=Math.max(0,Math.floor((Date.now()-t0)/1000));
+      up.textContent=Math.floor(s/86400)+'d '+two(Math.floor(s/3600)%24)+'h '+two(Math.floor(s/60)%60)+'m '+two(s%60)+'s';
+    };
+    tick();setInterval(tick,1000);
+  };
+  const saved=LAUNCH||read('mn-launch');
+  if(saved)start(saved);
+  else fetch('https://api.github.com/repos/mahathirjneloy/'+HOST)
+    .then(r=>{if(!r.ok)throw 0;return r.json()})
+    .then(d=>{write('mn-launch',d.created_at);start(d.created_at)})
+    .catch(()=>{up.textContent='unavailable'});
+})();
+</script>
+<script id="lfr-sim">
+// Line follower: 8 simulated IR sensors read the track and a PD controller steers the robot
+(function(){
+  const box=document.getElementById('lfr');if(!box)return;
+  const cv=box.querySelector('canvas'),c=cv.getContext('2d'),W=420,H=260,TAU=Math.PI*2;
+  const $=k=>box.querySelector('[data-k="'+k+'"]'),leds=box.querySelectorAll('.lfr-ir i');
+  const P=[[60,58],[125,34],[190,62],[255,36],[335,40],[386,82],[360,128],[295,128],[272,166],[318,190],[384,190],[374,232],[300,234],[222,196],[150,230],[62,222],[32,160],[78,118]];
+  const T=[];
+  for(let i=0;i<P.length;i++){
+    const p=[-1,0,1,2].map(k=>P[(i+k+P.length)%P.length]);
+    for(let j=0;j<36;j++){
+      const t=j/36,f=a=>.5*(2*p[1][a]+(p[2][a]-p[0][a])*t+(2*p[0][a]-5*p[1][a]+4*p[2][a]-p[3][a])*t*t+(3*p[1][a]-p[0][a]-3*p[2][a]+p[3][a])*t*t*t);
+      T.push([f(0),f(1)]);
+    }
+  }
+  const dist=(x,y)=>{let m=1e9,n=0;for(let i=0;i<T.length;i++){const dx=T[i][0]-x,dy=T[i][1]-y,d=dx*dx+dy*dy;if(d<m){m=d;n=i}}return[Math.sqrt(m),n]};
+
+  const r={x:T[0][0],y:T[0][1],a:Math.atan2(T[3][1]-T[0][1],T[3][0]-T[0][0]),wl:0,wr:0};
+  const S=new Array(8).fill(0),trail=[];
+  let err=0,last=0,idx=0,lap=1,lapT=0,best=null,ml=0,mr=0,tick=0;
+  const sensor=i=>{const s=(i-3.5)*5,ca=Math.cos(r.a),sa=Math.sin(r.a);return[r.x+ca*23-sa*s,r.y+sa*23+ca*s]};
+  function step(dt){
+    let sum=0,w=0;
+    for(let i=0;i<8;i++){const p=sensor(i),v=Math.max(0,Math.min(1,(6.5-dist(p[0],p[1])[0])/3));S[i]=v;sum+=v;w+=v*(i-3.5)/3.5}
+    const lost=sum<.15;
+    err=lost?(last<0?-1:1):w/sum;
+    const turn=7.5*err+(lost?0:.22*(err-last)/dt);
+    const v=lost?30:92*(1-.55*Math.min(1,Math.abs(err)));
+    last=err;
+    r.a+=Math.max(-9,Math.min(9,turn))*dt;r.x+=Math.cos(r.a)*v*dt;r.y+=Math.sin(r.a)*v*dt;
+    ml=v+turn*10;mr=v-turn*10;r.wl+=ml*dt;r.wr+=mr*dt;
+    lapT+=dt;
+    if(++tick%6===0){
+      trail.push([r.x,r.y]);if(trail.length>60)trail.shift();
+      const n=dist(r.x,r.y)[1];
+      if(idx>T.length*.85&&n<T.length*.15){best=best===null?lapT:Math.min(best,lapT);lap++;lapT=0}
+      idx=n;
+    }
+  }
+
+  const rr=(g,x,y,w,h,q)=>{g.beginPath();if(g.roundRect)g.roundRect(x,y,w,h,q);else g.rect(x,y,w,h)};
+  const bg=document.createElement('canvas');
+  function paintTrack(scale){
+    bg.width=W*scale;bg.height=H*scale;const g=bg.getContext('2d');g.scale(scale,scale);
+    g.fillStyle='#030a08';g.fillRect(0,0,W,H);
+    g.strokeStyle='rgba(52,211,153,.07)';g.lineWidth=1;g.beginPath();
+    for(let x=20;x<W;x+=20){g.moveTo(x,0);g.lineTo(x,H)}for(let y=20;y<H;y+=20){g.moveTo(0,y);g.lineTo(W,y)}g.stroke();
+    const line=(col,lw,dash)=>{g.strokeStyle=col;g.lineWidth=lw;g.setLineDash(dash||[]);g.lineJoin=g.lineCap='round';g.beginPath();T.forEach((p,i)=>i?g.lineTo(p[0],p[1]):g.moveTo(p[0],p[1]));g.closePath();g.stroke()};
+    line('rgba(52,211,153,.07)',26);line('rgba(52,211,153,.14)',13);line('#d9fbea',6);
+    g.setLineDash([]);
+    g.save();g.translate(T[0][0],T[0][1]);g.rotate(Math.atan2(T[3][1]-T[0][1],T[3][0]-T[0][0]));
+    for(let i=0;i<2;i++)for(let j=0;j<6;j++){g.fillStyle=(i+j)%2?'#fff':'#111';g.fillRect(-4+i*4,-12+j*4,4,4)}
+    g.restore();
+    g.fillStyle='rgba(52,211,153,.5)';[[10,10],[W-10,10],[10,H-10],[W-10,H-10]].forEach(p=>{g.beginPath();g.arc(p[0],p[1],2.5,0,TAU);g.fill()});
+  }
+  function wheel(y,spin){
+    c.fillStyle='#0b0d0f';rr(c,-13,y,17,7,2.5);c.fill();c.strokeStyle='#3b434d';c.lineWidth=1;c.stroke();
+    c.save();rr(c,-13,y,17,7,2.5);c.clip();c.strokeStyle='#6b7686';c.beginPath();
+    for(let x=-17+((spin%4)+4)%4;x<6;x+=4){c.moveTo(x,y);c.lineTo(x,y+7)}c.stroke();c.restore();
+  }
+  function robot(){
+    c.save();c.translate(r.x,r.y);c.rotate(r.a);c.scale(1.35,1.35);
+    const glow=c.createRadialGradient(18,0,2,18,0,30);glow.addColorStop(0,'rgba(110,231,183,.28)');glow.addColorStop(1,'rgba(110,231,183,0)');
+    c.fillStyle=glow;c.beginPath();c.arc(18,0,30,0,TAU);c.fill();
+    wheel(-17,-r.wl);wheel(10,-r.wr);
+    c.fillStyle='#e5b93b';c.fillRect(-8,-11,9,3);c.fillRect(-8,8,9,3);
+    c.fillStyle='#0c3b2a';rr(c,-14,-9,25,18,4);c.fill();c.strokeStyle='#34d399';c.lineWidth=1;c.stroke();
+    c.fillStyle='#9aa7b4';c.fillRect(10,-2.5,6,5);
+    c.fillStyle='#178a4c';rr(c,-11,-5.5,17,11,1.5);c.fill();
+    c.fillStyle='#e8c766';for(let x=-10;x<5;x+=2.6){c.fillRect(x,-5.2,1.2,1.2);c.fillRect(x,4,1.2,1.2)}
+    c.fillStyle='#0a0c0d';c.fillRect(-4,-3,6,6);c.fillStyle='#cbd5e1';c.fillRect(-13,-2,3.5,4);
+    c.fillStyle=tick%90<45?'#fde047':'#6b5d12';c.beginPath();c.arc(4,-2.5,1.1,0,TAU);c.fill();
+    c.fillStyle='#10161b';rr(c,15,-15.5,5,31,1.5);c.fill();c.strokeStyle='#475569';c.stroke();
+    for(let i=0;i<8;i++){const y=(i-3.5)*3.7;c.fillStyle=S[i]>.4?'#fb7185':'#4a2129';c.beginPath();c.arc(17.5,y,1.4,0,TAU);c.fill()}
+    c.restore();
+  }
+  let scale=1;
+  function draw(){
+    c.setTransform(1,0,0,1,0,0);c.drawImage(bg,0,0);c.setTransform(scale,0,0,scale,0,0);
+    c.lineCap='round';c.lineWidth=2.5;
+    for(let i=1;i<trail.length;i++){c.strokeStyle='rgba(16,185,129,'+(i/trail.length*.75)+')';c.beginPath();c.moveTo(trail[i-1][0],trail[i-1][1]);c.lineTo(trail[i][0],trail[i][1]);c.stroke()}
+    robot();
+  }
+  function hud(){
+    leds.forEach((e,i)=>e.style.opacity=.12+.88*S[i]);
+    $('lap').textContent=lap;$('time').textContent=lapT.toFixed(1)+'s';$('best').textContent=best===null?'—':best.toFixed(1)+'s';
+    $('ml').style.width=Math.max(0,Math.min(100,ml/1.4))+'%';$('mr').style.width=Math.max(0,Math.min(100,mr/1.4))+'%';
+  }
+  function resize(){
+    const w=cv.clientWidth;if(!w)return;
+    const k=w/W*Math.min(window.devicePixelRatio||1,2);
+    cv.width=Math.round(W*k);cv.height=Math.round(H*k);scale=k;paintTrack(k);draw();
+  }
+  let raf=0,prev=0,acc=0;
+  function loop(ts){
+    acc+=Math.min(.05,(ts-prev)/1000||0);prev=ts;
+    while(acc>=1/120){step(1/120);acc-=1/120}
+    draw();hud();raf=requestAnimationFrame(loop);
+  }
+  resize();
+  if(window.ResizeObserver)new ResizeObserver(resize).observe(cv);else addEventListener('resize',resize);
+  
+  new IntersectionObserver(e=>{
+    if(e[e.length-1].isIntersecting){if(!raf){prev=performance.now();raf=requestAnimationFrame(loop)}}
+    else{cancelAnimationFrame(raf);raf=0}
+  }).observe(box);
+  window.lfrState=()=>({lap,best,off:dist(r.x,r.y)[0],step});
 })();
 </script>
 </body>
