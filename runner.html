@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"><meta name="robots" content="noindex, nofollow">
+<html lang="en"><head><!-- speed-patched --><meta charset="UTF-8"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.gstatic.com https://*.firebasedatabase.app; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://formspree.io https://abacus.jasoncameron.dev https://api.github.com https://*.firebasedatabase.app wss://*.firebasedatabase.app https://identitytoolkit.googleapis.com https://securetoken.googleapis.com; frame-src https://*.firebasedatabase.app https://*.firebaseapp.com; base-uri 'self'; form-action 'self' https://formspree.io; object-src 'none'"><meta name="referrer" content="strict-origin-when-cross-origin"><script>if(top!==self){try{top.location.href=self.location.href}catch(e){document.documentElement.style.display='none'}}</script><meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"><meta name="robots" content="noindex, nofollow">
 <title>MOJA - Spark Runner</title>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='9' fill='%23000'/><rect x='1' y='1' width='30' height='30' rx='8' fill='none' stroke='%2310b981' stroke-width='2'/><text x='16' y='21' font-family='system-ui,sans-serif' font-weight='700' font-size='12' fill='%23b7f5d6' text-anchor='middle'>MJ</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap"></noscript>
 <style>
 :root{--h:152;--acc:hsl(var(--h) 75% 55%);--acc2:hsl(var(--h) 80% 74%);--accd:hsl(var(--h) 70% 38%);--line:rgba(255,255,255,.1);--mut:#8d95a8;--txt:#c5cad6;--mono:'JetBrains Mono',monospace}
 *{box-sizing:border-box;margin:0}
@@ -157,7 +157,11 @@ body{padding-left:max(.4rem,env(safe-area-inset-left));padding-right:max(.4rem,e
 .t4 li b{font-weight:500;color:var(--acc2)}
 .t4 li.me{border-color:var(--acc);background:hsl(var(--h) 70% 45% / .14)}
 @media (max-width:600px){.rk small{display:none}.t4{margin-bottom:.6rem}}
-</style></head><body>
+
+/* ===== Top 100 board ===== */
+.lbp .lbh{position:sticky;top:-1.1rem;z-index:1;margin:-1.1rem -1.1rem 0;padding:1.1rem 1.1rem .6rem;background:#050b09;border-radius:1.5rem 1.5rem 0 0}
+#lbl li i{min-width:1.6rem}
+</style><link rel="preconnect" href="https://www.gstatic.com" crossorigin><link rel="preconnect" href="https://portfolio-93573-default-rtdb.asia-southeast1.firebasedatabase.app" crossorigin><link rel="modulepreload" href="https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"><link rel="modulepreload" href="https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js"></head><body>
 <div class="wrap"><a class="back" href="moja.html">&larr; All games</a>
 <div class="card">
   <div class="hd">
@@ -183,13 +187,13 @@ body{padding-left:max(.4rem,env(safe-area-inset-left));padding-right:max(.4rem,e
   <div class="touch"><button class="tb" id="td">&darr; Duck</button><button class="tb" id="tj">&uarr; Jump</button></div>
   <div class="keys"><span><kbd>Space</kbd> jump (hold = higher)</span><span><kbd>&darr;</kbd> duck / fast fall</span><span><kbd>P</kbd> pause</span><span><kbd>M</kbd> sound</span><span><kbd>L</kbd> leaderboard</span></div>
   <div class="haz"><p class="k">Hazard log</p><div id="haz"></div></div>
-  <div class="lb" id="lb"><div class="lbp"><div class="lbh"><span class="live"></span><p class="k">Live leaderboard</p><button class="mini" id="lbx" type="button">Close</button></div><ol id="lbl"></ol><p class="lbe" id="lbe">Connecting&hellip;</p></div></div>
+  <div class="lb" id="lb"><div class="lbp"><div class="lbh"><span class="live"></span><p class="k">Live leaderboard &middot; top 100</p><button class="mini" id="lbx" type="button">Close</button></div><ol id="lbl"></ol><p class="lbe" id="lbe">Connecting&hellip;</p></div></div>
 </div></div>
 <script>
 const $=s=>document.querySelector(s),R=a=>a[Math.random()*a.length|0];
-const cv=$('#c'),c=cv.getContext('2d');
+const cv=$('#c'),c=cv.getContext('2d',{alpha:false});
 let W=800,VH=260,oy=0,pace=1;
-const H=260,G=208,PX=92,LVSTEP=400,TAU=6.2832,dpr=Math.min(window.devicePixelRatio||1,2);
+const H=260,G=208,PX=92,LVSTEP=400,TAU=6.2832;let dprMax=3,dpr=Math.min(window.devicePixelRatio||1,dprMax);
 const store={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
 const best=()=>+store.get('moja-runner')||0;
 let muted=store.get('moja-runner-mute')==='1';
@@ -204,7 +208,8 @@ const DEF={res:{w:20,h:46},cap:{w:28,h:40},ind:{w:34,h:34},ic:{w:64,h:24},tr:{w:
 let st='idle',p,ob=[],pk=[],pt=[],sp=5,dist=0,gap=0,last=performance.now(),endT=0,lv=1,rt=0,time=0,shake=0,flash=0,banner=null,toast=null,hue=152,hueShown=-1,scroll=0,cache={};
 const held={jump:false,duck:false};
 let bonus=0,streak=0,mult=1,rival=null,passed=new Set(),pbFlag=false;
-function reset(){p={y:G,vy:0,duck:0,ducking:false,wheel:0,shield:true,inv:0,buf:0,jt:0,air:false,dead:false};ob=[];pk=[];sp=5;dist=0;gap=300;lv=1;rt=0;banner=null;toast=null;bonus=0;streak=0;mult=1;rival=null;passed=new Set();pbFlag=false}
+let ppy=0,pscroll=0,ptime=0,pwheel=0,acc=0;
+function reset(){p={y:G,vy:0,duck:0,ducking:false,wheel:0,shield:true,inv:0,buf:0,jt:0,air:false,dead:false};ob=[];pk=[];sp=5;dist=0;gap=300;lv=1;rt=0;banner=null;toast=null;bonus=0;streak=0;mult=1;rival=null;passed=new Set();pbFlag=false;ppy=p.y;pscroll=scroll;ptime=time;pwheel=p.wheel}
 reset();
 const A=(a,l=60,s=80)=>`hsla(${Math.round(hue)},${s}%,${l}%,${a})`;
 const E={sc:$('#sc'),bs:$('#bs'),lv:$('#lv'),ln:$('#ln'),pg:$('#pg'),spd:$('#spd')};
@@ -313,7 +318,7 @@ function drawCombo(){
   c.restore();
 }
 const LBP=$('#lb'),FS=$('#fs');
-function openBoard(){if(st==='run')togglePause();LBP.classList.add('open')}
+function openBoard(){if(st==='run')togglePause();LBP.classList.add('open');const m=LBL.querySelector('.me');if(m)m.scrollIntoView({block:'center'})}
 function closeBoard(){LBP.classList.remove('open')}
 $('#lbb').addEventListener('click',e=>{openBoard();e.target.blur()});
 $('#lbx').addEventListener('click',closeBoard);
@@ -345,7 +350,7 @@ function rankLine(){
   const s=cache.final,me=myName?nkey(myName):'',el=$('#rk');
   const above=lbRows.filter(r=>r.key!==me&&r.score>s).sort((a,b)=>a.score-b.score),rank=above.length+1;
   const sub=above.length?'Next up: '+above[0].name+' ('+above[0].score+') \u2014 '+(above[0].score-s)+' to go':(lbRows.some(r=>r.key!==me)?'You are #1 on the board!':'You set the first score!');
-  el.textContent=rank<=10?'Rank #'+rank:'Outside the top 10';
+  el.textContent=rank<=100?'Rank #'+rank:'Outside the top 100';
   const sm=document.createElement('small');sm.textContent=sub;el.append(sm);
 }
 
@@ -491,7 +496,7 @@ function pulseAt(pa,d){let i=0;while(i<pa.cum.length-2&&pa.cum[i+1]<d)i++;const 
 let vg,scale=1;
 /* size the world to the screen: closer view on phones, extra sky on tall screens */
 function resize(){
-  const r=cv.getBoundingClientRect();if(!r.width||!r.height)return;
+  const r=cv.getBoundingClientRect();if(!r.width||!r.height)return;dpr=Math.min(window.devicePixelRatio||1,dprMax);
   scale=Math.min(r.width/(r.width<600?420:800),r.height/H);
   W=r.width/scale;VH=r.height/scale;oy=(VH-H)*.7;
   cv.width=Math.round(r.width*dpr);cv.height=Math.round(r.height*dpr);
@@ -699,11 +704,42 @@ function render(){
   c.fillStyle=vg;c.fillRect(0,0,W,VH);
 }
 
+/* ---------- smooth fixed-step loop + auto quality ---------- */
+const STEP=.5;
+let fx=1,qlv=0,ema=16.7,base=16.7,cool=120;
+(()=>{const d=Object.getOwnPropertyDescriptor(CanvasRenderingContext2D.prototype,'shadowBlur');
+ if(d&&d.set&&d.get)Object.defineProperty(c,'shadowBlur',{get(){return d.get.call(c)},set(v){d.set.call(c,fx?v:0)},configurable:true})})();
+function perf(ms){
+  if(st!=='run'||document.hidden){cool=Math.max(cool,60);return}
+  ms=Math.min(ms,100);if(ms>4&&ms<base)base=ms;
+  ema+=(ms-ema)*.08;cool--;
+  if(cool<=0&&qlv<3&&ema>base*1.5){qlv++;fx=0;dprMax=[3,3,1.5,1][qlv];cool=180;ema=base;resize()}
+}
+function snap(){
+  for(const o of ob)o.px=o.x;
+  for(const o of pk)o.px=o.x;
+  for(const q of pt){q.px=q.x;q.py=q.y}
+  ppy=p.y;pscroll=scroll;ptime=time;pwheel=p.wheel;
+}
+function renderI(a){
+  const ry=p.y,rs=scroll,rtm=time,rw=p.wheel;
+  p.y=ppy+(p.y-ppy)*a;scroll=pscroll+(scroll-pscroll)*a;time=ptime+(time-ptime)*a;p.wheel=pwheel+(p.wheel-pwheel)*a;
+  for(const o of ob){o.rx=o.x;if(o.px!==undefined)o.x=o.px+(o.x-o.px)*a}
+  for(const o of pk){o.rx=o.x;if(o.px!==undefined)o.x=o.px+(o.x-o.px)*a}
+  for(const q of pt){q.rx=q.x;q.ry=q.y;if(q.px!==undefined){q.x=q.px+(q.x-q.px)*a;q.y=q.py+(q.y-q.py)*a}}
+  render();
+  p.y=ry;scroll=rs;time=rtm;p.wheel=rw;
+  for(const o of ob)o.x=o.rx;
+  for(const o of pk)o.x=o.rx;
+  for(const q of pt){q.x=q.rx;q.y=q.ry}
+}
+addEventListener('resize',resize);
+
 /* ---------- loop ---------- */
 function loop(ts){
-  const dt=Math.max(0,Math.min((ts-last)/16.667,3));last=ts;
-  if(st!=='paused')update(st==='run'?dt*pace:dt);
-  render();
+  const ms=ts-last,dt=Math.max(0,Math.min(ms/16.667,3));last=ts;perf(ms);
+  if(st!=='paused'){acc+=dt;let n=0;while(acc>=STEP&&n<8){snap();update(st==='run'?STEP*pace:STEP);acc-=STEP;n++}if(n>=8)acc=0}else acc=0;
+  renderI(st==='paused'?0:acc/STEP);
   requestAnimationFrame(loop);
 }
 hazRender();hud(true);showOv('idle');
@@ -711,11 +747,14 @@ requestAnimationFrame(loop);
 </script>
 <script type="module">
 import {initializeApp} from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
+import {getAuth,signInAnonymously} from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
 import {getDatabase,ref,set,query,orderByChild,limitToLast,onValue} from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js';
-const db=getDatabase(initializeApp({ databaseURL: "https://portfolio-93573-default-rtdb.asia-southeast1.firebasedatabase.app", projectId: "portfolio-93573" }));
+const app=initializeApp({ apiKey: "AIzaSyCOvrAzIcONtT-WBsofHmB7n2ORKCThAuo", authDomain: "portfolio-93573.firebaseapp.com", databaseURL: "https://portfolio-93573-default-rtdb.asia-southeast1.firebasedatabase.app", projectId: "portfolio-93573", appId: "1:635490769035:web:5c478313bccdab4b8b1c8e" });
+const db=getDatabase(app),auth=getAuth(app);
+const ready=signInAnonymously(auth).then(()=>auth.currentUser).catch(()=>null);
 window.LB={
-  submit:(key,name,score)=>set(ref(db,'runner/'+key),{name,score}),
-  watch:(ok,fail)=>onValue(query(ref(db,'runner'),orderByChild('score'),limitToLast(10)),snap=>{
+  submit:async(key,name,score)=>{const u=await ready;return set(ref(db,'runner/'+key),u?{name,score,uid:u.uid}:{name,score})},
+  watch:(ok,fail)=>onValue(query(ref(db,'runner'),orderByChild('score'),limitToLast(100)),snap=>{
     const rows=[];snap.forEach(c=>{const v=c.val()||{};rows.push({key:c.key,name:String(v.name||c.key),score:+v.score||0})});
     rows.reverse();ok(rows);
   },fail)
