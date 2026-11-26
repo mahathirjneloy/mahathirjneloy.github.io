@@ -1,0 +1,28 @@
+/* ===== Monochrome low-poly theme (inspired by the Cloco design) ===== */
+:root{--hd:'Montserrat','Outfit',system-ui,sans-serif;--ser:'Noto Serif',Georgia,serif}
+img{filter:grayscale(1) contrast(1.05)}
+h1,h2,h3,h4,nav a,.pill,.btn,.logo b,.go,.reset,.play,.add,.mini,.label,.k{font-family:var(--hd)}
+h1,h2{font-weight:700;letter-spacing:-.02em}
+h3,.logo b{font-weight:700}
+.bio,header>p:not(.label):not(.priv),.sec-head p{font-family:var(--ser);font-style:italic;font-weight:400}
+/* faceted background */
+html::before{content:'';position:fixed;inset:0;z-index:-1;pointer-events:none;background:
+ linear-gradient(152deg,transparent 0 44%,rgba(255,255,255,.04) 44% 60%,transparent 60%),
+ linear-gradient(28deg,transparent 0 56%,rgba(255,255,255,.03) 56% 73%,transparent 73%),
+ linear-gradient(118deg,transparent 0 69%,rgba(255,255,255,.05) 69% 69.4%,transparent 69.4%),
+ linear-gradient(62deg,transparent 0 30%,rgba(255,255,255,.035) 30% 30.4%,transparent 30.4%)}
+/* square, outlined controls */
+.pill,.btn,.go,.reset,.play,.add,.mini,button.x,.chip,.tag,.status,.priv,.tl em,.f4 input,input,textarea,select{border-radius:0!important}
+.pill,.go,.reset,.play,.add,.mini{text-transform:uppercase;letter-spacing:.08em;font-weight:700}
+.pill-w,.go,.reset,.play{background:#fff;color:#000;border:2px solid #fff}
+.pill-w:hover,.go:hover,.reset:hover,.game:hover .play{background:#000;color:#fff;box-shadow:none}
+.pill-d,.mini{background:transparent;border:2px solid #fff;color:#fff}
+.pill-d:hover,.mini:hover{background:#fff;color:#000}
+input:focus,textarea:focus,select:focus{border-color:#fff;box-shadow:none}
+/* cards with a cut corner */
+.card,.panel,.game{border-radius:0!important;border-width:2px;clip-path:polygon(0 0,calc(100% - 1.6rem) 0,100% 1.6rem,100% 100%,0 100%)}
+.photo,.fcard,.box,.spec,.lbx,.lbp,.bar,#mmenu{border-radius:0!important}
+.game:hover,.card:hover{box-shadow:none}
+.live{border-radius:0;clip-path:polygon(50% 0,100% 100%,0 100%)}
+/* triangle marker for small headings */
+.grp::before{content:'';width:.6rem;height:.55rem;background:currentColor;clip-path:polygon(0 0,100% 0,50% 100%)}
