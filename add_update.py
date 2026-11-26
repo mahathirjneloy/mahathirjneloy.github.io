@@ -39,16 +39,17 @@ def copy(src):
     return "updates/" + name
 
 
-def thumb(src):
-    """small copy for the grid (needs Pillow), otherwise a plain copy"""
+def thumb(src, reuse=""):
+    """small copy for the grid (needs Pillow), otherwise reuse or plain copy"""
     src = need(src)
     FOLDER.mkdir(exist_ok=True)
     try:
         from PIL import Image
     except ImportError:
-        if src.stat().st_size > 500000:
-            print("Tip: this thumbnail is big, a smaller image loads faster.")
-        return copy(src)
+        if src.stat().st_size > 300000:
+            print("Tip: big pictures load slowly. Install Pillow once for small thumbnails:")
+            print("     Thonny > Tools > Manage packages > search Pillow > Install")
+        return reuse or copy(src)
     try:
         im = Image.open(src).convert("RGB")
         im.thumbnail((640, 640))
@@ -87,7 +88,7 @@ def add(cat, title, date="", file="", img=""):
     if img:
         i = thumb(img)
     elif u and not re.match(r"https?:", file, re.I) and file.lower().endswith(IMG):
-        i = thumb(file)
+        i = thumb(file, u)
     if i:
         files.append(i)
     e = [("d", date), ("c", cat), ("t", title), ("u", u), ("i", i)]
