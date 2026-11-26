@@ -1,29 +1,29 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="UTF-8"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.gstatic.com https://*.firebasedatabase.app; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://formspree.io https://abacus.jasoncameron.dev https://api.github.com https://*.firebasedatabase.app wss://*.firebasedatabase.app; frame-src https://*.firebasedatabase.app; base-uri 'self'; form-action 'self' https://formspree.io; object-src 'none'"><meta name="referrer" content="strict-origin-when-cross-origin"><script>if(top!==self){try{top.location.href=self.location.href}catch(e){document.documentElement.style.display='none'}}</script><meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"><meta name="robots" content="noindex, nofollow">
-<title>NSU Stuff | CGPA Calculator</title>
+<html lang="en"><head><meta charset="UTF-8"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.gstatic.com https://*.firebasedatabase.app; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://formspree.io https://abacus.jasoncameron.dev https://api.github.com https://*.firebasedatabase.app wss://*.firebasedatabase.app; frame-src https://*.firebasedatabase.app; base-uri 'self'; form-action 'self' https://formspree.io; object-src 'none'"><meta name="referrer" content="strict-origin-when-cross-origin"><script>if(top!==self){try{top.location.href=self.location.href}catch(e){document.documentElement.style.display='none'}}</script><meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>NSU CGPA Calculator &amp; Grading System | North South University</title><meta name="description" content="Free NSU CGPA calculator for North South University students. Work out semester GPA, CGPA, retakes and target CGPA, and check the NSU grading system."><link rel="canonical" href="https://mahathirjneloy.github.io/nsu.html"><meta property="og:type" content="website"><meta property="og:url" content="https://mahathirjneloy.github.io/nsu.html"><meta property="og:title" content="NSU CGPA Calculator"><meta property="og:description" content="Free NSU CGPA calculator for North South University students. Work out semester GPA, CGPA, retakes and target CGPA, and check the NSU grading system."><script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "NSU CGPA Calculator", "url": "https://mahathirjneloy.github.io/nsu.html", "description": "Free NSU CGPA calculator for North South University students. Work out semester GPA, CGPA, retakes and target CGPA, and check the NSU grading system.", "applicationCategory": "EducationalApplication", "operatingSystem": "Any", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "BDT"}, "author": {"@type": "Person", "name": "Mahathir Neloy", "url": "https://mahathirjneloy.github.io/"}}</script>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='9' fill='%23000'/><rect x='1' y='1' width='30' height='30' rx='8' fill='none' stroke='%2310b981' stroke-width='2'/><text x='16' y='21' font-family='system-ui,sans-serif' font-weight='700' font-size='12' fill='%23b7f5d6' text-anchor='middle'>MJ</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"></noscript>
 <style>
 :root{--b1:#b7f5d6;--b2:#6ee7b7;--b3:#34d399;--line:rgba(255,255,255,.1);--mut:#8d95a8;--txt:#c5cad6;--mono:'JetBrains Mono',monospace}
 *{box-sizing:border-box;margin:0}
-body{background:#000;color:var(--txt);font-family:'Outfit',system-ui,sans-serif;min-height:100vh;line-height:1.5;padding:.9rem max(1.25rem,env(safe-area-inset-right)) max(1.25rem,env(safe-area-inset-bottom)) max(1.25rem,env(safe-area-inset-left));background-image:radial-gradient(60rem 30rem at 50% -8%,rgba(5,66,44,.5),transparent 70%),radial-gradient(34rem 34rem at 8% 95%,rgba(16,185,129,.14),transparent 65%),radial-gradient(30rem 30rem at 95% 75%,rgba(13,148,136,.12),transparent 65%)}
+body{background:#000000;color:var(--txt);font-family:'Outfit',system-ui,sans-serif;min-height:100vh;line-height:1.5;padding:.9rem max(1.25rem,env(safe-area-inset-right)) max(1.25rem,env(safe-area-inset-bottom)) max(1.25rem,env(safe-area-inset-left));background-image:radial-gradient(60rem 30rem at 50% -8%,rgba(5,66,44,.5),transparent 70%),radial-gradient(34rem 34rem at 8% 95%,rgba(16,185,129,.14),transparent 65%),radial-gradient(30rem 30rem at 95% 75%,rgba(13,148,136,.12),transparent 65%)}
 .wrap{width:100%;max-width:64rem;margin:0 auto;padding:.5rem 0}
 .back{display:inline-block;font:.78rem var(--mono);color:var(--b3);text-decoration:none}.back:hover{color:var(--b1)}
 header{text-align:center;margin:.4rem 0 1.1rem}
 .label{font:.72rem var(--mono);text-transform:uppercase;letter-spacing:.14em;color:var(--b3)}
-h1{font-size:clamp(1.8rem,4.5vw,2.5rem);font-weight:500;color:#fff;letter-spacing:-.03em;line-height:1.15;margin:.25rem 0 .5rem}
+h1{font-size:clamp(1.8rem,4.5vw,2.5rem);font-weight:500;color:#ffffff;letter-spacing:-.03em;line-height:1.15;margin:.25rem 0 .5rem}
 .priv{display:inline-flex;align-items:center;gap:.45rem;padding:.3rem .85rem;border-radius:999px;border:1px solid rgba(52,211,153,.35);background:rgba(52,211,153,.08);color:var(--b2);font:.72rem var(--mono)}
 .priv svg{flex:none}
 .grid{display:grid;gap:1rem;grid-template-columns:minmax(0,1fr) 21rem;align-items:start}
 .col,.side{display:grid;gap:1rem}
 .side{position:sticky;top:.75rem}
 .card{padding:.95rem 1.1rem 1.05rem;border-radius:1.5rem;border:1px solid var(--line);background:linear-gradient(160deg,rgba(255,255,255,.06),rgba(255,255,255,.012)),#030806;box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 0 60px -34px rgba(52,211,153,.5)}
-h2{font-size:1rem;font-weight:500;color:#fff;margin-bottom:.6rem}
+h2{font-size:1rem;font-weight:500;color:#ffffff;margin-bottom:.6rem}
 .f4{display:grid;gap:.6rem;grid-template-columns:repeat(auto-fit,minmax(8rem,1fr))}
 .f{display:flex;flex-direction:column;gap:.2rem;min-width:0}
 .f small{font:.6rem var(--mono);text-transform:uppercase;letter-spacing:.1em;color:var(--mut)}
-input,select{width:100%;padding:.5rem .7rem;border-radius:.8rem;border:1px solid var(--line);background:rgba(255,255,255,.05);color:#fff;font:500 .9rem var(--mono);outline:0;color-scheme:dark;min-width:0}
+input,select{width:100%;padding:.5rem .7rem;border-radius:.8rem;border:1px solid var(--line);background:rgba(255,255,255,.05);color:#ffffff;font:500 .9rem var(--mono);outline:0;color-scheme:dark;min-width:0}
 input:focus,select:focus{border-color:var(--b3);background:rgba(52,211,153,.07)}
 input::placeholder{color:#5d6579}
 .rh{display:none}
@@ -31,20 +31,20 @@ input::placeholder{color:#5d6579}
 .row:first-child{border-top:0;padding-top:0}
 .row .n{flex:1 1 9rem;align-self:flex-end}
 .row .f{flex:0 0 5.2rem}
-.x{flex:0 0 2rem;height:2.2rem;border-radius:.7rem;border:0;background:none;color:#f87171;font-size:1.3rem;line-height:1;cursor:pointer}.x:hover{background:rgba(248,113,113,.12)}
+.x{flex:0 0 2rem;height:2.2rem;border-radius:.7rem;border:0;background:none;color:#80e9c2;font-size:1.3rem;line-height:1;cursor:pointer}.x:hover{background:rgba(128,233,194,.12)}
 .add{width:100%;margin-top:.4rem;padding:.55rem;border-radius:.8rem;border:1px dashed rgba(52,211,153,.4);background:transparent;color:var(--b3);font:500 .8rem var(--mono);cursor:pointer;transition:.2s}.add:hover{background:rgba(52,211,153,.08);border-color:var(--b3)}
 .r{display:flex;flex-direction:column;padding:.6rem 0;border-bottom:1px solid var(--line)}.r:first-of-type{padding-top:0}
 .k{font:.62rem var(--mono);text-transform:uppercase;letter-spacing:.12em;color:var(--mut)}
-.r b{font:500 1.8rem/1.2 var(--mono);color:#fff}.r.big b{font-size:2.6rem;color:var(--b1);text-shadow:0 0 30px rgba(52,211,153,.4)}
+.r b{font:500 1.8rem/1.2 var(--mono);color:#ffffff}.r.big b{font-size:2.6rem;color:var(--b1);text-shadow:0 0 30px rgba(52,211,153,.4)}
 .r small{font:.72rem var(--mono);color:var(--mut)}
 .chip{display:inline-block;margin:.6rem 0 .1rem;padding:.25rem .75rem;border-radius:999px;border:1px solid rgba(52,211,153,.4);background:rgba(52,211,153,.1);color:var(--b2);font:.7rem var(--mono)}.chip:empty{display:none}
 .line{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;padding:.5rem 0;font-size:.88rem}.line b{font:500 1rem var(--mono);color:var(--b1);text-align:right}
 .line[hidden],.rh[hidden]{display:none}
-.err{margin-top:.4rem;color:#f87171;font:.75rem var(--mono)}
-.reset{width:100%;margin-top:.4rem;padding:.6rem;border-radius:999px;border:0;background:#fff;color:#111;font:600 .9rem 'Outfit',sans-serif;cursor:pointer;transition:.2s}.reset:hover{background:var(--b3)}
+.err{margin-top:.4rem;color:#80e9c2;font:.75rem var(--mono)}
+.reset{width:100%;margin-top:.4rem;padding:.6rem;border-radius:999px;border:0;background:#ffffff;color:#111111;font:600 .9rem 'Outfit',sans-serif;cursor:pointer;transition:.2s}.reset:hover{background:var(--b3)}
 .gr table{width:100%;border-collapse:collapse;font:.74rem var(--mono)}
 .gr th{color:var(--mut);text-transform:uppercase;font-weight:400;font-size:.58rem;letter-spacing:.1em;text-align:left;padding:.15rem .4rem}
-.gr td{padding:.26rem .4rem;border-top:1px solid var(--line);color:#fff}
+.gr td{padding:.26rem .4rem;border-top:1px solid var(--line);color:#ffffff}
 .gr td i{font-style:normal;color:var(--mut);margin-left:.3rem}
 .gr th:last-child,.gr td:last-child{text-align:right}.gr td:last-child{color:var(--b2)}
 .note{margin-top:1rem;text-align:center;font:.7rem var(--mono);color:var(--mut)}
@@ -57,10 +57,10 @@ input::placeholder{color:#5d6579}
 }
 @media(max-width:860px){.grid{grid-template-columns:1fr}.side{display:contents}.res{order:-1}}
 @media(max-width:600px){input,select{font-size:16px}.card{padding:1rem}}
-</style></head><body>
+</style><!-- green-theme --><link rel="stylesheet" href="theme.css"><link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;800&family=Noto+Serif:ital,wght@1,400&display=swap" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;800&family=Noto+Serif:ital,wght@1,400&display=swap"></noscript></head><body>
 <div class="wrap">
 <a class="back" href="index.html">&larr; Back to portfolio</a>
-<header><p class="label">// NSU STUFF</p><h1>CGPA Calculator</h1><p class="priv"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>Nothing is recorded. Your data stays on your device.</p></header>
+<header><p class="label">NSU STUFF</p><h1>NSU CGPA Calculator</h1><p class="priv"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>Nothing is recorded. Your data stays on your device.</p></header>
 <div class="grid">
 <div class="col">
 <section class="card"><h2>Your record</h2><div class="f4">
@@ -82,9 +82,10 @@ input::placeholder{color:#5d6579}
 <p class="err" id="oerr" hidden></p>
 <button class="reset" id="rs" type="button">Reset</button>
 </aside>
-<section class="card gr"><h2>NSU grading</h2><table><thead><tr><th>Score</th><th>Grade</th><th>Points</th></tr></thead><tbody><tr><td>93 and above</td><td>A<i>Excellent</i></td><td>4.0</td></tr><tr><td>90 - 92</td><td>A-</td><td>3.7</td></tr><tr><td>87 - 89</td><td>B+</td><td>3.3</td></tr><tr><td>83 - 86</td><td>B<i>Good</i></td><td>3.0</td></tr><tr><td>80 - 82</td><td>B-</td><td>2.7</td></tr><tr><td>77 - 79</td><td>C+</td><td>2.3</td></tr><tr><td>73 - 76</td><td>C<i>Average</i></td><td>2.0</td></tr><tr><td>70 - 72</td><td>C-</td><td>1.7</td></tr><tr><td>67 - 69</td><td>D+</td><td>1.3</td></tr><tr><td>60 - 66</td><td>D<i>Poor</i></td><td>1.0</td></tr><tr><td>Below 60</td><td>F<i>Failure</i></td><td>0.0</td></tr></tbody></table></section>
+<section class="card gr"><h2>NSU grading system</h2><table><thead><tr><th>Score</th><th>Grade</th><th>Points</th></tr></thead><tbody><tr><td>93 and above</td><td>A<i>Excellent</i></td><td>4.0</td></tr><tr><td>90 - 92</td><td>A-</td><td>3.7</td></tr><tr><td>87 - 89</td><td>B+</td><td>3.3</td></tr><tr><td>83 - 86</td><td>B<i>Good</i></td><td>3.0</td></tr><tr><td>80 - 82</td><td>B-</td><td>2.7</td></tr><tr><td>77 - 79</td><td>C+</td><td>2.3</td></tr><tr><td>73 - 76</td><td>C<i>Average</i></td><td>2.0</td></tr><tr><td>70 - 72</td><td>C-</td><td>1.7</td></tr><tr><td>67 - 69</td><td>D+</td><td>1.3</td></tr><tr><td>60 - 66</td><td>D<i>Poor</i></td><td>1.0</td></tr><tr><td>Below 60</td><td>F<i>Failure</i></td><td>0.0</td></tr></tbody></table></section>
 </div>
 </div>
+<section class="card" style="margin-top:1rem;font-size:.9rem"><h2>How to calculate CGPA at NSU</h2><p>Multiply the credits of each course by its grade point, add the results, then divide by the total credits. For example, a 3 credit A (4.0) and a 3 credit B (3.0) give (12 + 9) / 6 = 3.50.</p><h3 style="font-size:.95rem;color:#fff;margin:.8rem 0 .2rem">How are retakes counted?</h3><p>This calculator replaces the old grade with the new one.</p><h3 style="font-size:.95rem;color:#fff;margin:.8rem 0 .2rem">What GPA do I need to reach my target CGPA?</h3><p>Enter your total credits, credits passed, current CGPA and target CGPA. The calculator shows the average you need in your remaining credits.</p><p style="margin-top:.8rem;color:#8d95a8">An unofficial tool for North South University students, made by <a href="index.html" style="color:#34d399">Mahathir Neloy</a>.</p></section>
 <p class="note">A retake replaces the old grade. W / I courses are not counted.</p>
 </div>
 <script>
