@@ -57,7 +57,21 @@ input::placeholder{color:#5d6579}
 }
 @media(max-width:860px){.grid{grid-template-columns:1fr}.side{display:contents}.res{order:-1}}
 @media(max-width:600px){input,select{font-size:16px}.card{padding:1rem}}
-</style><!-- green-theme --><link rel="stylesheet" href="theme.css"><link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;800&family=Noto+Serif:ital,wght@1,400&display=swap" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;800&family=Noto+Serif:ital,wght@1,400&display=swap"></noscript></head><body>
+</style><!-- green-theme --><link rel="stylesheet" href="theme.css"><link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;800&family=Noto+Serif:ital,wght@1,400&display=swap" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;800&family=Noto+Serif:ital,wght@1,400&display=swap"></noscript><style>/* mobile-fix */
+@media(max-width:600px){
+.priv{font-size:.64rem;justify-content:center;text-align:center}
+.card{padding:.9rem}
+.res{display:grid;grid-template-columns:1fr 1fr;column-gap:.9rem}
+.res>*{grid-column:1/-1}.res>.r{grid-column:auto;padding:0 0 .6rem}
+.res>.r b,.res>.r.big b{font-size:2rem}.res>.chip{justify-self:start}
+.res>.reset{background:transparent;color:#b7f5d6;border:1px solid rgba(52,211,153,.5);padding:.5rem}
+#cl .row,#rl .row{display:grid;gap:.5rem;align-items:end}
+#cl .row{grid-template-columns:repeat(2,minmax(0,1fr)) 2.5rem}
+#rl .row{grid-template-columns:repeat(3,minmax(0,1fr)) 2.5rem}
+.row .n{grid-area:1/1/2/-2}.row .x{grid-area:1/-2/2/-1;width:100%;height:2.5rem}
+}
+</style>
+</head><body>
 <div class="wrap">
 <a class="back" href="index.html">&larr; Back to portfolio</a>
 <header><p class="label">NSU STUFF</p><h1>NSU CGPA Calculator</h1><p class="priv"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>Nothing is recorded. Your data stays on your device.</p></header>
