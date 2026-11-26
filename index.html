@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" style="scroll-behavior:smooth">
 <head><!-- speed-patched -->
-<meta charset="UTF-8">
+<meta charset="UTF-8"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.gstatic.com https://*.firebasedatabase.app; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://formspree.io https://abacus.jasoncameron.dev https://api.github.com https://*.firebasedatabase.app wss://*.firebasedatabase.app; frame-src https://*.firebasedatabase.app; base-uri 'self'; form-action 'self' https://formspree.io; object-src 'none'"><meta name="referrer" content="strict-origin-when-cross-origin"><script>if(top!==self){try{top.location.href=self.location.href}catch(e){document.documentElement.style.display='none'}}</script>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='9' fill='%23000'/><rect x='1' y='1' width='30' height='30' rx='8' fill='none' stroke='%2310b981' stroke-width='2'/><circle cx='25' cy='7' r='2' fill='%2334d399'/><text x='15' y='21' font-family='system-ui,sans-serif' font-weight='700' font-size='13' fill='%23b7f5d6' text-anchor='middle'>MN</text></svg>">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Mahathir Neloy | Robotics & Embedded Systems</title>
@@ -554,12 +554,12 @@ h1{font-size:clamp(2.6rem,7.6vw,6rem)}
         <div class="fcard">
           <form id="contact-form" action="https://formspree.io/f/xaengzla" method="POST" onsubmit="handleFormSubmit(event)">
             <div class="fr">
-              <div><label for="f-name">YOUR NAME</label><input id="f-name" type="text" name="name" required placeholder="Emtiaj Fahim"></div>
-              <div><label for="f-email">EMAIL ADDRESS</label><input id="f-email" type="email" name="email" required placeholder="emtiajfahim0@gmail.com"></div>
+              <div><label for="f-name">YOUR NAME</label><input id="f-name" maxlength="80" autocomplete="name" type="text" name="name" required placeholder="Emtiaj Fahim"></div>
+              <div><label for="f-email">EMAIL ADDRESS</label><input id="f-email" maxlength="120" autocomplete="email" type="email" name="email" required placeholder="emtiajfahim0@gmail.com"></div>
             </div>
-            <div><label for="f-subject">SUBJECT / TOPIC</label><input id="f-subject" type="text" name="subject" required placeholder="Robotics Internship / Hardware Collab"></div>
-            <div><label for="f-message">MESSAGE</label><textarea id="f-message" name="message" rows="4" required placeholder="Hi Mahathir, I reviewed your Raspberry Pi Pico dual-mode robot and would love to connect..."></textarea></div>
-            <button type="submit" class="pill pill-w btn">Send</button>
+            <div><label for="f-subject">SUBJECT / TOPIC</label><input id="f-subject" maxlength="120" type="text" name="subject" required placeholder="Robotics Internship / Hardware Collab"></div>
+            <div><label for="f-message">MESSAGE</label><textarea id="f-message" maxlength="2000" name="message" rows="4" required placeholder="Hi Mahathir, I reviewed your Raspberry Pi Pico dual-mode robot and would love to connect..."></textarea></div>
+            <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0"><button type="submit" class="pill pill-w btn">Send</button>
           </form>
         </div>
       </div>
@@ -614,6 +614,7 @@ document.querySelectorAll('.mlink').forEach(l => l.addEventListener('click', () 
 // Formspree AJAX
 async function handleFormSubmit(e){
   e.preventDefault();
+  if(Date.now()-(window._ls||0)<15000){showToast('Please wait a few seconds before sending again.');return}window._ls=Date.now();
   const f = e.target, b = f.querySelector('button[type="submit"]'), old = b.innerText;
   b.disabled = true; b.innerText = 'Transmitting Message...';
   try {
