@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="robots" content="noindex, nofollow">
+<html lang="en"><head><!-- speed-patched --><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="robots" content="noindex, nofollow">
 <meta name="generator" content="moja-ui-2">
 <title>MOJA - Games</title>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='9' fill='%23000'/><rect x='1' y='1' width='30' height='30' rx='8' fill='none' stroke='%2310b981' stroke-width='2'/><text x='16' y='21' font-family='system-ui,sans-serif' font-weight='700' font-size='12' fill='%23b7f5d6' text-anchor='middle'>MJ</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"></noscript>
 <style>
 :root{--b1:#b7f5d6;--b3:#34d399;--line:rgba(255,255,255,.1);--mut:#8d95a8;--txt:#c5cad6;--mono:'JetBrains Mono',monospace}
 *{box-sizing:border-box;margin:0}
@@ -16,7 +16,7 @@ header{text-align:center;margin:1.5rem 0 2.25rem}
 .label{font:.72rem var(--mono);text-transform:uppercase;letter-spacing:.14em;color:var(--b3)}
 h1{font-size:clamp(2.2rem,7vw,3.6rem);font-weight:500;color:#fff;letter-spacing:-.03em;line-height:1.15;margin:.4rem 0}
 header p:last-child{font-weight:300}
-.grid{display:grid;gap:1.25rem;grid-template-columns:repeat(3,1fr)}
+.grid{display:grid;gap:1.25rem;grid-template-columns:minmax(0,26rem);justify-content:center}
 .game{--c:#34d399;--g:rgba(52,211,153,.5);display:flex;flex-direction:column;text-decoration:none;color:var(--txt);border-radius:1.75rem;overflow:hidden;border:1px solid var(--line);background:linear-gradient(160deg,rgba(255,255,255,.06),rgba(255,255,255,.012)),#030806;box-shadow:inset 0 1px 0 rgba(255,255,255,.08);transition:transform .25s,border-color .25s,box-shadow .25s}
 .game:hover,.game:focus-visible{transform:translateY(-6px);border-color:var(--c);box-shadow:0 18px 50px -22px var(--g);outline:none}
 .cyan{--c:#38bdf8;--g:rgba(56,189,248,.5)}
@@ -38,28 +38,6 @@ h2{font-size:1.35rem;font-weight:500;color:#fff;line-height:1.25;margin-bottom:.
 <header><p class="label">// MOJA</p><h1>Pick a game</h1><p>Tiny EEE-themed games.</p></header>
 <main class="grid">
 
-<a class="game" href="quiz.html">
-<svg class="art" viewBox="0 0 320 180" fill="none" stroke="#34d399" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-<path d="M80 80V48H128L135 36L149 60L163 36L177 60L191 36L198 48H240V70M240 110V136H80V100"/>
-<path d="M62 80H98M70 100H90"/><circle cx="240" cy="90" r="20"/><path d="M231 99L249 81M237 81H249V93" stroke="#b7f5d6"/>
-<g fill="#b7f5d6" stroke="none"><circle cx="80" cy="48" r="4"/><circle cx="240" cy="48" r="4"/><circle cx="240" cy="136" r="4"/><circle cx="80" cy="136" r="4"/></g>
-<text x="160" y="106" fill="#b7f5d6" stroke="none" font-family="JetBrains Mono,monospace" font-size="20" text-anchor="middle">V = IR</text>
-</svg>
-<div class="body"><h2>Circuit Blitz</h2><p>10-question EEE quiz: Ohm's law, power, RC.</p>
-<div class="foot"><div class="best"><span>Best score</span><b id="b1">0/100</b></div><span class="play">Play &rarr;</span></div></div></a>
-
-<a class="game cyan" href="snake.html">
-<svg class="art" viewBox="0 0 320 180" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-<path d="M56 134H120V82H184V46H228" stroke="#0e4f6e" stroke-width="16"/><path d="M56 134H120V82H184V46H228" stroke="#38bdf8" stroke-width="7"/>
-<g fill="#04121a" stroke="#bae6fd" stroke-width="2"><circle cx="88" cy="134" r="3"/><circle cx="120" cy="108" r="3"/><circle cx="152" cy="82" r="3"/><circle cx="184" cy="64" r="3"/><circle cx="56" cy="134" r="6"/></g>
-<path d="M226 28V34M238 28V34M250 28V34M226 58V64M238 58V64M250 58V64" stroke="#cbd5e1" stroke-width="4"/>
-<rect x="218" y="32" width="40" height="28" rx="6" fill="#0f1720" stroke="#38bdf8" stroke-width="2.5"/>
-<g fill="#bae6fd"><circle cx="248" cy="40" r="3"/><circle cx="248" cy="52" r="3"/></g>
-<circle cx="256" cy="122" r="20" fill="#fbbf24"/><text x="256" y="129" fill="#111" font-family="JetBrains Mono,monospace" font-size="20" text-anchor="middle">R</text>
-</svg>
-<div class="body"><h2>Electron Snake</h2><p>Collect R, C, L and V components.</p>
-<div class="foot"><div class="best"><span id="l2">Best score</span><b id="b2">0</b></div><span class="play">Play &rarr;</span></div></div></a>
-
 <a class="game amber" href="runner.html">
 <svg class="art" viewBox="0 0 320 180" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
 <path d="M0 142H320" stroke="#fbbf24" stroke-width="3"/><path d="M24 158H70L82 168H130M190 158H240L252 168H300" stroke="#fbbf24" stroke-opacity=".4" stroke-width="2"/>
@@ -77,13 +55,7 @@ h2{font-size:1.35rem;font-weight:500;color:#fff;line-height:1.25;margin-bottom:.
 <script>
 const g=k=>{try{return+localStorage.getItem(k)||0}catch(e){return 0}};
 const set=(id,v)=>{document.getElementById(id).textContent=v};
-function scores(){
-  set('b1',g('moja-best')+'/100');
-  // Snake saves one score per difficulty: show the highest and say which one
-  const top=['easy','medium','hard'].map(m=>[g('moja-snake-'+m),m]).sort((a,b)=>b[0]-a[0])[0];
-  set('b2',top[0]);
-  set('l2',top[0]?'Best · '+top[1]:'Best score');
-  set('b3',g('moja-runner'));
+function scores(){set('b3',g('moja-runner'));
 }
 scores();
 addEventListener('pageshow',scores);
