@@ -22,14 +22,15 @@ addEventListener('hashchange',openHash);openHash();
 /* rule search */
 var f=$('find');
 if(f){var rules=all('.rule'),grps=all('.rgrp'),cnt=$('count');
- rules.forEach(function(r){r._t=' '+r.textContent.toLowerCase()});
+ var words=function(n){var o=[],w=document.createTreeWalker(n,NodeFilter.SHOW_TEXT),x;while(x=w.nextNode())o.push(x.nodeValue);return o.join(' ')};
+ rules.forEach(function(r){r._t=' '+words(r).toLowerCase()});
  var run=function(){var s=f.value.trim().toLowerCase(),n=0,re=new RegExp('[^a-z0-9]'+s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'));
   rules.forEach(function(r){var ok=!s||re.test(r._t);r.hidden=!ok;if(ok)n++});
   grps.forEach(function(g){g.hidden=!g.querySelector('.rule:not([hidden])')});
   $('none').hidden=n>0;cnt.textContent=s?n+' rule'+(n===1?'':'s')+' found':rules.length+' rules'};
  f.addEventListener('input',run);
  all('[data-q]').forEach(function(b){b.addEventListener('click',function(){f.value=b.getAttribute('data-q');run();f.scrollIntoView({block:'start'})})});
- var h=decodeURIComponent(location.hash);if(h.indexOf('#q=')===0){f.value=h.slice(3);setTimeout(function(){f.scrollIntoView({block:'start'})},50)}
+ var h;try{h=decodeURIComponent(location.hash)}catch(e){h=''}if(h.indexOf('#q=')===0){f.value=h.slice(3);setTimeout(function(){f.scrollIntoView({block:'start'})},50)}
  run()}
 
 /* routines and notices */
