@@ -71,9 +71,69 @@ input::placeholder{color:#5d6579}
 .row .n{grid-area:1/1/2/-2}.row .x{grid-area:1/-2/2/-1;width:100%;height:2.5rem}
 }
 </style>
-<style>/* red-privacy */.priv{color:#4da3ff;border-color:#4da3ff;background:rgba(77,163,255,.1);animation:privblink 1.2s ease-in-out infinite}@keyframes privblink{50%{opacity:.25}}@media(prefers-reduced-motion:reduce){.priv{animation:none}}</style><!-- nsu-policy --><!-- seo-faq --><script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How do you calculate CGPA at NSU?", "acceptedAnswer": {"@type": "Answer", "text": "Multiply the credits of each course by its grade point, add the results, then divide by the total credits. For example, a 3 credit A (4.0) and a 3 credit B (3.0) give (12 + 9) / 6 = 3.50."}}, {"@type": "Question", "name": "How are retakes counted in NSU CGPA?", "acceptedAnswer": {"@type": "Answer", "text": "You can retake a course if your grade is B or lower. The best grade counts for CGPA. A course can normally be retaken three times. A fourth retake needs approval from the Vice-Chancellor."}}, {"@type": "Question", "name": "What GPA do I need to reach my target CGPA?", "acceptedAnswer": {"@type": "Answer", "text": "Enter your total credits, credits passed, current CGPA and target CGPA. The calculator shows the average you need in your remaining credits."}}]}</script></head><body>
+<style>/* red-privacy */.priv{color:#4da3ff;border-color:#4da3ff;background:rgba(77,163,255,.1);animation:privblink 1.2s ease-in-out infinite}@keyframes privblink{50%{opacity:.25}}@media(prefers-reduced-motion:reduce){.priv{animation:none}}</style><!-- nsu-policy --><!-- seo-faq --><script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How do you calculate CGPA at NSU?", "acceptedAnswer": {"@type": "Answer", "text": "Multiply the credits of each course by its grade point, add the results, then divide by the total credits. For example, a 3 credit A (4.0) and a 3 credit B (3.0) give (12 + 9) / 6 = 3.50."}}, {"@type": "Question", "name": "How are retakes counted in NSU CGPA?", "acceptedAnswer": {"@type": "Answer", "text": "You can retake a course if your grade is B or lower. The best grade counts for CGPA. A course can normally be retaken three times. A fourth retake needs approval from the Vice-Chancellor."}}, {"@type": "Question", "name": "What GPA do I need to reach my target CGPA?", "acceptedAnswer": {"@type": "Answer", "text": "Enter your total credits, credits passed, current CGPA and target CGPA. The calculator shows the average you need in your remaining credits."}}]}</script><style id="nsu-theme-css">/* nsu-theme: light by default, dark when html[data-theme=dark] */
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:1rem}
+.tbtn{display:inline-flex;align-items:center;gap:.45rem;padding:.4rem .8rem;border:2px solid var(--b3);background:transparent;color:var(--b2);font:600 .72rem var(--mono);text-transform:uppercase;letter-spacing:.08em;cursor:pointer;border-radius:0}
+.tbtn:hover,.tbtn:focus-visible{background:var(--b3);color:#000;outline:none}
+.tbtn .ti{display:inline-flex}
+html:not([data-theme="dark"]){color-scheme:light;--b1:#064e3b;--b2:#065f46;--b3:#047857;--line:rgba(6,78,59,.15);--mut:#566860;--txt:#26332f}
+html:not([data-theme="dark"]) body{background-color:#f3f7f5;background-image:radial-gradient(60rem 30rem at 50% -8%,rgba(16,185,129,.16),transparent 70%),radial-gradient(34rem 34rem at 8% 95%,rgba(16,185,129,.1),transparent 65%),radial-gradient(30rem 30rem at 95% 75%,rgba(13,148,136,.08),transparent 65%)}
+html:not([data-theme="dark"])::before{opacity:.09}
+html:not([data-theme="dark"]) h1,html:not([data-theme="dark"]) h2,html:not([data-theme="dark"]) h3{color:#0b1512!important;text-shadow:none}
+html:not([data-theme="dark"]) .card{background:#fff!important;border-color:rgba(4,120,87,.32);box-shadow:0 1px 2px rgba(6,78,59,.06),0 14px 30px -22px rgba(4,120,87,.5)}
+html:not([data-theme="dark"]) .card:hover{border-color:#047857}
+html:not([data-theme="dark"]) input,html:not([data-theme="dark"]) select{background:#fff;color:#0b1512;border-color:rgba(6,78,59,.3)}
+html:not([data-theme="dark"]) input:focus,html:not([data-theme="dark"]) select:focus{background:#f0fdf8;border-color:#047857;box-shadow:0 0 0 3px rgba(4,120,87,.15)}
+html:not([data-theme="dark"]) input::placeholder{color:#8a9893}
+html:not([data-theme="dark"]) .r b{color:#0b1512}
+html:not([data-theme="dark"]) .r.big b{color:var(--b1);text-shadow:none}
+html:not([data-theme="dark"]) .gr td{color:#0b1512}
+html:not([data-theme="dark"]) .gr td:last-child{color:var(--b2)}
+html:not([data-theme="dark"]) .x{color:#047857}
+html:not([data-theme="dark"]) .x:hover{background:rgba(4,120,87,.1)}
+html:not([data-theme="dark"]) .err{color:#b42318}
+html:not([data-theme="dark"]) .priv{color:#1d5fb8;border-color:#1d5fb8;background:rgba(29,95,184,.08)}
+html:not([data-theme="dark"]) .chip{background:rgba(4,120,87,.1);border-color:rgba(4,120,87,.4);color:var(--b2)}
+html:not([data-theme="dark"]) .add{border-color:rgba(4,120,87,.45)}
+html:not([data-theme="dark"]) .add:hover{background:rgba(4,120,87,.08)}
+html:not([data-theme="dark"]) .reset{background:#047857;color:#fff;border:2px solid #047857}
+html:not([data-theme="dark"]) .reset:hover{background:#064e3b;border-color:#064e3b;color:#fff}
+html:not([data-theme="dark"]) .card a{color:#047857!important}
+html:not([data-theme="dark"]) .card p[style*="color"]{color:var(--mut)!important}
+html:not([data-theme="dark"]) .tbtn:hover,html:not([data-theme="dark"]) .tbtn:focus-visible{color:#fff}
+</style>
+<style id="nsu-font-css">/* nsu-fonts: easier to read */
+:root{--mono:'Outfit',system-ui,sans-serif}
+body{font-size:1.05rem;line-height:1.6}
+h2{font-size:1.2rem;font-weight:700;margin-bottom:.8rem}
+.f small,.k,.rh,.gr th{font-family:'Outfit',system-ui,sans-serif;font-size:.86rem;font-weight:600;letter-spacing:.015em;text-transform:none;color:var(--mut)}
+input,select{font:500 1.05rem 'Outfit',system-ui,sans-serif;padding:.6rem .8rem}
+input::placeholder{color:#7d8699}
+html:not([data-theme="dark"]) input::placeholder{color:#66756f}
+.r b{font:600 2rem/1.2 'Outfit',system-ui,sans-serif;font-variant-numeric:tabular-nums}
+.r.big b{font-size:3rem}
+.r small,.note,.err{font-size:.92rem}
+.line{font-size:1.02rem}
+.line b{font:600 1.2rem 'Outfit',system-ui,sans-serif;font-variant-numeric:tabular-nums}
+.chip{font:600 .9rem 'Outfit',system-ui,sans-serif;padding:.3rem .85rem}
+.priv{font:500 .9rem 'Outfit',system-ui,sans-serif}
+.back{font:500 1rem 'Outfit',system-ui,sans-serif}
+.add{font-size:.95rem}
+.reset{font-size:1.02rem}
+.tbtn{font:700 .82rem 'Outfit',system-ui,sans-serif}
+.gr table{font-size:.98rem}
+.gr th{font-size:.82rem}
+.gr td i{font-size:.9rem}
+.gr td{padding:.32rem .4rem}
+.card[style]{font-size:1.04rem!important}
+.card h3[style]{font-size:1.1rem!important}
+.card p{line-height:1.65}
+@media(max-width:600px){.rh{display:none!important}}
+</style>
+<style id="nsu-redx-css">/* red delete crosses */html body .x{color:#ff6b6b;font-size:1.6rem;font-weight:600}html body .x:hover{background:rgba(255,107,107,.15)}html:not([data-theme="dark"]) body .x{color:#d32f2f}html:not([data-theme="dark"]) body .x:hover{background:rgba(211,47,47,.1)}</style>
+</head><body>
 <div class="wrap">
-<a class="back" href="index.html">&larr; Back to portfolio</a>
+<div class="topbar"><a class="back" href="index.html">&larr; Back to portfolio</a><button class="tbtn" id="themebtn" type="button" aria-pressed="false"><span class="ti"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></span><span class="tl">Dark mode</span></button></div>
 <header><h1>NSU CGPA Calculator</h1><p class="priv"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>Nothing is saved, so chill bhai</p></header>
 <div class="grid">
 <div class="col">
@@ -157,4 +217,15 @@ document.addEventListener('click',e=>{
 });
 $('#rs').onclick=()=>{S=def();draw();calc();save()};
 draw();calc();
-</script></body></html>
+</script><script id="nsu-theme-js">(function(){
+var d=document.documentElement,b=document.getElementById('themebtn');if(!b)return;
+var moon='<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>';
+var sun='<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>';
+function paint(t){d.setAttribute('data-theme',t);var dark=t==='dark';
+ b.setAttribute('aria-pressed',dark?'true':'false');
+ b.querySelector('.ti').innerHTML=dark?sun:moon;
+ b.querySelector('.tl').textContent=dark?'Light mode':'Dark mode'}
+b.addEventListener('click',function(){paint(d.getAttribute('data-theme')==='dark'?'light':'dark')});
+paint('light');
+})();</script>
+</body></html>

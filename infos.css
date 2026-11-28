@@ -73,3 +73,58 @@ h3.th{font:600 .95rem 'Outfit',system-ui,sans-serif;color:var(--mut);margin-top:
 footer{margin-top:3rem;padding-top:1rem;border-top:1px solid var(--edge);font-size:.85rem;color:var(--mut);text-align:center}
 @media(max-width:600px){.doors,.facts{grid-template-columns:1fr}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+
+/* nsu-light-theme */
+/* ---- theme button (both modes) ---- */
+.tright{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center}
+.tbtn{display:inline-flex;align-items:center;gap:.45rem;padding:.4rem .85rem;min-height:2.6rem;border:2px solid var(--g);background:transparent;color:var(--g2);font:700 .82rem 'Outfit',system-ui,sans-serif;text-transform:uppercase;letter-spacing:.08em;cursor:pointer;border-radius:0}
+.tbtn:hover,.tbtn:focus-visible{background:var(--g);color:#000;outline:none}
+.tbtn .ti{display:inline-flex}
+/* ---- easier to read text (both modes) ---- */
+body{font-size:1.08rem;line-height:1.7}
+header p{font-family:'Outfit',system-ui,sans-serif!important;font-style:normal!important;font-size:1.18rem;line-height:1.5}
+.intro{font-size:1.1rem}
+.upd,.note,.try,.try button,.file small,.links a{font-size:1rem}
+.note{font-size:1rem}
+.try button{padding:.35rem .85rem}
+.doors span,.facts span{font-size:1.04rem;line-height:1.55}
+.facts b{font-size:1.04rem}
+.rgrp h3{font-size:1.02rem;text-transform:none;letter-spacing:.01em;font-weight:700}
+.rule i{font-size:.98rem;width:2.7rem}
+th{font-size:.95rem;font-weight:600}
+h3.th{font-size:1.05rem}
+summary{font-size:1.08rem}
+.related a{font-size:1.06rem}
+footer{font-size:.97rem}
+.pages a{font-size:1rem}
+.back{font-size:1.02rem}
+/* ---- light mode: default. Dark mode = html[data-theme=dark] ---- */
+html:not([data-theme="dark"]){color-scheme:light;--g:#047857;--g2:#065f46;--o:#b45309;--r:#c62828;--txt:#1f2b27;--mut:#51615b;--bg2:#ffffff;--edge:rgba(4,120,87,.3)}
+html:not([data-theme="dark"]) body{background-color:#f3f7f5;background-image:radial-gradient(60rem 30rem at 50% -8%,rgba(16,185,129,.16),transparent 70%),radial-gradient(34rem 34rem at 8% 95%,rgba(16,185,129,.1),transparent 65%)}
+html:not([data-theme="dark"]) h1,
+html:not([data-theme="dark"]) h2,
+html:not([data-theme="dark"]) label,
+html:not([data-theme="dark"]) summary,
+html:not([data-theme="dark"]) .doors b,
+html:not([data-theme="dark"]) .rule b,
+html:not([data-theme="dark"]) .words dt,
+html:not([data-theme="dark"]) .file b{color:#0b1512}
+html:not([data-theme="dark"]) input{background:#fff;color:#0b1512;border-color:#047857}
+html:not([data-theme="dark"]) input:focus{box-shadow:0 0 0 3px rgba(4,120,87,.2)}
+html:not([data-theme="dark"]) tr.hit td,
+html:not([data-theme="dark"]) .pages a[aria-current],
+html:not([data-theme="dark"]) .cta,
+html:not([data-theme="dark"]) .links a:hover,
+html:not([data-theme="dark"]) .tbtn:hover,
+html:not([data-theme="dark"]) .tbtn:focus-visible{color:#fff}
+html:not([data-theme="dark"]) .try button{background:#fff;color:#065f46}
+html:not([data-theme="dark"]) .doors a,
+html:not([data-theme="dark"]) .facts a,
+html:not([data-theme="dark"]) .tile,
+html:not([data-theme="dark"]) details,
+html:not([data-theme="dark"]) .file,
+html:not([data-theme="dark"]) .related a,
+html:not([data-theme="dark"]) .words div{box-shadow:0 1px 2px rgba(6,78,59,.06)}
+html:not([data-theme="dark"]) #totop{background:#fff;color:#047857;border-color:rgba(4,120,87,.6)}
+html:not([data-theme="dark"]) #totop:hover,
+html:not([data-theme="dark"]) #totop:focus-visible{background:#047857;border-color:#047857;color:#fff}
